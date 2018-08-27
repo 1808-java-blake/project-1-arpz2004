@@ -3,9 +3,9 @@ export class SqlReimbursement {
     amount: number;
     submitted: number;
     resolved: number;
-    description: number;
+    description: string;
     author_id: number;
     resolver_id: number;
     status: string;
-    type: string;
+    type_id: number;
 }

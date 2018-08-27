@@ -25,14 +25,14 @@ export class Reimbursement {
 }
 
 enum ReimbursementStatus {
-    Pending = "PENDING",
-    Approved = "APPROVED",
-    Denied = "DENIED"
+    Pending,
+    Approved,
+    Denied
 }
 
 enum ReimbursementType {
-    Lodging = "LODGING",
-    Travel = "TRAVEL",
-    Food = "FOOD",
-    Other = "OTHER"
+    Lodging,
+    Travel,
+    Food,
+    Other
 }
