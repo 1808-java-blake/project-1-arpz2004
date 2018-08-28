@@ -1,17 +1,30 @@
 import { connectionPool } from "../util/connection-util";
 import { Reimbursement } from "../model/reimbursement";
 import { reimbursementConverter } from "../util/reimbursement-converter";
+import { userConverter } from "../util/user-converter";
 
 export async function findAll(): Promise<Reimbursement[]> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
-            `SELECT * FROM reimbursement_system.reimbursement
-            NATURAL JOIN reimbursement_system.reimbursement_status
-            NATURAL JOIN reimbursement_system.reimbursement_type`);
+            `WITH reimb AS (SELECT * FROM reimbursement_system.reimbursement r
+                NATURAL JOIN reimbursement_system.reimbursement_status s
+                NATURAL JOIN reimbursement_system.reimbursement_type t)
+                SELECT reimb.*, author.*, resolver.user_id AS r_user_id, resolver.username AS r_username, resolver.password AS r_password, 
+                resolver.first_name AS r_first_name, resolver.last_name AS r_last_name, resolver.email AS r_email, resolver.role_id AS r_role_id
+                FROM reimb
+                LEFT JOIN reimbursement_system.ers_user author ON reimb.author_id = author.user_id
+                LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id`);
         const reimbursements = [];
         resp.rows.forEach((reimbursement_result) => {
             let reimbursement = reimbursementConverter(reimbursement_result);
+            reimbursement.author = userConverter(reimbursement_result);
+            Object.keys(reimbursement_result).forEach((key) => {
+                if (key.startsWith('r_')) {
+                    reimbursement_result[key.substring(2, key.length)] = reimbursement_result[key];
+                }
+            });
+            reimbursement.resolver = userConverter(reimbursement_result);
             reimbursements.push(reimbursement);
         });
         return reimbursements;
@@ -24,30 +37,24 @@ export async function findById(id: number): Promise<Reimbursement> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
-            /*`SELECT r.reimbursement_id, r.amount, r.submitted, r.resolved, r.description, s.status, t.type,
-            author.user_id AS author_user_id, author.username AS author_username, author.password AS author_password, author.first_name AS author_first_name,
-            author.last_name AS author_last_name, author.email AS author_email, resolver.user_id AS resolver_user_id, resolver.username AS resolver_username, 
-            resolver.password AS resolver_password, resolver.first_name AS resolver_first_name, resolver.last_name AS resolver_last_name, resolver.email AS resolver_email
-            FROM reimbursement_system.reimbursement r
-            NATURAL JOIN reimbursement_system.reimbursement_status s
-            NATURAL JOIN reimbursement_system.reimbursement_type t
-            LEFT JOIN reimbursement_system.ers_user author ON r.author_id = author.user_id
-            LEFT JOIN reimbursement_system.ers_user resolver ON r.resolver_id = resolver.user_id
-            WHERE r.reimbursement_id = $1`, [id]);*/
-            `SELECT * FROM reimbursement_system.reimbursement r
-            NATURAL JOIN reimbursement_system.reimbursement_status s
-            NATURAL JOIN reimbursement_system.reimbursement_type t
-            LEFT JOIN reimbursement_system.ers_user author ON r.author_id = author.user_id
-            WHERE r.reimbursement_id = $1
-            UNION
-            SELECT * FROM reimbursement_system.reimbursement r
-            NATURAL JOIN reimbursement_system.reimbursement_status s
-            NATURAL JOIN reimbursement_system.reimbursement_type t
-            LEFT JOIN reimbursement_system.ers_user resolver ON r.resolver_id = resolver.user_id
-            WHERE r.reimbursement_id = $1`, [id]);
-        console.log(resp.rows);
+            `WITH reimb AS (SELECT * FROM reimbursement_system.reimbursement r
+                NATURAL JOIN reimbursement_system.reimbursement_status s
+                NATURAL JOIN reimbursement_system.reimbursement_type t
+                WHERE r.reimbursement_id = $1)
+                SELECT reimb.*, author.*, resolver.user_id AS r_user_id, resolver.username AS r_username, resolver.password AS r_password, 
+                resolver.first_name AS r_first_name, resolver.last_name AS r_last_name, resolver.email AS r_email, resolver.role_id AS r_role_id
+                FROM reimb
+                LEFT JOIN reimbursement_system.ers_user author ON reimb.author_id = author.user_id
+                LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id`, [id]);
         const reimbursement_result = resp.rows[0];
         let reimbursement = reimbursementConverter(reimbursement_result);
+        reimbursement.author = userConverter(reimbursement_result);
+        Object.keys(reimbursement_result).forEach((key) => {
+            if (key.startsWith('r_')) {
+                reimbursement_result[key.substring(2, key.length)] = reimbursement_result[key];
+            }
+        });
+        reimbursement.resolver = userConverter(reimbursement_result);
         return reimbursement;
     } finally {
         client.release();
