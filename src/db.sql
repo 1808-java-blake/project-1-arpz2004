@@ -54,4 +54,10 @@ CREATE TABLE reimbursement
 );
 
 INSERT INTO user_role(role)
-VALUES("employee"), ("manager");
+VALUES('employee'), ('manager');
+
+INSERT INTO reimbursement_status(status)
+VALUES('pending'), ('approved'), ('denied');
+
+INSERT INTO reimbursement_type(type)
+VALUES('lodging'), ('travel'), ('food'), ('other');

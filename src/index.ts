@@ -4,6 +4,7 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import { userRouter } from './routers/user-router';
+import { reimbursementRouter } from './routers/reimbursement-router';
 // create the app object from express
 const app = express();
 
@@ -44,6 +45,7 @@ app.use(bodyParser.json());
  * API Routers
  ********************************************************************************************/
 app.use('/users', userRouter);
+app.use('/reimbursements', reimbursementRouter);
 
 const server = app.listen(port, () => {
   console.log(`App is running at http://localhost:${app.get('port')} in ${app.get('env')} mode`);
