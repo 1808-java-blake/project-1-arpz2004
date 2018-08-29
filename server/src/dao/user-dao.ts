@@ -8,9 +8,9 @@ export async function findAll(): Promise<User[]> {
         const resp = await client.query(
             `SELECT * FROM reimbursement_system.ers_user
             NATURAL JOIN reimbursement_system.user_role`);
-        const users = [];
-        resp.rows.forEach((user_result) => {
-            users.push(userConverter(user_result));
+        const users: User[] = [];
+        resp.rows.forEach((userResult) => {
+            users.push(userConverter(userResult));
         });
         return users;
     } finally {
@@ -40,10 +40,10 @@ export async function findByUsernameAndPassword(username: string, password: stri
             NATURAL JOIN reimbursement_system.user_role
             WHERE u.username = $1
             AND u.password = $2`, [username, password]);
-        if (resp.rows.length !== 0) {
+         // if (resp.rows.length !== 0) {
             return userConverter(resp.rows[0]);
-        }
-        return null;
+         // }
+         // return null;
     } finally {
         client.release();
     }

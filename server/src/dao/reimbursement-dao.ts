@@ -17,16 +17,16 @@ export async function findAll(): Promise<Reimbursement[]> {
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
                 INNER JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`);
-        const reimbursements = [];
-        resp.rows.forEach((reimbursement_result) => {
-            let reimbursement = reimbursementConverter(reimbursement_result);
-            reimbursement.author = userConverter(reimbursement_result);
-            Object.keys(reimbursement_result).forEach((key) => {
+        const reimbursements: Reimbursement[] = [];
+        resp.rows.forEach((reimbursementResult) => {
+            const reimbursement = reimbursementConverter(reimbursementResult);
+            reimbursement.author = userConverter(reimbursementResult);
+            Object.keys(reimbursementResult).forEach((key) => {
                 if (key.startsWith('r_')) {
-                    reimbursement_result[key.substring(2, key.length)] = reimbursement_result[key];
+                    reimbursementResult[key.substring(2, key.length)] = reimbursementResult[key];
                 }
             });
-            reimbursement.resolver = userConverter(reimbursement_result);
+            reimbursement.resolver = userConverter(reimbursementResult);
             reimbursements.push(reimbursement);
         });
         return reimbursements;
@@ -50,22 +50,22 @@ export async function findById(id: number): Promise<Reimbursement> {
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
                 INNER JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [id]);
-        const reimbursement_result = resp.rows[0];
-        let reimbursement = reimbursementConverter(reimbursement_result);
-        reimbursement.author = userConverter(reimbursement_result);
-        Object.keys(reimbursement_result).forEach((key) => {
+        const reimbursementResult = resp.rows[0];
+        const reimbursement = reimbursementConverter(reimbursementResult);
+        reimbursement.author = userConverter(reimbursementResult);
+        Object.keys(reimbursementResult).forEach((key) => {
             if (key.startsWith('r_')) {
-                reimbursement_result[key.substring(2, key.length)] = reimbursement_result[key];
+                reimbursementResult[key.substring(2, key.length)] = reimbursementResult[key];
             }
         });
-        reimbursement.resolver = userConverter(reimbursement_result);
+        reimbursement.resolver = userConverter(reimbursementResult);
         return reimbursement;
     } finally {
         client.release();
     }
 }
 
-export async function findByAuthorId(author_id: number): Promise<Reimbursement[]> {
+export async function findByAuthorId(authorId: number): Promise<Reimbursement[]> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
@@ -79,17 +79,17 @@ export async function findByAuthorId(author_id: number): Promise<Reimbursement[]
                 LEFT JOIN reimbursement_system.ers_user author ON reimb.author_id = author.user_id
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
-                INNER JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [author_id]);
-        const reimbursements = [];
-        resp.rows.forEach((reimbursement_result) => {
-            let reimbursement = reimbursementConverter(reimbursement_result);
-            reimbursement.author = userConverter(reimbursement_result);
-            Object.keys(reimbursement_result).forEach((key) => {
+                INNER JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [authorId]);
+        const reimbursements: Reimbursement[] = [];
+        resp.rows.forEach((reimbursementResult) => {
+            const reimbursement = reimbursementConverter(reimbursementResult);
+            reimbursement.author = userConverter(reimbursementResult);
+            Object.keys(reimbursementResult).forEach((key) => {
                 if (key.startsWith('r_')) {
-                    reimbursement_result[key.substring(2, key.length)] = reimbursement_result[key];
+                    reimbursementResult[key.substring(2, key.length)] = reimbursementResult[key];
                 }
             });
-            reimbursement.resolver = userConverter(reimbursement_result);
+            reimbursement.resolver = userConverter(reimbursementResult);
             reimbursements.push(reimbursement);
         });
         return reimbursements;
@@ -101,8 +101,8 @@ export async function findByAuthorId(author_id: number): Promise<Reimbursement[]
 export async function create(reimbursement: Reimbursement): Promise<number> {
     const client = await connectionPool.connect();
     try {
-        let author = reimbursement.author;
-        let resolver = reimbursement.resolver;
+        const author = reimbursement.author;
+        const resolver = reimbursement.resolver;
         const resp = await client.query(
             `INSERT INTO reimbursement_system.reimbursement
             (amount, submitted, resolved, description, author_id, resolver_id, status_id, type_id)
@@ -128,8 +128,8 @@ export async function create(reimbursement: Reimbursement): Promise<number> {
 export async function update(reimbursement: Reimbursement): Promise<number> {
     const client = await connectionPool.connect();
     try {
-        let author = reimbursement.author;
-        let resolver = reimbursement.resolver;
+        const author = reimbursement.author;
+        const resolver = reimbursement.resolver;
         const resp = await client.query(
             `UPDATE reimbursement_system.reimbursement
             SET amount=$1, submitted=$2, resolved=$3, description=$4, author_id=$5, resolver_id=$6, 

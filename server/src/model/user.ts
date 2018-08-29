@@ -1,11 +1,11 @@
 export class User {
-    userId: number;
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    role: UserRole;
+    public userId: number;
+    public username: string;
+    public password: string;
+    public firstName: string;
+    public lastName: string;
+    public email: string;
+    public role: UserRole;
 
     constructor(userId?: number, username?: string, password?: string, firstName?: string, lastName?: string, email?: string, role?: string) {
         userId && (this.userId = userId);

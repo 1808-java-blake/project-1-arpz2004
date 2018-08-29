@@ -1,22 +1,23 @@
+import * as bodyParser from 'body-parser';
 // this will be the entry point for our application
-import express from 'express';
-import path from 'path';
-import bodyParser from 'body-parser';
-import session from 'express-session';
-import { userRouter } from './routers/user-router';
+import * as express from 'express';
+import * as session from 'express-session';
+import * as path from 'path';
 import { reimbursementRouter } from './routers/reimbursement-router';
+import { userRouter } from './routers/user-router';
+
 // create the app object from express
 const app = express();
 
 // set the port
-const port = process.env.PORT || 3000; // will use port from computers environment variables or 3000 if there is none
+const port = process.env.PORT || 9001; // will use port from computers environment variables or 3000 if there is none
 app.set('port', port);
 
 const sess = {
-  secret: 'keyboard cat',
-  cookie: {secure: false},
+  cookie: { secure: false },
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  secret: 'keyboard cat'
 };
 
 if (app.get('env') === 'production') {
@@ -47,6 +48,6 @@ app.use(bodyParser.json());
 app.use('/users', userRouter);
 app.use('/reimbursements', reimbursementRouter);
 
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`App is running at http://localhost:${app.get('port')} in ${app.get('env')} mode`);
 });

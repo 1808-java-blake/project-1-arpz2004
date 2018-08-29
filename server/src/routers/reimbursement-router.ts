@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import express from 'express';
+import * as express from 'express';
 import * as reimbursementDao from '../dao/reimbursement-dao';
 
 export const reimbursementRouter = express.Router();
@@ -10,7 +10,7 @@ export const reimbursementRouter = express.Router();
 reimbursementRouter.get('', async (req: Request, resp: Response) => {
     try {
         console.log('retrieving all reimbursements');
-        let users = await reimbursementDao.findAll();
+        const users = await reimbursementDao.findAll();
         resp.json(users);
     } catch (err) {
         console.log(err);
@@ -21,11 +21,11 @@ reimbursementRouter.get('', async (req: Request, resp: Response) => {
 /**
  * Find reimbursement by id
  */
-reimbursementRouter.get('/:id', async (req, resp) => {
+reimbursementRouter.get('/:id', async (req: Request, resp: Response) => {
     const id = +req.params.id;
     console.log(`retreiving reimbursement with id  ${id}`)
     try {
-        let user = await reimbursementDao.findById(id);
+        const user = await reimbursementDao.findById(id);
         if (user !== undefined) {
             resp.json(user);
         } else {
@@ -39,7 +39,7 @@ reimbursementRouter.get('/:id', async (req, resp) => {
 /**
  * Add a new reimbursement
  */
-reimbursementRouter.post('', async (req, resp) => {
+reimbursementRouter.post('', async (req: Request, resp: Response) => {
     console.log('creating reimbursement')
     try {
         const id = await reimbursementDao.create(req.body);
@@ -51,7 +51,7 @@ reimbursementRouter.post('', async (req, resp) => {
     }
 })
 
-reimbursementRouter.put('/:id', async (req, resp) => {
+reimbursementRouter.put('/:id', async (req: Request, resp: Response) => {
     console.log('updating reimbursement')
     try {
         const id = await reimbursementDao.update(req.body);

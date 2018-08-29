@@ -1,15 +1,15 @@
 import { User } from "./user";
 
 export class Reimbursement {
-    reimbursementId: number;
-    author: User;
-    resolver: User;
-    amount: number;
-    submitted: number;
-    resolved: number;
-    description: string;
-    status: ReimbursementStatus;
-    type: ReimbursementType;
+    public reimbursementId: number;
+    public author: User;
+    public resolver: User;
+    public amount: number;
+    public submitted: number;
+    public resolved: number;
+    public description: string;
+    public status: ReimbursementStatus;
+    public type: ReimbursementType;
 
     constructor(reimbursementId?: number, author?: User, resolver?: User, amount?: number, submitted?: number, resolved?: number, description?: string, status?: string, type?: string) {
         reimbursementId && (this.reimbursementId = reimbursementId);
