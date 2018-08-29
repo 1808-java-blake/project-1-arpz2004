@@ -50,3 +50,15 @@ reimbursementRouter.post('', async (req, resp) => {
         resp.sendStatus(500);
     }
 })
+
+reimbursementRouter.put('/:id', async (req, resp) => {
+    console.log('updating reimbursement')
+    try {
+        const id = await reimbursementDao.update(req.body);
+        resp.status(201);
+        resp.json(id);
+    } catch (err) {
+        console.log(err);
+        resp.sendStatus(500);
+    }
+})

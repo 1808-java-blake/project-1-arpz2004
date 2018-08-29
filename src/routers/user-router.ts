@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import express from 'express';
 import * as userDao from '../dao/user-dao';
+import * as reimbursementDao from '../dao/reimbursement-dao';
 
 export const userRouter = express.Router();
 
@@ -28,6 +29,21 @@ userRouter.get('/:id', async (req, resp) => {
         let user = await userDao.findById(id);
         if (user !== undefined) {
             resp.json(user);
+        } else {
+            resp.sendStatus(400);
+        }
+    } catch (err) {
+        resp.sendStatus(500);
+    }
+});
+
+userRouter.get('/:id/reimbursements', async (req, resp) => {
+    const id = +req.params.id;
+    console.log(`retreiving reimbursements submitted by user with id  ${id}`)
+    try {
+        let reimbursements = await reimbursementDao.findByAuthorId(id);
+        if (reimbursements !== undefined) {
+            resp.json(reimbursements);
         } else {
             resp.sendStatus(400);
         }
