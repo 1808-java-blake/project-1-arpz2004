@@ -2,7 +2,6 @@ import * as bodyParser from 'body-parser';
 // this will be the entry point for our application
 import * as express from 'express';
 import * as session from 'express-session';
-import * as path from 'path';
 import { reimbursementRouter } from './routers/reimbursement-router';
 import { userRouter } from './routers/user-router';
 
@@ -33,11 +32,6 @@ app.use((req, res, next) => {
   console.log(`request made with path: ${req.path} \nand type: ${req.method}`);
   next();
 });
-
-// allow static content to be served, navigating to url with nothing after / will serve index.html from public
-app.use(
-  express.static(path.join(__dirname, 'public'))
-);
 
 // use the body parser to convert request json
 app.use(bodyParser.json());
