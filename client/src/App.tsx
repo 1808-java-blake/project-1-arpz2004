@@ -16,7 +16,6 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                {/* <Route path="/first" component={FirstComponent} /> */}
                 <Route path="/sign-in" component={SignInComponent} />
                 <Route component={SignInComponent} />
               </Switch>

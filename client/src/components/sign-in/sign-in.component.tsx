@@ -20,7 +20,7 @@ class SignInComponent extends React.Component<IProps, {}> {
 
   public submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch('http://localhost:3000/users/login', {
+    fetch('http://localhost:9001/users/login', {
       body: JSON.stringify(this.props.credentials),
       credentials: 'include',
       headers: {
@@ -33,6 +33,7 @@ class SignInComponent extends React.Component<IProps, {}> {
         if (resp.status === 401) {
           this.props.updateError('Invalid Credentials');
         } else if (resp.status === 200) {
+          this.props.updateError('');
           return resp.json();
         } else {
           this.props.updateError('Failed to Login at this time');
@@ -40,7 +41,6 @@ class SignInComponent extends React.Component<IProps, {}> {
         throw new Error('Failed to login');
       })
       .then(resp => {
-        localStorage.setItem('user', JSON.stringify(resp));
         this.props.history.push('/home');
       })
       .catch(err => {
