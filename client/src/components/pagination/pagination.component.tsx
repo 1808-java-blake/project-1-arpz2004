@@ -25,7 +25,7 @@ class PaginationComponent extends React.Component<IProps, {}>  {
         <Pagination
           activePage={this.props.activePage}
           itemsCountPerPage={10}
-          totalItemsCount={100}// this.props.totalItemCount}
+          totalItemsCount={this.props.totalItemCount}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
           itemClass={'page-item'}

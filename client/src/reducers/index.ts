@@ -2,6 +2,8 @@ import { combineReducers } from "redux";
 import { signInReducer } from "./sign-in.reducer";
 import { reimbursementReducer } from "./reimbursement.reducer";
 import { paginationReducer } from "./pagination.reducer";
+import { Reimbursement } from "../model/Reimbursement";
+import { reimbursementTableReducer } from "./reimbursement-table.reducer";
 
 export interface ISignInState {
   credentials: {
@@ -12,13 +14,11 @@ export interface ISignInState {
 }
 
 export interface IReimbursementState {
-  reimbursementId: number,
-  amount: number,
-  submitted: number,
-  resolved: number,
-  description: string,
-  status: string,
-  type: string
+  reimbursement: Reimbursement
+}
+
+export interface IReimbursementTableState {
+  reimbursements: Reimbursement[]
 }
 
 export interface IPaginationState {
@@ -31,11 +31,13 @@ export interface IPaginationState {
 export interface IState {
   pagination: IPaginationState,
   reimbursement: IReimbursementState,
+  reimbursementTable: IReimbursementTableState,
   signIn: ISignInState
 }
 
 export const state = combineReducers<IState>({
   pagination: paginationReducer,
   reimbursement: reimbursementReducer,
+  reimbursementTable: reimbursementTableReducer,
   signIn: signInReducer
 })

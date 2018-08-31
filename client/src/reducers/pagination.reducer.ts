@@ -3,9 +3,9 @@ import { paginationTypes } from "../actions/pagination/pagination.types";
 
 const initialState: IPaginationState = {
     activePage: 1,
-    itemsCountPerPage: 15,
+    itemsCountPerPage: 10,
     pageRangeDisplayed: 5,
-    totalItemCount: 100
+    totalItemCount: 0
 }
 
 export const paginationReducer = (state = initialState, action: any) => {

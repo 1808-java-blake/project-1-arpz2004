@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IState } from '../../reducers';
-import PaginationComponent from '../pagination/pagination.component';
 
 class ReimbursementComponent extends React.Component<any, {}> {
 
@@ -10,13 +9,21 @@ class ReimbursementComponent extends React.Component<any, {}> {
   }
 
   public render() {
+    const reimbursement = this.props.reimbursement;
     return (
-      <PaginationComponent />
+      <tr>
+        <th scope="row">{reimbursement.reimbursementId}</th>
+        <td>{reimbursement.amount}</td>
+        <td>{reimbursement.submitted}</td>
+        <td>{reimbursement.description}</td>
+        <td>{reimbursement.status}</td>
+        <td>{reimbursement.type}</td>
+      </tr>
     );
   }
 }
 
-const mapStateToProps = (state: IState) => state.reimbursement 
+const mapStateToProps = (state: IState) => state.reimbursement
 
 const mapDispatchToProps = {
 }
