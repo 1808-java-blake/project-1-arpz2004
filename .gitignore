@@ -1,7 +1,6 @@
 # Created by https://www.gitignore.io/api/java,maven,eclipse
 
-client/node_modules
-server/node_modules
+*/node_modules
 ### Eclipse ###
 
 .metadata
