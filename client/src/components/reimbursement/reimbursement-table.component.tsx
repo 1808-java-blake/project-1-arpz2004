@@ -25,7 +25,10 @@ class ReimbursementTableComponent extends React.Component<any, {}> {
                             <th scope="col">ID</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Submitted</th>
+                            <th scope="col">Resolved</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Resolver</th>
                             <th scope="col">Status</th>
                             <th scope="col">Type</th>
                         </tr>

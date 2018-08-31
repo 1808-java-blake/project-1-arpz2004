@@ -16,9 +16,11 @@ export async function findAll(): Promise<Reimbursement[]> {
                 LEFT JOIN reimbursement_system.ers_user author ON reimb.author_id = author.user_id
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
-                INNER JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`);
+                LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`);
         const reimbursements: Reimbursement[] = [];
         resp.rows.forEach((reimbursementResult) => {
+            console.log(`TESTING @@@@@@@@@@@@@@@@@@@@ id: ${reimbursementResult.reimbursementId}`);
+            console.log(reimbursementResult);
             const reimbursement = reimbursementConverter(reimbursementResult);
             reimbursement.author = userConverter(reimbursementResult);
             Object.keys(reimbursementResult).forEach((key) => {
@@ -49,7 +51,7 @@ export async function findById(id: number): Promise<Reimbursement> {
                 LEFT JOIN reimbursement_system.ers_user author ON reimb.author_id = author.user_id
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
-                INNER JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [id]);
+                LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [id]);
         const reimbursementResult = resp.rows[0];
         const reimbursement = reimbursementConverter(reimbursementResult);
         reimbursement.author = userConverter(reimbursementResult);
@@ -79,7 +81,7 @@ export async function findByAuthorId(authorId: number): Promise<Reimbursement[]>
                 LEFT JOIN reimbursement_system.ers_user author ON reimb.author_id = author.user_id
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
-                INNER JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [authorId]);
+                LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [authorId]);
         const reimbursements: Reimbursement[] = [];
         resp.rows.forEach((reimbursementResult) => {
             const reimbursement = reimbursementConverter(reimbursementResult);
