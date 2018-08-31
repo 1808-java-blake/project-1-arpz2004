@@ -26,9 +26,6 @@ export const AppNav: React.StatelessComponent<any> = (props) => {
               <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/pagination" className="unset-anchor nav-link">Pagination</Link>
-            </li>
-            <li className="nav-item active">
               <Link to="/reimbursements" className="unset-anchor nav-link">Reimbursements</Link>
             </li>
             <li className="nav-item active dropdown">

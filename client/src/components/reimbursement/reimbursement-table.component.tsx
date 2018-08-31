@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { IState } from '../../reducers';
-import PaginationComponent from '../pagination/pagination.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 import { Reimbursement } from '../../model/Reimbursement';
-import * as reimbursementTableActions from '../../actions/reimbursement/reimbursement-table.actions';
 import { ReimbursementComponent } from './reimbursement.component';
+import * as reimbursementTableActions from '../../actions/reimbursement/reimbursement-table.actions'
+import { IState } from '../../reducers';
+import { connect } from 'react-redux';
 
 class ReimbursementTableComponent extends React.Component<any, {}> {
 
@@ -39,7 +39,7 @@ class ReimbursementTableComponent extends React.Component<any, {}> {
                         })}
                     </tbody>
                 </table>
-                <PaginationComponent />
+                <PaginationComponent activePage={1} totalItemsCount={this.props.renderedReimbursements.length} updateActivePage={() => { console.log("Page updated from reimbursement table") }} />
             </div>
         );
     }
