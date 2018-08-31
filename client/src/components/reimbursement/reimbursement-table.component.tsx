@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IState } from '../../reducers';
 import PaginationComponent from '../pagination/pagination.component';
-import ReimbursementComponent from './reimbursement.component';
+// import ReimbursementComponent from './reimbursement.component';
 import { Reimbursement } from '../../model/Reimbursement';
 import * as reimbursementTableActions from '../../actions/reimbursement/reimbursement-table.actions';
 
@@ -32,7 +32,14 @@ class ReimbursementTableComponent extends React.Component<any, {}> {
                     </thead>
                     <tbody>
                         {this.props.reimbursements.map((reimbursement: Reimbursement) => {
-                            return (<ReimbursementComponent key={reimbursement.reimbursementId} reimbursement={reimbursement} />)
+                            return (<tr key={reimbursement.reimbursementId}>
+                                <th scope="row">{reimbursement.reimbursementId}</th>
+                                <td>{reimbursement.amount}</td>
+                                <td>{reimbursement.submitted}</td>
+                                <td>{reimbursement.description}</td>
+                                <td>{reimbursement.status}</td>
+                                <td>{reimbursement.type}</td>
+                            </tr>)
                         })}
                     </tbody>
                 </table>

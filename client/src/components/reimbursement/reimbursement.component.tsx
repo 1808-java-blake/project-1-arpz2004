@@ -8,6 +8,10 @@ class ReimbursementComponent extends React.Component<any, {}> {
     super(props);
   }
 
+  public componentDidMount = () => {
+    console.log(this.props)
+  }
+
   public render() {
     const reimbursement = this.props.reimbursement;
     return (

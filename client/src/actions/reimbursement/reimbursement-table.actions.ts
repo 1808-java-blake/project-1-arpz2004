@@ -11,14 +11,12 @@ export const fetchReimbursements = () => (dispatch: any) => {
         throw new Error('Failed to fetch reimbursements');
       }
     }).then(resp => {
-      console.log(resp);
-      const reim: Reimbursement[] = resp.map((reimb: any) => {
-        return new Reimbursement(reimb);
+      const reimbursements: Reimbursement[] = resp.map((reimbursement: Reimbursement) => {
+        return reimbursement;
       });
-      console.log(reim)
       dispatch({
         payload: {
-          reimbursements: reim
+          reimbursements
         },
         type: reimbursementTableTypes.FETCH_REIMBURSEMENTS
       })
