@@ -15,7 +15,6 @@ class PaginationComponent extends React.Component<IProps, {}>  {
   }
 
   public handlePageChange = (pageNumber: number) => {
-    console.log(`active page is ${pageNumber}`);
     this.props.updateActivePage(pageNumber);
   }
 

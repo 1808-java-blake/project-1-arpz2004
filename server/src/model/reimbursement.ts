@@ -8,8 +8,8 @@ export class Reimbursement {
     public submitted: number;
     public resolved: number;
     public description: string;
-    public status: ReimbursementStatus;
-    public type: ReimbursementType;
+    public status: string;
+    public type: string;
 
     constructor(reimbursementId?: number, author?: User, resolver?: User, amount?: number, submitted?: number, resolved?: number, description?: string, status?: string, type?: string) {
         reimbursementId && (this.reimbursementId = reimbursementId);
@@ -19,20 +19,7 @@ export class Reimbursement {
         submitted && (this.submitted = submitted);
         resolved && (this.resolved = resolved);
         description && (this.description = description);
-        status && (this.status = ReimbursementStatus[status]);
-        type && (this.type = ReimbursementType[type]);
+        status && (this.status = status);
+        type && (this.type = type);
     }
-}
-
-enum ReimbursementStatus {
-    Pending,
-    Approved,
-    Denied
-}
-
-enum ReimbursementType {
-    Lodging,
-    Travel,
-    Food,
-    Other
 }
