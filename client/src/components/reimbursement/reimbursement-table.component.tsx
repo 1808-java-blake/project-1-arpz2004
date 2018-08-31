@@ -34,7 +34,7 @@ class ReimbursementTableComponent extends React.Component<any, {}> {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.reimbursements.map((reimbursement: Reimbursement) => {
+                        {this.props.renderedReimbursements.map((reimbursement: Reimbursement) => {
                             return <ReimbursementComponent key={reimbursement.reimbursementId} reimbursement={reimbursement} />
                         })}
                     </tbody>
@@ -48,7 +48,8 @@ class ReimbursementTableComponent extends React.Component<any, {}> {
 const mapStateToProps = (state: IState) => state.reimbursementTable
 
 const mapDispatchToProps = {
-    fetchReimbursements: reimbursementTableActions.fetchReimbursements
+    fetchReimbursements: reimbursementTableActions.fetchReimbursements,
+    filterReimbursements: reimbursementTableActions.filterReimbursements
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReimbursementTableComponent);

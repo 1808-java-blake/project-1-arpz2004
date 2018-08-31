@@ -14,6 +14,7 @@ export interface ISignInState {
 
 export interface IReimbursementTableState {
   reimbursements: Reimbursement[]
+  renderedReimbursements: Reimbursement[]
 }
 
 export interface IPaginationState {
