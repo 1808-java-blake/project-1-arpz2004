@@ -5,10 +5,10 @@ import * as signInActions from '../../actions/sign-in/sign-in.actions';
 import { connect } from 'react-redux';
 
 interface IProps extends RouteComponentProps<{}>, ISignInState {
-  updateError: (message: string) => any
-  updatePassword: (password: string) => any,
-  updateUsername: (username: string) => any,
-  submit: (credentials: any) => any
+  updateError: (message: string) => void
+  updatePassword: (password: string) => void,
+  updateUsername: (username: string) => void,
+  submit: (credentials: any) => void
 }
 
 class SignInComponent extends React.Component<IProps, {}> {
@@ -41,7 +41,7 @@ class SignInComponent extends React.Component<IProps, {}> {
         throw new Error('Failed to login');
       })
       .then(resp => {
-        this.props.history.push('/home');
+        this.props.history.push('/reimbursements');
       })
       .catch(err => {
         console.log(err);

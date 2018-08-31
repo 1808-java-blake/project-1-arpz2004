@@ -20,25 +20,25 @@ export const AppNav: React.StatelessComponent<any> = (props) => {
               <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
+              <Link to="/reimbursements" className="unset-anchor nav-link">Reimbursements</Link>
             </li>
             <li className="nav-item active">
               <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
+              <Link to="/pagination" className="unset-anchor nav-link">Pagination</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
+              <Link to="/reimbursements" className="unset-anchor nav-link">Reimbursements</Link>
             </li>
             <li className="nav-item active dropdown">
               <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
               <div className="dropdown-menu" aria-labelledby="examples-dropdown">
                 <div className="dropdown-item"><Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link></div>
+                <div className="dropdown-item"><Link to="/reimbursements" className="unset-anchor nav-link">Reimbursements</Link></div>
+                <div className="dropdown-item"><Link to="/reimbursements" className="unset-anchor nav-link">Reimbursements</Link></div>
                 <div className="dropdown-item"><Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link></div>
-                <div className="dropdown-item"><Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link></div>
-                <div className="dropdown-item"><Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link></div>
-                <div className="dropdown-item"><Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link></div>
+                <div className="dropdown-item"><Link to="/reimbursements" className="unset-anchor nav-link">Reimbursements</Link></div>
               </div>
             </li>
             <li className="nav-item active">

@@ -1,19 +1,22 @@
 import * as React from "react";
 import Pagination from "react-js-pagination";
 import { IPaginationState, IState } from "../../reducers";
+import * as paginationActions from '../../actions/pagination/pagination.actions';
 import { connect } from "react-redux";
+import { RouteComponentProps } from "react-router";
 
-class PaginationComponent extends React.Component<IPaginationState, {}>  {
+interface IProps extends RouteComponentProps<{}>, IPaginationState {
+  updateActivePage: (activePage: number) => void
+}
+
+class PaginationComponent extends React.Component<IProps, {}>  {
   constructor(props: any) {
     super(props);
-    this.state = {
-      activePage: 15
-    };
   }
 
-  public handlePageChange(pageNumber: number) {
+  public handlePageChange = (pageNumber: number) => {
     console.log(`active page is ${pageNumber}`);
-    this.setState({ activePage: pageNumber });
+    this.props.updateActivePage(pageNumber);
   }
 
   public render() {
@@ -22,18 +25,21 @@ class PaginationComponent extends React.Component<IPaginationState, {}>  {
         <Pagination
           activePage={this.props.activePage}
           itemsCountPerPage={10}
-          totalItemsCount={this.props.totalItemCount}
+          totalItemsCount={100}// this.props.totalItemCount}
           pageRangeDisplayed={5}
           onChange={this.handlePageChange}
+          itemClass={'page-item'}
+          linkClass={'page-link'}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: IState) => { state.pagination }
+const mapStateToProps = (state: IState) => state.pagination
 
 const mapDispatchToProps = {
+  updateActivePage: paginationActions.updateActivePage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaginationComponent);

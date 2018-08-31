@@ -1,7 +1,10 @@
-// import { paginationTypes } from "./pagination.types";
+import { paginationTypes } from "./pagination.types";
 
-export const paginationAction = (password: string) => {
-    return {
-    }
+export const updateActivePage = (activePage: number) => {
+  return {
+    payload: {
+      activePage
+    },
+    type: paginationTypes.UPDATE_ACTIVE_PAGE
   }
-  
+}
