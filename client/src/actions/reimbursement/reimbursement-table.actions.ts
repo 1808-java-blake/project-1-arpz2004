@@ -33,7 +33,13 @@ export const filterReimbursements = (filteredReimbursements: Reimbursement[], re
   })
 }
 
-export const updateActivePage = (activePage: number, renderedReimbursements: Reimbursement[]) => (dispatch: any) => {
+export const updateActivePage = () => (dispatch: any, state: any) => {
+  const rt = state().reimbursementTable
+  const activePage = rt.activePage
+  const countPerPage = rt.itemsCountPerPage
+  const startIndex = (activePage - 1) * countPerPage;
+  const endIndex = startIndex + countPerPage;
+  const renderedReimbursements = rt.filteredReimbursements.slice(startIndex, endIndex)
   dispatch({
     payload: {
       activePage,

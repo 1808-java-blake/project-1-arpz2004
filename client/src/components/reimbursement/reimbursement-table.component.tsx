@@ -11,7 +11,7 @@ import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
     filterReimbursements: (filteredReimbursements: Reimbursement[], renderedReimbursements: Reimbursement[], statusFilter: string[]) => void
-    updateActivePage: (page: number, renderedReimbursements: Reimbursement[]) => void
+    updateActivePage: () => void
 }
 
 class ReimbursementTableComponent extends React.Component<IProps, {}> {
@@ -66,15 +66,9 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         })}
                     </tbody>
                 </table>
-                <PaginationComponent activePage={this.props.activePage} itemsCountPerPage={this.props.itemsCountPerPage} totalItemsCount={this.props.filteredReimbursements.length} updateActivePage={(page: number) => this.renderPage(page, this.props.itemsCountPerPage, this.props.filteredReimbursements)} />
+                <PaginationComponent activePage={this.props.activePage} itemsCountPerPage={this.props.itemsCountPerPage} totalItemsCount={this.props.filteredReimbursements.length} updateActivePage={this.props.updateActivePage} />
             </div>
         );
-    }
-
-    private renderPage = (pageNumber: number, countPerPage: number, filteredReimbursements: Reimbursement[]) => {
-        const startIndex = (pageNumber - 1) * countPerPage;
-        const endIndex = startIndex + countPerPage;
-        this.props.updateActivePage(pageNumber, filteredReimbursements.slice(startIndex, endIndex));
     }
 }
 
