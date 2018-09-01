@@ -13,10 +13,10 @@ export const PaginationComponent: React.StatelessComponent<IProps> = (props) => 
     <div>
       <Pagination
         activePage={activePage}
-        itemsCountPerPage={10}
+        itemsCountPerPage={2}
         totalItemsCount={totalItemsCount}
         pageRangeDisplayed={5}
-        onChange={updateActivePage}
+        onChange={(page: number) => updateActivePage(page)}
         itemClass={'page-item'}
         linkClass={'page-link'}
       />

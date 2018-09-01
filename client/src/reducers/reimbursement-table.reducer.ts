@@ -2,8 +2,9 @@ import { IReimbursementTableState } from ".";
 import { reimbursementTableTypes } from "../actions/reimbursement/reimbursement-table.types";
 
 const initialState: IReimbursementTableState = {
+    activePage: 1,
     reimbursements: [],
-    renderedReimbursements: []
+    renderedReimbursements: [],
 }
 
 export const reimbursementTableReducer = (state = initialState, action: any) => {
@@ -18,6 +19,11 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
             return {
                 ...state,
                 renderedReimbursements: action.payload.renderedReimbursements
+            }
+        case reimbursementTableTypes.UPDATE_ACTIVE_PAGE:
+            return {
+                ...state,
+                activePage: action.payload.activePage
             }
     }
     return state;

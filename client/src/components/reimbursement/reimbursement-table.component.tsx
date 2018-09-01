@@ -39,7 +39,7 @@ class ReimbursementTableComponent extends React.Component<any, {}> {
                         })}
                     </tbody>
                 </table>
-                <PaginationComponent activePage={1} totalItemsCount={this.props.renderedReimbursements.length} updateActivePage={() => { console.log("Page updated from reimbursement table") }} />
+                <PaginationComponent activePage={this.props.activePage} totalItemsCount={this.props.renderedReimbursements.length} updateActivePage={(page: number) => this.props.updateActivePage(page)} />
             </div>
         );
     }
@@ -49,7 +49,8 @@ const mapStateToProps = (state: IState) => state.reimbursementTable
 
 const mapDispatchToProps = {
     fetchReimbursements: reimbursementTableActions.fetchReimbursements,
-    filterReimbursements: reimbursementTableActions.filterReimbursements
+    filterReimbursements: reimbursementTableActions.filterReimbursements,
+    updateActivePage: reimbursementTableActions.updateActivePage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReimbursementTableComponent);
