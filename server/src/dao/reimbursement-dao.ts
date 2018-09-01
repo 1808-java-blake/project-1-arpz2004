@@ -19,8 +19,6 @@ export async function findAll(): Promise<Reimbursement[]> {
                 LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`);
         const reimbursements: Reimbursement[] = [];
         resp.rows.forEach((reimbursementResult) => {
-            console.log(`TESTING @@@@@@@@@@@@@@@@@@@@ id: ${reimbursementResult.reimbursementId}`);
-            console.log(reimbursementResult);
             const reimbursement = reimbursementConverter(reimbursementResult);
             reimbursement.author = userConverter(reimbursementResult);
             Object.keys(reimbursementResult).forEach((key) => {
