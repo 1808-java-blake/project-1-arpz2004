@@ -3,9 +3,11 @@ import { reimbursementTableTypes } from "../actions/reimbursement/reimbursement-
 
 const initialState: IReimbursementTableState = {
     activePage: 1,
+    filteredReimbursements: [],
     itemsCountPerPage: 10,
     reimbursements: [],
     renderedReimbursements: [],
+    statusFilter: ["Pending", "Approved", "Denied"]
 }
 
 export const reimbursementTableReducer = (state = initialState, action: any) => {
@@ -15,13 +17,16 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
             const endIndex = startIndex + state.itemsCountPerPage;
             return {
                 ...state,
+                filteredReimbursements: action.payload.reimbursements,
                 reimbursements: action.payload.reimbursements,
-                renderedReimbursements: action.payload.reimbursements.slice(startIndex, endIndex)
+                renderedReimbursements: action.payload.reimbursements.slice(startIndex, endIndex),
             }
         case reimbursementTableTypes.FILTER_REIMBURSEMENTS:
             return {
                 ...state,
-                renderedReimbursements: action.payload.renderedReimbursements
+                filteredReimbursements: action.payload.filteredReimbursements,
+                renderedReimbursements: action.payload.renderedReimbursements,
+                statusFilter: action.payload.statusFilter
             }
         case reimbursementTableTypes.UPDATE_ACTIVE_PAGE:
             return {

@@ -10,6 +10,7 @@ import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
+    filterReimbursements: (filteredReimbursements: Reimbursement[], renderedReimbursements: Reimbursement[], statusFilter: string[]) => void
     updateActivePage: (page: number, renderedReimbursements: Reimbursement[]) => void
 }
 
@@ -23,14 +24,26 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         this.props.fetchReimbursements();
     }
 
+    public filterByStatus = (statusArray: string[]) => {
+        const pageNumber = this.props.activePage;
+        const countPerPage = this.props.itemsCountPerPage
+        const startIndex = (pageNumber - 1) * countPerPage;
+        const endIndex = startIndex + countPerPage;
+        const filteredReimbursements = this.props.reimbursements.filter(reimbursement => {
+            return statusArray.indexOf(reimbursement.status) >= 0;
+        });
+        const renderedReimbursements = filteredReimbursements.slice(startIndex, endIndex);
+        this.props.filterReimbursements(filteredReimbursements, renderedReimbursements, statusArray);
+    }
+
     public render() {
         return (
             <div className="container">
                 <ButtonToolbar>
-                    <ToggleButtonGroup type="checkbox" defaultValue={[1, 3]}>
-                        <ToggleButton value={1}>Pending</ToggleButton>
-                        <ToggleButton value={2}>Approved</ToggleButton>
-                        <ToggleButton value={3}>Denied</ToggleButton>
+                    <ToggleButtonGroup onChange={this.filterByStatus} type="checkbox" defaultValue={this.props.statusFilter}>
+                        <ToggleButton bsStyle={"warning"} value={"Pending"}>Pending</ToggleButton>
+                        <ToggleButton bsStyle={"success"} value={"Approved"}>Approved</ToggleButton>
+                        <ToggleButton bsStyle={"danger"} value={"Denied"}>Denied</ToggleButton>
                     </ToggleButtonGroup>
                 </ButtonToolbar>
                 <table className="table">
@@ -53,15 +66,15 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         })}
                     </tbody>
                 </table>
-                <PaginationComponent activePage={this.props.activePage} itemsCountPerPage={this.props.itemsCountPerPage} totalItemsCount={this.props.reimbursements.length} updateActivePage={(page: number) => this.renderPage(page, this.props.itemsCountPerPage, this.props.reimbursements)} />
+                <PaginationComponent activePage={this.props.activePage} itemsCountPerPage={this.props.itemsCountPerPage} totalItemsCount={this.props.filteredReimbursements.length} updateActivePage={(page: number) => this.renderPage(page, this.props.itemsCountPerPage, this.props.filteredReimbursements)} />
             </div>
         );
     }
 
-    private renderPage = (pageNumber: number, countPerPage: number, reimbursements: Reimbursement[]) => {
+    private renderPage = (pageNumber: number, countPerPage: number, filteredReimbursements: Reimbursement[]) => {
         const startIndex = (pageNumber - 1) * countPerPage;
         const endIndex = startIndex + countPerPage;
-        this.props.updateActivePage(pageNumber, reimbursements.slice(startIndex, endIndex));
+        this.props.updateActivePage(pageNumber, filteredReimbursements.slice(startIndex, endIndex));
     }
 }
 

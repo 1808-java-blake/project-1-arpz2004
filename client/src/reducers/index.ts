@@ -13,9 +13,11 @@ export interface ISignInState {
 
 export interface IReimbursementTableState {
   reimbursements: Reimbursement[]
+  filteredReimbursements: Reimbursement[]
   renderedReimbursements: Reimbursement[]
   activePage: number
   itemsCountPerPage: number
+  statusFilter: string[]
 }
 
 export interface IState {

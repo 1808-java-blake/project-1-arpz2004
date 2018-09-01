@@ -22,10 +22,12 @@ export const fetchReimbursements = () => (dispatch: any) => {
     });
 }
 
-export const filterReimbursements = (renderedReimbursements: Reimbursement[]) => (dispatch: any) => {
+export const filterReimbursements = (filteredReimbursements: Reimbursement[], renderedReimbursements: Reimbursement[], statusFilter: string[]) => (dispatch: any) => {
   dispatch({
     payload: {
-      renderedReimbursements
+      filteredReimbursements,
+      renderedReimbursements,
+      statusFilter
     },
     type: reimbursementTableTypes.FILTER_REIMBURSEMENTS
   })
