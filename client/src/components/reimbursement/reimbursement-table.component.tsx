@@ -10,7 +10,7 @@ import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
-    filterReimbursements: (filteredReimbursements: Reimbursement[], renderedReimbursements: Reimbursement[], statusFilter: string[]) => void
+    filterReimbursements: (filteredReimbursements: Reimbursement[], statusFilter: string[]) => void
     updateActivePage: () => void
 }
 
@@ -24,16 +24,20 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         this.props.fetchReimbursements();
     }
 
+    public componentDidUpdate(prevProps: IProps) {
+        if(this.props.reimbursements !== prevProps.reimbursements) {
+            this.filterByStatus(this.props.statusFilter);
+        }
+        if (this.props.filteredReimbursements !== prevProps.filteredReimbursements) {
+            this.props.updateActivePage();
+        }
+    }
+
     public filterByStatus = (statusArray: string[]) => {
-        const pageNumber = this.props.activePage;
-        const countPerPage = this.props.itemsCountPerPage
-        const startIndex = (pageNumber - 1) * countPerPage;
-        const endIndex = startIndex + countPerPage;
         const filteredReimbursements = this.props.reimbursements.filter(reimbursement => {
             return statusArray.indexOf(reimbursement.status) >= 0;
         });
-        const renderedReimbursements = filteredReimbursements.slice(startIndex, endIndex);
-        this.props.filterReimbursements(filteredReimbursements, renderedReimbursements, statusArray);
+        this.props.filterReimbursements(filteredReimbursements, statusArray);
     }
 
     public render() {
