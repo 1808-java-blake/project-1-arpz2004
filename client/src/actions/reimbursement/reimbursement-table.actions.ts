@@ -31,10 +31,11 @@ export const filterReimbursements = (renderedReimbursements: Reimbursement[]) =>
   })
 }
 
-export const updateActivePage = (activePage: number) => (dispatch: any) => {
+export const updateActivePage = (activePage: number, renderedReimbursements: Reimbursement[]) => (dispatch: any) => {
   dispatch({
     payload: {
-      activePage
+      activePage,
+      renderedReimbursements
     },
     type: reimbursementTableTypes.UPDATE_ACTIVE_PAGE
   })

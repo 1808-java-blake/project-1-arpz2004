@@ -3,10 +3,16 @@ import { PaginationComponent } from '../pagination/pagination.component';
 import { Reimbursement } from '../../model/Reimbursement';
 import { ReimbursementComponent } from './reimbursement.component';
 import * as reimbursementTableActions from '../../actions/reimbursement/reimbursement-table.actions'
-import { IState } from '../../reducers';
+import { IState, IReimbursementTableState } from '../../reducers';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 
-class ReimbursementTableComponent extends React.Component<any, {}> {
+interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
+    fetchReimbursements: () => void,
+    updateActivePage: (page: number, renderedReimbursements: Reimbursement[]) => void
+}
+
+class ReimbursementTableComponent extends React.Component<IProps, {}> {
 
     constructor(props: any) {
         super(props);
@@ -39,9 +45,15 @@ class ReimbursementTableComponent extends React.Component<any, {}> {
                         })}
                     </tbody>
                 </table>
-                <PaginationComponent activePage={this.props.activePage} totalItemsCount={this.props.renderedReimbursements.length} updateActivePage={(page: number) => this.props.updateActivePage(page)} />
+                <PaginationComponent activePage={this.props.activePage} itemsCountPerPage={this.props.itemsCountPerPage} totalItemsCount={this.props.reimbursements.length} updateActivePage={(page: number) => this.renderPage(page, this.props.itemsCountPerPage, this.props.reimbursements)} />
             </div>
         );
+    }
+
+    private renderPage = (pageNumber: number, countPerPage: number, reimbursements: Reimbursement[]) => {
+        const startIndex = (pageNumber - 1) * countPerPage;
+        const endIndex = startIndex + countPerPage;
+        this.props.updateActivePage(pageNumber, reimbursements.slice(startIndex, endIndex));
     }
 }
 

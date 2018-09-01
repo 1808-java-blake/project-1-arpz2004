@@ -5,15 +5,16 @@ interface IProps {
   updateActivePage: (activePage: number) => void
   activePage: number
   totalItemsCount: number
+  itemsCountPerPage: number
 }
 
 export const PaginationComponent: React.StatelessComponent<IProps> = (props) => {
-  const { activePage, totalItemsCount, updateActivePage } = props;
+  const { activePage, totalItemsCount, updateActivePage, itemsCountPerPage } = props;
   return (
     <div>
       <Pagination
         activePage={activePage}
-        itemsCountPerPage={2}
+        itemsCountPerPage={itemsCountPerPage}
         totalItemsCount={totalItemsCount}
         pageRangeDisplayed={5}
         onChange={updateActivePage}

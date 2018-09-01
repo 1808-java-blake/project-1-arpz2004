@@ -15,6 +15,7 @@ export interface IReimbursementTableState {
   reimbursements: Reimbursement[]
   renderedReimbursements: Reimbursement[]
   activePage: number
+  itemsCountPerPage: number
 }
 
 export interface IState {
