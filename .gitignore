@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io/api/java,maven,eclipse
 
 */node_modules
-src/**/*.css
+client/src/**/*.css
 
 ### Eclipse ###
 

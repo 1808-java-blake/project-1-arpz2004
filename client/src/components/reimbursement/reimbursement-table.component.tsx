@@ -6,6 +6,7 @@ import * as reimbursementTableActions from '../../actions/reimbursement/reimburs
 import { IState, IReimbursementTableState } from '../../reducers';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
@@ -25,6 +26,13 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     public render() {
         return (
             <div className="container">
+                <ButtonToolbar>
+                    <ToggleButtonGroup type="checkbox" defaultValue={[1, 3]}>
+                        <ToggleButton value={1}>Pending</ToggleButton>
+                        <ToggleButton value={2}>Approved</ToggleButton>
+                        <ToggleButton value={3}>Denied</ToggleButton>
+                    </ToggleButtonGroup>
+                </ButtonToolbar>
                 <table className="table">
                     <thead>
                         <tr>
