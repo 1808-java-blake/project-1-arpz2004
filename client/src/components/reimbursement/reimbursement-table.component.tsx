@@ -25,6 +25,21 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     public render() {
         return (
             <div className="container">
+                <div className="col-xs-6">
+                    <h3 className="text-center">Colorful Example</h3>
+                    <div className="well" id="reimbursement-status">
+                        <ul id="check-list-box" className="list-group checked-list-box">
+                            <li className="list-group-item">Cras justo odio</li>
+                            <li className="list-group-item" data-color="success">Dapibus ac facilisis in</li>
+                            <li className="list-group-item" data-color="info">Morbi leo risus</li>
+                            <li className="list-group-item" data-color="warning">Porta ac consectetur ac</li>
+                            <li className="list-group-item" data-color="danger">Vestibulum at eros</li>
+                        </ul>
+                        <br />
+                        <button className="btn btn-primary col-xs-12" id="get-checked-data">Get Checked Data</button>
+                    </div>
+                    <pre id="display-json"></pre>
+                </div>
                 <table className="table">
                     <thead>
                         <tr>
