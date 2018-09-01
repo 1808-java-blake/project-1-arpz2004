@@ -16,17 +16,11 @@ class App extends React.Component {
           <div>
             <AppNav />
             <div id="main-content-container">
-              <div className="container">
-                <div className="row">
-                  <div className="col">
-                    <Switch>
-                      <Route path="/reimbursements" component={ReimbursementTableComponent} />
-                      <Route path="/sign-in" component={SignInComponent} />
-                      <Route component={SignInComponent} />
-                    </Switch>
-                  </div>
-                </div>
-              </div>
+              <Switch>
+                <Route path="/reimbursements" component={ReimbursementTableComponent} />
+                <Route path="/sign-in" component={SignInComponent} />
+                <Route component={SignInComponent} />
+              </Switch>
             </div>
           </div>
         </BrowserRouter>

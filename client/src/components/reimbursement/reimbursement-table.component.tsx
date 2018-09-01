@@ -18,7 +18,7 @@ class ReimbursementTableComponent extends React.Component<any, {}> {
 
     public render() {
         return (
-            <div>
+            <div className="container">
                 <table className="table">
                     <thead>
                         <tr>
