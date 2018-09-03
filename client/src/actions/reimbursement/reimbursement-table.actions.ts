@@ -33,6 +33,10 @@ export const filterReimbursements = (filteredReimbursements: Reimbursement[], st
 }
 
 export const updateActivePage = (activePage: number, filteredReimbursements: Reimbursement[], itemsCountPerPage: number) => (dispatch: any) => {
+  const maxPage = Math.ceil(filteredReimbursements.length / itemsCountPerPage);
+  if(activePage >= maxPage && maxPage > 0){
+    activePage = maxPage;
+  }
   const startIndex = (activePage - 1) * itemsCountPerPage;
   const endIndex = startIndex + itemsCountPerPage;
   const renderedReimbursements = filteredReimbursements.slice(startIndex, endIndex)
