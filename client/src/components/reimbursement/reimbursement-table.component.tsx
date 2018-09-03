@@ -10,8 +10,8 @@ import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
-    filterReimbursements: (filteredReimbursements: Reimbursement[], statusFilter: string[]) => void
-    updateActivePage: () => void
+    filterReimbursements: (reimbursements: Reimbursement[], statusFilter: string[]) => void
+    updateActivePage: (activePage: number, filteredReimbursements: Reimbursement[], itemsCountPerPage: number) => void
 }
 
 class ReimbursementTableComponent extends React.Component<IProps, {}> {
@@ -25,11 +25,11 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     }
 
     public componentDidUpdate(prevProps: IProps) {
-        if(this.props.reimbursements !== prevProps.reimbursements) {
+        if (this.props.reimbursements !== prevProps.reimbursements) {
             this.filterByStatus(this.props.statusFilter);
         }
         if (this.props.filteredReimbursements !== prevProps.filteredReimbursements) {
-            this.props.updateActivePage();
+            this.props.updateActivePage(this.props.activePage, this.props.filteredReimbursements, this.props.itemsCountPerPage);
         }
     }
 
@@ -70,7 +70,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         })}
                     </tbody>
                 </table>
-                <PaginationComponent activePage={this.props.activePage} itemsCountPerPage={this.props.itemsCountPerPage} totalItemsCount={this.props.filteredReimbursements.length} updateActivePage={this.props.updateActivePage} />
+                <PaginationComponent activePage={this.props.activePage} itemsCountPerPage={this.props.itemsCountPerPage} totalItemsCount={this.props.filteredReimbursements.length} updateActivePage={(page: number) => this.props.updateActivePage(page, this.props.filteredReimbursements, this.props.itemsCountPerPage)} />
             </div>
         );
     }
