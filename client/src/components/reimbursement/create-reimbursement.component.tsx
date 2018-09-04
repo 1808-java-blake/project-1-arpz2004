@@ -46,17 +46,6 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
         console.log(err);
       });
   }
-  public amountChange = (e: any) => {
-    this.props.updateAmount(e.target.value);
-  }
-
-  public descriptionChange = (e: any) => {
-    this.props.updateDescription(e.target.value);
-  }
-
-  public typeChange = (e: any) => {
-    this.props.updateType(e.target.value);
-  }
 
   public render() {
     const { errorMessage, reimbursement } = this.props;
@@ -84,7 +73,7 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
 
         <label htmlFor="inputDescription" className="sr-only">Description</label>
         <textarea
-          onChange={this.descriptionChange}
+          onChange={(e: any) => this.props.updateDescription(e.target.value)}
           value={reimbursement.description}
           maxLength={250}
           id="inputDescription"
@@ -98,7 +87,7 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
             className="form-control"
             id="inputType"
             value={reimbursement.type}
-            onChange={this.typeChange}>
+            onChange={(e: any) => this.props.updateType(e.target.value)}>
             <option>Lodging</option>
             <option>Travel</option>
             <option>Food</option>

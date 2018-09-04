@@ -17,29 +17,15 @@ class SignInComponent extends React.Component<IProps, {}> {
     super(props);
   }
 
-  public submit = (e: React.FormEvent<HTMLFormElement>) => {
-    this.props.login(e, this.props.credentials);
-  }
-
-  public passwordChange = (e: any) => {
-    this.props.updatePassword(e.target.value);
-  }
-
-  public usernameChange = (e: any) => {
-    this.props.updateUsername(e.target.value);
-  }
-
-
   public render() {
     const { errorMessage, credentials } = this.props;
-
     return (
-      <form className="form-signin" onSubmit={this.submit}>
+      <form className="form-signin" onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
 
         <label htmlFor="inputUsername" className="sr-only">Username</label>
         <input
-          onChange={this.usernameChange}
+          onChange={(e: any) => this.props.updateUsername(e.target.value)}
           value={credentials.username}
           type="text"
           id="inputUsername"
@@ -49,7 +35,7 @@ class SignInComponent extends React.Component<IProps, {}> {
 
         <label htmlFor="inputPassword" className="sr-only">Password</label>
         <input
-          onChange={this.passwordChange}
+          onChange={(e: any) => this.props.updatePassword(e.target.value)}
           value={credentials.password}
           type="password"
           id="inputPassword"
