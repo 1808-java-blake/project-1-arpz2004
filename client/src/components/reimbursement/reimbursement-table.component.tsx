@@ -21,6 +21,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     }
 
     public componentDidMount = () => {
+        console.log(localStorage.getItem('currentUser'))
         this.props.fetchReimbursements();
     }
 

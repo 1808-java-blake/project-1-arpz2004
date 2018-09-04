@@ -8,7 +8,7 @@ interface IProps extends RouteComponentProps<{}>, ISignInState {
   updateError: (message: string) => void
   updatePassword: (password: string) => void,
   updateUsername: (username: string) => void,
-  submit: (credentials: any) => void
+  login: (e: React.FormEvent<HTMLFormElement>, credentials: any) => void
 }
 
 class SignInComponent extends React.Component<IProps, {}> {
@@ -17,36 +17,10 @@ class SignInComponent extends React.Component<IProps, {}> {
     super(props);
   }
 
-
   public submit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    fetch('http://localhost:9001/users/login', {
-      body: JSON.stringify(this.props.credentials),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-      .then(resp => {
-        console.log(resp.status)
-        if (resp.status === 401) {
-          this.props.updateError('Invalid Credentials');
-        } else if (resp.status === 200) {
-          this.props.updateError('');
-          return resp.json();
-        } else {
-          this.props.updateError('Failed to Login at this time');
-        }
-        throw new Error('Failed to login');
-      })
-      .then(resp => {
-        this.props.history.push('/reimbursements');
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.props.login(e, this.props.credentials);
   }
+
   public passwordChange = (e: any) => {
     this.props.updatePassword(e.target.value);
   }
@@ -92,9 +66,10 @@ class SignInComponent extends React.Component<IProps, {}> {
 
 const mapStateToProps = (state: IState) => (state.signIn);
 const mapDispatchToProps = {
+  login: signInActions.login,
   updateError: signInActions.updateError,
   updatePassword: signInActions.updatePassword,
-  updateUsername: signInActions.updateUsername,
+  updateUsername: signInActions.updateUsername
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInComponent);

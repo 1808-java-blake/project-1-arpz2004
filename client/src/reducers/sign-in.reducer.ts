@@ -2,7 +2,7 @@ import { signInTypes } from "../actions/sign-in/sign-in.types";
 import { ISignInState } from ".";
 
 const initialState: ISignInState = {
-  credentials : {
+  credentials: {
     password: '',
     username: ''
   },
@@ -32,7 +32,11 @@ export const signInReducer = (state = initialState, action: any) => {
           username: action.payload.username
         }
       }
+    case signInTypes.LOGIN:
+      return {
+        ...state,
+        errorMessage: action.payload.errorMessage
+      }
   }
-
   return state;
 }
