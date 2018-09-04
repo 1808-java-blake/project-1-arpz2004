@@ -74,12 +74,12 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
             thousandSeparator={true}
             allowNegative={false}
             isNumericString={true}
-            onChange={this.amountChange}
+            onValueChange={(values) => this.props.updateAmount(values.formattedValue)}
             value={reimbursement.amount}
             id="inputAmount"
             className="form-control"
             placeholder="Amount"
-            isAllowed={(val) => +val.value <= 999999.99}
+            isAllowed={(val) => +val.value <= 999999.99 && val.value.length <= 9}
             required />
         </div>
 
