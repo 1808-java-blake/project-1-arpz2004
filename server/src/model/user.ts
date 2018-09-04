@@ -5,7 +5,7 @@ export class User {
     public firstName: string;
     public lastName: string;
     public email: string;
-    public role: UserRole;
+    public role: string;
 
     constructor(userId?: number, username?: string, password?: string, firstName?: string, lastName?: string, email?: string, role?: string) {
         userId && (this.userId = userId);
@@ -14,11 +14,6 @@ export class User {
         firstName && (this.firstName = firstName);
         lastName && (this.lastName = lastName);
         email && (this.email = email);
-        role && (this.role = UserRole[role]);
+        role && (this.role = role);
     }
-}
-
-enum UserRole {
-    Employee,
-    Manager
 }
