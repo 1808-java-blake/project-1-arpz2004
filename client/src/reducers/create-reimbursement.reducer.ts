@@ -49,7 +49,11 @@ export const createReimbursementReducer = (state = initialState, action: any) =>
           type: action.payload.type
         }
       }
+    case createReimbursementTypes.CREATE_REIMBURSEMENT:
+      return {
+        ...state,
+        errorMessage: action.payload.errorMessage
+      }
   }
-
   return state;
 }
