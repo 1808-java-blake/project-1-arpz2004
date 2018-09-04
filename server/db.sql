@@ -38,7 +38,7 @@ CREATE TABLE reimbursement_type
 CREATE TABLE reimbursement
 (
     reimbursement_id SERIAL NOT NULL,
-    amount INTEGER NOT NULL,
+    amount NUMERIC(6,2) NOT NULL,
     submitted TIMESTAMP NOT NULL,
     resolved TIMESTAMP,
     description VARCHAR(250),
