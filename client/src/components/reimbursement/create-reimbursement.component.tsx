@@ -69,25 +69,29 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
         <input
           onChange={this.amountChange}
           value={reimbursement.amount}
-          type="text"
+          type="number"
           id="inputAmount"
           className="form-control"
           placeholder="Amount"
           required />
 
         <label htmlFor="inputDescription" className="sr-only">Description</label>
-        <input
+        <textarea
           onChange={this.descriptionChange}
           value={reimbursement.description}
-          type="text"
+          maxLength={250}
           id="inputDescription"
           className="form-control"
           placeholder="Description"
           required />
 
         <div className="form-group">
-          <label htmlFor="reimbursement-type">Type:</label>
-          <select className="form-control" id="reimbursement-type">
+          <label htmlFor="inputType">Type:</label>
+          <select
+            className="form-control"
+            id="inputType"
+            value={reimbursement.type}
+            onChange={this.typeChange}>
             <option>Lodging</option>
             <option>Travel</option>
             <option>Food</option>

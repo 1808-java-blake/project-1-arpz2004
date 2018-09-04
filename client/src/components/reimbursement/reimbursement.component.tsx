@@ -22,8 +22,8 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
   );
 }
 
-const formatTime = (datetime: string) => {
-  const time = new Date(datetime);
+const formatTime = (time: Date) => {
+  time = new Date(time)
   let h = time.getHours();
   const amPm = h < 12 ? 'AM' : 'PM';
   h = h > 12 ? h - 12 : h;

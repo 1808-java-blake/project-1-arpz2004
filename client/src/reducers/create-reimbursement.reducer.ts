@@ -9,10 +9,10 @@ const initialState: ICreateReimbursementState = {
     author: new User,
     description: '',
     reimbursementId: 0,
-    resolved: '',
+    resolved: new Date(),
     resolver: new User,
     status: '',
-    submitted: '',
+    submitted: new Date(),
     type: ''
   }
 }
