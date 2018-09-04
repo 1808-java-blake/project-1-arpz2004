@@ -11,7 +11,7 @@ interface IProps extends RouteComponentProps<{}>, ICreateReimbursementState {
   updateAmount: (amount: string) => void,
   updateDescription: (description: string) => void,
   updateType: (type: string) => void,
-  submit: (reimbursement: Reimbursement) => void
+  createReimbursement: (e: React.FormEvent<HTMLFormElement>, reimbursement: Reimbursement) => void
 }
 
 class CreateReimbursementComponent extends React.Component<IProps, {}> {
@@ -20,38 +20,11 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
     super(props);
   }
 
-
-  public submit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    fetch('http://localhost:9001/reimbursements', {
-      body: JSON.stringify(this.props.reimbursement),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-      .then(resp => {
-        if (resp.status === 200) {
-          this.props.updateError('');
-          return resp.json();
-        } else {
-          this.props.updateError('Failed submitting reimbursement request');
-        }
-        throw new Error('Failed creating reimbursement request');
-      })
-      .then(resp => {
-        this.props.history.push('/reimbursements');
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   public render() {
     const { errorMessage, reimbursement } = this.props;
 
     return (
-      <form onSubmit={this.submit}>
+      <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => (this.props.createReimbursement(e, this.props.reimbursement))}>
         <h1 className="h3 mb-3 font-weight-normal">Enter reimbursement details</h1>
         <div className="input-group mb-3">
           <label htmlFor="inputAmount" className="sr-only">Amount</label>
@@ -104,6 +77,7 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
 
 const mapStateToProps = (state: IState) => (state.createReimbursement);
 const mapDispatchToProps = {
+  createReimbursement: createReimbursementActions.createReimbursement,
   updateAmount: createReimbursementActions.updateAmount,
   updateDescription: createReimbursementActions.updateDescription,
   updateError: createReimbursementActions.updateError,
