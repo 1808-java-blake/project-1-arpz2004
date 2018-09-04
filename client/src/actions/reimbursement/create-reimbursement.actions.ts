@@ -1,6 +1,7 @@
 import { createReimbursementTypes } from "./create-reimbursement.types";
 import { Reimbursement } from "../../model/Reimbursement";
 import history from '../../history'
+import { User } from "../../model/User";
 
 export const updateError = (error: string) => {
   return {
@@ -40,35 +41,49 @@ export const updateType = (type: string) => {
     type: createReimbursementTypes.UPDATE_TYPE
   }
 }
-export const createReimbursement = (e: React.FormEvent<HTMLFormElement>, reimbursement: Reimbursement) => {
-  let errorMessage = '';
+export const createReimbursement = (e: React.FormEvent<HTMLFormElement>, reimbursement: Reimbursement) => (dispatch: any) => {
   e.preventDefault();
-  fetch('http://localhost:9001/reimbursements', {
-    body: JSON.stringify(reimbursement),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-  })
-    .then(resp => {
-      if (resp.status === 200) {
-        errorMessage = '';
-        return resp.json();
-      } else {
-        errorMessage = 'Failed submitting reimbursement request';
-      }
-      throw new Error('Failed creating reimbursement request');
+  const currentUser = localStorage.getItem('currentUser');
+  if (currentUser) {
+    reimbursement = new Reimbursement({ ...reimbursement, author: new User(JSON.parse(currentUser)) });
+    fetch('http://localhost:9001/reimbursements', {
+      body: JSON.stringify(reimbursement),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
     })
-    .then(resp => {
-      history.push('/reimbursements');
-    })
-    .catch(err => {
-      console.log(err);
+      .then(resp => {
+        if (resp.status === 200) {
+          dispatch({
+            payload: {
+              errorMessage: ''
+            },
+            type: createReimbursementTypes.CREATE_REIMBURSEMENT
+          });
+          return resp.json();
+        } else {
+          dispatch({
+            payload: {
+              errorMessage: 'Failed submitting reimbursement request. Please try again.'
+            },
+            type: createReimbursementTypes.CREATE_REIMBURSEMENT
+          });
+          throw new Error('Failed creating reimbursement request');
+        }
+      })
+      .then(resp => {
+        history.push('/reimbursements');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  } else {
+    dispatch({
+      payload: {
+        errorMessage: 'You must be signed in to submit a reimbursement request.'
+      },
+      type: createReimbursementTypes.CREATE_REIMBURSEMENT
     });
-  return {
-    payload: {
-      errorMessage
-    },
-    type: createReimbursementTypes.CREATE_REIMBURSEMENT
-  };
+  }
 }

@@ -28,8 +28,7 @@ export const updateError = (errorMessage: string) => {
   }
 }
 
-export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => {
-  let errorMessage = '';
+export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => (dispatch: any) => {
   e.preventDefault();
   fetch('http://localhost:9001/users/login', {
     body: JSON.stringify(credentials),
@@ -41,12 +40,27 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
   })
     .then(resp => {
       if (resp.status === 401) {
-        errorMessage = 'Invalid Credentials';
+        dispatch({
+          payload: {
+            errorMessage: 'Invalid Credentials'
+          },
+          type: signInTypes.LOGIN
+        });
       } else if (resp.status === 200) {
-        errorMessage = '';
+        dispatch({
+          payload: {
+            errorMessage: ''
+          },
+          type: signInTypes.LOGIN
+        });
         return resp.json();
       } else {
-        errorMessage = 'Failed to login at this time';
+        dispatch({
+          payload: {
+            errorMessage: 'Failed to login at this time'
+          },
+          type: signInTypes.LOGIN
+        });
       }
       throw new Error('Failed to login');
     })
@@ -57,10 +71,4 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
     .catch(err => {
       console.log(err);
     });
-  return {
-    payload: {
-      errorMessage
-    },
-    type: signInTypes.LOGIN
-  };
 }

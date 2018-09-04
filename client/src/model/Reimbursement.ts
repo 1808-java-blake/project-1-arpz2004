@@ -4,10 +4,10 @@ export class Reimbursement {
   public reimbursementId: number
   public amount: number
   public submitted: Date
-  public resolved: Date
+  public resolved: Date | null
   public description: string
   public author: User
-  public resolver: User
+  public resolver: User | null
   public status: string
   public type: string
 

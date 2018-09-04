@@ -15,7 +15,7 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
       <td>{reimbursement.resolved && formatTime(reimbursement.resolved)}</td>
       <td>{reimbursement.description}</td>
       <td>{reimbursement.author.username}</td>
-      <td>{reimbursement.resolver.username}</td>
+      <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
       <td>{reimbursement.status}</td>
       <td>{reimbursement.type}</td>
     </tr>
