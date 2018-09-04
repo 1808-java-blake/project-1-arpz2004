@@ -41,6 +41,8 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     }
 
     public render() {
+        const filteredReimbursements = this.props.filteredReimbursements;
+        const numberOfFilteredReimbursements = filteredReimbursements.length;
         return (
             <div className="container">
                 <ButtonToolbar>
@@ -70,7 +72,11 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         })}
                     </tbody>
                 </table>
-                <PaginationComponent activePage={this.props.activePage} itemsCountPerPage={this.props.itemsCountPerPage} totalItemsCount={this.props.filteredReimbursements.length} updateActivePage={(page: number) => this.props.updateActivePage(page, this.props.filteredReimbursements, this.props.itemsCountPerPage)} />
+                <PaginationComponent
+                    activePage={this.props.activePage}
+                    itemsCountPerPage={this.props.itemsCountPerPage}
+                    totalItemsCount={numberOfFilteredReimbursements ? numberOfFilteredReimbursements : 1}
+                    updateActivePage={(page: number) => this.props.updateActivePage(page, filteredReimbursements, this.props.itemsCountPerPage)} />
             </div>
         );
     }

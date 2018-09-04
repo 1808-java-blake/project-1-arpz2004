@@ -51,7 +51,7 @@ export const updateActivePage = (activePage: number, filteredReimbursements: Rei
   }
   const startIndex = (activePage - 1) * itemsCountPerPage;
   const endIndex = startIndex + itemsCountPerPage;
-  const renderedReimbursements = filteredReimbursements.slice(startIndex, endIndex)
+  const renderedReimbursements = filteredReimbursements.slice(startIndex, endIndex);
   dispatch({
     payload: {
       activePage,
