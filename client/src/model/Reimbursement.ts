@@ -10,4 +10,8 @@ export class Reimbursement {
   public resolver: User
   public status: string
   public type: string
+
+  public constructor(init?: Partial<Reimbursement>) {
+    Object.assign(this, init);
+  }
 }
