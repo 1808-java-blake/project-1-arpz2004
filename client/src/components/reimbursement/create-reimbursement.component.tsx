@@ -36,7 +36,7 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
             allowNegative={false}
             isNumericString={true}
             onValueChange={(values) => this.props.updateAmount(values.formattedValue)}
-            value={reimbursement.amount}
+            value={reimbursement.amount === 0 ? '' : reimbursement.amount}
             id="inputAmount"
             className="form-control"
             placeholder="Amount"
