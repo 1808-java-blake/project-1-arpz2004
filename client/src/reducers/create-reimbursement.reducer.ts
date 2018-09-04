@@ -13,7 +13,7 @@ const initialState: ICreateReimbursementState = {
     resolver: null,
     status: 'Pending',
     submitted: new Date,
-    type: ''
+    type: 'Lodging'
   }
 }
 

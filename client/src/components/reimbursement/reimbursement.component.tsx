@@ -10,7 +10,7 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
   return (
     <tr>
       <th scope="row">{reimbursement.reimbursementId}</th>
-      <td>{reimbursement.amount}</td>
+      <td>${reimbursement.amount}</td>
       <td>{formatTime(reimbursement.submitted)}</td>
       <td>{reimbursement.resolved && formatTime(reimbursement.resolved)}</td>
       <td>{reimbursement.description}</td>
@@ -37,5 +37,5 @@ const formatTime = (time: Date) => {
   const mm = month < 10 ? `0${month}` : month;
   const day = time.getDay();
   const dd = day < 10 ? `0${day}` : day;
-  return `${yyyy}-${mm}-${dd} ${h}:${m}:${s} ${amPm}`;
+  return <div>{yyyy}-{mm}-{dd}<br />{h}:{m}:{s} {amPm}</div>;
 }
