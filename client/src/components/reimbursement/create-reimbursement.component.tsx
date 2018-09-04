@@ -31,7 +31,6 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
       method: 'POST',
     })
       .then(resp => {
-        console.log(resp.status)
         if (resp.status === 200) {
           this.props.updateError('');
           return resp.json();
