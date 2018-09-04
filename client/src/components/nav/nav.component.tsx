@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import * as RevLogo from '../../assets/rev-logo.png';
+import RevLogo from '../../assets/rev-logo.png';
 
 export const AppNav: React.StatelessComponent<any> = (props) => {
   return (
