@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 
 export const connectionPool = new Pool({
   database: 'postgres',
-  host: process.env["MOVIE_DB_HOST"],
+  host: process.env["MOVIE_DB_URL"] || 'localhost',
   max: 2,
   password: process.env["MOVIE_DB_PASSWORD"],
   port: 5432,
