@@ -2,12 +2,15 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { ISignInState, IState } from '../../reducers';
 import * as signInActions from '../../actions/sign-in/sign-in.actions';
+import * as currentUserActions from '../../actions/current-user/current-user.actions';
 import { connect } from 'react-redux';
+import { User } from '../../model/User';
 
 interface IProps extends RouteComponentProps<{}>, ISignInState {
+  updateCurrentUser: (currentUser: User | null) => void
   updateError: (message: string) => void
-  updatePassword: (password: string) => void,
-  updateUsername: (username: string) => void,
+  updatePassword: (password: string) => void
+  updateUsername: (username: string) => void
   login: (e: React.FormEvent<HTMLFormElement>, credentials: any) => void
 }
 
@@ -15,6 +18,12 @@ class SignInComponent extends React.Component<IProps, {}> {
 
   constructor(props: any) {
     super(props);
+  }
+
+  public componentDidUpdate = (prevProps: any) => {
+    if (this.props.currentUser !== prevProps.currentUser) {
+      this.props.updateCurrentUser(this.props.currentUser);
+    }
   }
 
   public render() {
@@ -53,6 +62,7 @@ class SignInComponent extends React.Component<IProps, {}> {
 const mapStateToProps = (state: IState) => (state.signIn);
 const mapDispatchToProps = {
   login: signInActions.login,
+  updateCurrentUser: currentUserActions.updateCurrentUser,
   updateError: signInActions.updateError,
   updatePassword: signInActions.updatePassword,
   updateUsername: signInActions.updateUsername

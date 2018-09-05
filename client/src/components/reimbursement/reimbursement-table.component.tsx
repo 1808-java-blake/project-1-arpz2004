@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { Reimbursement } from '../../model/Reimbursement';
-import { ReimbursementComponent } from './reimbursement.component';
-import * as reimbursementTableActions from '../../actions/reimbursement/reimbursement-table.actions'
-import { IState, IReimbursementTableState } from '../../reducers';
+import { ButtonToolbar, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import * as reimbursementTableActions from '../../actions/reimbursement/reimbursement-table.actions';
+import { Reimbursement } from '../../model/Reimbursement';
+import { IReimbursementTableState, IState } from '../../reducers';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { ReimbursementComponent } from './reimbursement.component';
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
@@ -43,6 +43,12 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     public render() {
         const filteredReimbursements = this.props.filteredReimbursements;
         const numberOfFilteredReimbursements = filteredReimbursements.length;
+        const currentUserJson = localStorage.getItem('currentUser');
+        let currentUser: any = null;
+        if (currentUserJson) {
+            currentUser = JSON.parse(currentUserJson);
+        }
+        const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Approve/Deny Request</th> : null;
         return (
             <div className="container">
                 <ButtonToolbar>
@@ -64,6 +70,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                             <th scope="col">Resolver</th>
                             <th scope="col">Status</th>
                             <th scope="col">Type</th>
+                            {managerColumn}
                         </tr>
                     </thead>
                     <tbody>

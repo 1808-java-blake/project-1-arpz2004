@@ -6,6 +6,7 @@ const initialState: ISignInState = {
     password: '',
     username: ''
   },
+  currentUser: null,
   errorMessage: ''
 }
 
@@ -35,6 +36,7 @@ export const signInReducer = (state = initialState, action: any) => {
     case signInTypes.LOGIN:
       return {
         ...state,
+        currentUser: action.payload.currentUser,
         errorMessage: action.payload.errorMessage
       }
   }

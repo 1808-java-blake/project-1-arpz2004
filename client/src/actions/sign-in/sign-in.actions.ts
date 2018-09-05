@@ -1,5 +1,5 @@
+import history from '../../history';
 import { signInTypes } from "./sign-in.types";
-import history from '../../history'
 
 export const updatePassword = (password: string) => {
   return {
@@ -47,12 +47,6 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
           type: signInTypes.LOGIN
         });
       } else if (resp.status === 200) {
-        dispatch({
-          payload: {
-            errorMessage: ''
-          },
-          type: signInTypes.LOGIN
-        });
         return resp.json();
       } else {
         dispatch({
@@ -65,7 +59,13 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
       throw new Error('Failed to login');
     })
     .then(resp => {
-      localStorage.setItem('currentUser', JSON.stringify(resp));
+      dispatch({
+        payload: {
+          currentUser: resp,
+          errorMessage: ''
+        },
+        type: signInTypes.LOGIN
+      });
       history.push('/reimbursements');
     })
     .catch(err => {
