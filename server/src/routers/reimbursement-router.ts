@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import * as express from 'express';
 import * as reimbursementDao from '../dao/reimbursement-dao';
+import { authMiddleware } from '../security/authorization-middleware';
 
 export const reimbursementRouter = express.Router();
 
 /**
  * Find all reimbursements
  */
-reimbursementRouter.get('', async (req: Request, resp: Response) => {
+reimbursementRouter.get('', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     try {
         console.log('retrieving all reimbursements');
         const users = await reimbursementDao.findAll();
@@ -16,12 +17,12 @@ reimbursementRouter.get('', async (req: Request, resp: Response) => {
         console.log(err);
         resp.sendStatus(500);
     }
-});
+}]);
 
 /**
  * Find reimbursement by id
  */
-reimbursementRouter.get('/:id', async (req: Request, resp: Response) => {
+reimbursementRouter.get('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     const id = +req.params.id;
     console.log(`retreiving reimbursement with id  ${id}`)
     try {
@@ -34,12 +35,12 @@ reimbursementRouter.get('/:id', async (req: Request, resp: Response) => {
     } catch (err) {
         resp.sendStatus(500);
     }
-});
+}]);
 
 /**
  * Add a new reimbursement
  */
-reimbursementRouter.post('', async (req: Request, resp: Response) => {
+reimbursementRouter.post('', [authMiddleware('Employee', 'Manager'), async (req: Request, resp: Response) => {
     console.log('creating reimbursement')
     try {
         const id = await reimbursementDao.create(req.body);
@@ -49,9 +50,12 @@ reimbursementRouter.post('', async (req: Request, resp: Response) => {
         console.log(err);
         resp.sendStatus(500);
     }
-})
+}])
 
-reimbursementRouter.put('/:id', async (req: Request, resp: Response) => {
+/**
+ * Update reimbursement
+ */
+reimbursementRouter.put('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     console.log('updating reimbursement')
     try {
         const id = await reimbursementDao.update(req.body);
@@ -61,4 +65,4 @@ reimbursementRouter.put('/:id', async (req: Request, resp: Response) => {
         console.log(err);
         resp.sendStatus(500);
     }
-})
+}])

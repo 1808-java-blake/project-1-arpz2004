@@ -2,13 +2,14 @@ import { Request, Response } from 'express';
 import * as express from 'express';
 import * as userDao from '../dao/user-dao';
 import * as reimbursementDao from '../dao/reimbursement-dao';
+import { authMiddleware } from '../security/authorization-middleware';
 
 export const userRouter = express.Router();
 
 /**
  * Find all users
  */
-userRouter.get('', async (req: Request, resp: Response) => {
+userRouter.get('', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     try {
         console.log('retrieving all users');
         const users = await userDao.findAll();
@@ -17,12 +18,12 @@ userRouter.get('', async (req: Request, resp: Response) => {
         console.log(err);
         resp.sendStatus(500);
     }
-});
+}]);
 
 /**
  * Find user by id
  */
-userRouter.get('/:id', async (req, resp) => {
+userRouter.get('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     const id = +req.params.id;
     console.log(`retreiving user with id  ${id}`)
     try {
@@ -35,9 +36,12 @@ userRouter.get('/:id', async (req, resp) => {
     } catch (err) {
         resp.sendStatus(500);
     }
-});
+}]);
 
-userRouter.get('/:id/reimbursements', async (req, resp) => {
+/**
+ * Find all reimbursements by user id
+ */
+userRouter.get('/:id/reimbursements', [authMiddleware('Employee', 'Manager'), async (req: Request, resp: Response) => {
     const id = +req.params.id;
     console.log(`retreiving reimbursements submitted by user with id  ${id}`)
     try {
@@ -50,12 +54,12 @@ userRouter.get('/:id/reimbursements', async (req, resp) => {
     } catch (err) {
         resp.sendStatus(500);
     }
-});
+}]);
 
 /**
  * Add a new user
  */
-userRouter.post('', async (req, resp) => {
+userRouter.post('', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     console.log('creating user')
     try {
         const id = await userDao.create(req.body);
@@ -65,8 +69,11 @@ userRouter.post('', async (req, resp) => {
         console.log(err);
         resp.sendStatus(500);
     }
-})
+}])
 
+/**
+ * Login
+ */
 userRouter.post('/login', async (req, resp) => {
     try {
         const user = await userDao.findByUsernameAndPassword(req.body.username, req.body.password);
