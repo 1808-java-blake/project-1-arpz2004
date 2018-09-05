@@ -54,7 +54,7 @@ export const createReimbursement = (e: React.FormEvent<HTMLFormElement>, reimbur
       method: 'POST',
     })
       .then(resp => {
-        if (resp.status === 200) {
+        if (resp.status === 201) {
           dispatch({
             payload: {
               errorMessage: ''
