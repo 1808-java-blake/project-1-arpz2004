@@ -45,7 +45,7 @@ export const createReimbursement = (e: React.FormEvent<HTMLFormElement>, reimbur
   const currentUser = getCurrentUser();
   if (currentUser) {
     reimbursement = new Reimbursement({ ...reimbursement, author: currentUser });
-    fetch(`${environment.context}/reimbursements`, {
+    fetch(`${environment.context}reimbursements`, {
       body: JSON.stringify(reimbursement),
       headers: {
         'Content-Type': 'application/json',
