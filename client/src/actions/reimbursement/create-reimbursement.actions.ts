@@ -1,7 +1,7 @@
 import { createReimbursementTypes } from "./create-reimbursement.types";
 import { Reimbursement } from "../../model/Reimbursement";
 import history from '../../history'
-import { User } from "../../model/User";
+import { getCurrentUser } from "../../App"
 
 export const updateError = (error: string) => {
   return {
@@ -43,9 +43,9 @@ export const updateType = (type: string) => {
 }
 export const createReimbursement = (e: React.FormEvent<HTMLFormElement>, reimbursement: Reimbursement) => (dispatch: any) => {
   e.preventDefault();
-  const currentUser = localStorage.getItem('currentUser');
+  const currentUser = getCurrentUser();
   if (currentUser) {
-    reimbursement = new Reimbursement({ ...reimbursement, author: new User(JSON.parse(currentUser)) });
+    reimbursement = new Reimbursement({ ...reimbursement, author: currentUser });
     fetch('http://localhost:9001/reimbursements', {
       body: JSON.stringify(reimbursement),
       headers: {

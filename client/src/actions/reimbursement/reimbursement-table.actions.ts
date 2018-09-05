@@ -1,13 +1,11 @@
-import { reimbursementTableTypes } from "./reimbursement-table.types";
+import { getCurrentUser } from "../../App";
 import { Reimbursement } from "../../model/Reimbursement";
-import { User } from "../../model/User";
+import { reimbursementTableTypes } from "./reimbursement-table.types";
 
 export const fetchReimbursements = () => (dispatch: any) => {
-  const currentUserJson = localStorage.getItem('currentUser');
-  if (currentUserJson) {
-    const currentUser = new User(JSON.parse(currentUserJson))
+  const currentUser = getCurrentUser();
+  if (currentUser) {
     let fetchUrl = '';
-    console.log(`User role: ${currentUser.role}`);
     if (currentUser.role === "Manager") {
       fetchUrl = 'http://localhost:9001/reimbursements';
     } else {

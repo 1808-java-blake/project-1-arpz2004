@@ -10,6 +10,10 @@ import CreateReimbursementComponent from './components/reimbursement/create-reim
 import { AppNav } from './components/nav/nav.component';
 import history from './history'
 
+export const getCurrentUser = () => {
+  return store.getState().currentUser;
+}
+
 class App extends React.Component {
   public render() {
     return (

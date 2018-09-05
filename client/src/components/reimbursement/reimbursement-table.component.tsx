@@ -7,6 +7,7 @@ import { Reimbursement } from '../../model/Reimbursement';
 import { IReimbursementTableState, IState } from '../../reducers';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ReimbursementComponent } from './reimbursement.component';
+import { getCurrentUser } from '../../App';
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
@@ -43,11 +44,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     public render() {
         const filteredReimbursements = this.props.filteredReimbursements;
         const numberOfFilteredReimbursements = filteredReimbursements.length;
-        const currentUserJson = localStorage.getItem('currentUser');
-        let currentUser: any = null;
-        if (currentUserJson) {
-            currentUser = JSON.parse(currentUserJson);
-        }
+        const currentUser = getCurrentUser();
         const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Approve/Deny Request</th> : null;
         return (
             <div className="container">
