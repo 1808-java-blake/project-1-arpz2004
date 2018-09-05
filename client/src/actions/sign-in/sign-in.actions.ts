@@ -42,6 +42,7 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
       if (resp.status === 401) {
         dispatch({
           payload: {
+            currentUser: null,
             errorMessage: 'Invalid Credentials'
           },
           type: signInTypes.LOGIN
@@ -51,6 +52,7 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
       } else {
         dispatch({
           payload: {
+            currentUser: null,
             errorMessage: 'Failed to login at this time'
           },
           type: signInTypes.LOGIN
