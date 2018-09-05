@@ -4,7 +4,7 @@ import { reimbursementTableTypes } from "../actions/reimbursement/reimbursement-
 const initialState: IReimbursementTableState = {
     activePage: 1,
     filteredReimbursements: [],
-    itemsCountPerPage: 2,
+    itemsCountPerPage: 10,
     reimbursements: [],
     renderedReimbursements: [],
     statusFilter: ["Pending", "Approved", "Denied"]

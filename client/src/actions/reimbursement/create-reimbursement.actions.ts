@@ -13,9 +13,7 @@ export const updateError = (error: string) => {
 }
 
 export const updateAmount = (amount: string) => {
-  if (amount.length > 0 && amount.startsWith('$')) {
-    amount = amount.substring(1);
-  }
+  amount = amount.replace(/[$,]/g, '');
   return {
     payload: {
       amount

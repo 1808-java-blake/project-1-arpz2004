@@ -45,7 +45,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         const filteredReimbursements = this.props.filteredReimbursements;
         const numberOfFilteredReimbursements = filteredReimbursements.length;
         const currentUser = getCurrentUser();
-        const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Approve/Deny Request</th> : null;
+        const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Approve/Deny</th> : null;
         return (
             <div className="container">
                 <ButtonToolbar>
