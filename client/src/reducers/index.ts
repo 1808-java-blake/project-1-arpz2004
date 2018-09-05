@@ -31,13 +31,9 @@ export interface IReimbursementTableState {
 
 export interface IState {
   createReimbursement: ICreateReimbursementState,
-  currentUser: ICurrentUserState,
+  currentUser: User | null,
   reimbursementTable: IReimbursementTableState,
   signIn: ISignInState
-}
-
-export interface ICurrentUserState {
-  currentUser: User | null
 }
 
 export const state = combineReducers<IState>({
