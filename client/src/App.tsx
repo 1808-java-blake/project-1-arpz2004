@@ -9,9 +9,11 @@ import ReimbursementTableComponent from './components/reimbursement/reimbursemen
 import CreateReimbursementComponent from './components/reimbursement/create-reimbursement.component'
 import { AppNav } from './components/nav/nav.component';
 import history from './history'
+import { User } from './model/User';
 
 export const getCurrentUser = () => {
-  return store.getState().currentUser;
+  const currentUser = store.getState().currentUser;
+  return currentUser ? new User(currentUser) : null;
 }
 
 class App extends React.Component {

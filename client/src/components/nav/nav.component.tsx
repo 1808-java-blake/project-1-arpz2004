@@ -1,8 +1,28 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import RevLogo from '../../assets/rev-logo.png';
+import { getCurrentUser } from '../../App';
+import { User } from '../../model/User';
+
+const createLink = (path: string, name: string) => {
+  return (<li className="nav-item active">
+    <Link to={path} className="unset-anchor nav-link">{name}</Link>
+  </li>);
+}
 
 export const AppNav: React.StatelessComponent<any> = (props) => {
+  const currentUser: User | null = getCurrentUser();
+  let signInLink = null;
+  let reimbursementsLink = null;
+  let createReimbursementLink = null;
+  if (currentUser) {
+    reimbursementsLink = createLink("/reimbursements", "Reimbursements");
+    if (!currentUser.isManager()) {
+      createReimbursementLink = createLink("/reimbursements/new", "Create Reimbursement");
+    }
+  } else {
+    signInLink = createLink("/sign-in", "Sign In");
+  }
   return (
     <div>
       <nav className="navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">
@@ -16,15 +36,9 @@ export const AppNav: React.StatelessComponent<any> = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarsExample04">
           <ul className="navbar-nav ml-auto margin-nav">
-            <li className="nav-item active">
-              <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
-            </li>
-            <li className="nav-item active">
-              <Link to="/reimbursements" className="unset-anchor nav-link">Reimbursements</Link>
-            </li>
-            <li className="nav-item active">
-              <Link to="/reimbursements/new" className="unset-anchor nav-link">Create Reimbursement</Link>
-            </li>
+            {signInLink}
+            {reimbursementsLink}
+            {createReimbursementLink}
           </ul>
         </div>
       </nav>
