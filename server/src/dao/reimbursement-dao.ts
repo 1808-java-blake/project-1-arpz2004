@@ -16,7 +16,8 @@ export async function findAll(): Promise<Reimbursement[]> {
                 LEFT JOIN reimbursement_system.ers_user author ON reimb.author_id = author.user_id
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
-                LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`);
+                LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id
+                ORDER BY submitted DESC`);
         const reimbursements: Reimbursement[] = [];
         resp.rows.forEach((reimbursementResult) => {
             const reimbursement = reimbursementConverter(reimbursementResult);
@@ -79,7 +80,8 @@ export async function findByAuthorId(authorId: number): Promise<Reimbursement[]>
                 LEFT JOIN reimbursement_system.ers_user author ON reimb.author_id = author.user_id
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
-                LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [authorId]);
+                LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id
+                ORDER BY submitted DESC`, [authorId]);
         const reimbursements: Reimbursement[] = [];
         resp.rows.forEach((reimbursementResult) => {
             const reimbursement = reimbursementConverter(reimbursementResult);
