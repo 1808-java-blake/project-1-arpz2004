@@ -2,6 +2,7 @@
 
 */node_modules
 client/src/**/*.css
+client/build/*
 
 ### Eclipse ###
 

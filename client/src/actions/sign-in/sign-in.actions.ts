@@ -1,5 +1,6 @@
 import history from '../../history';
 import { signInTypes } from "./sign-in.types";
+import { environment } from '../../environment';
 
 export const updatePassword = (password: string) => {
   return {
@@ -30,7 +31,7 @@ export const updateError = (errorMessage: string) => {
 
 export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => (dispatch: any) => {
   e.preventDefault();
-  fetch('http://localhost:9001/users/login', {
+  fetch(`${environment.context}users/login`, {
     body: JSON.stringify(credentials),
     credentials: 'include',
     headers: {

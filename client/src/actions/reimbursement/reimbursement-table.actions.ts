@@ -1,15 +1,16 @@
 import { getCurrentUser } from "../../App";
 import { Reimbursement } from "../../model/Reimbursement";
 import { reimbursementTableTypes } from "./reimbursement-table.types";
+import { environment } from '../../environment';
 
 export const fetchReimbursements = () => (dispatch: any) => {
   const currentUser = getCurrentUser();
   if (currentUser) {
     let fetchUrl = '';
     if (currentUser.role === "Manager") {
-      fetchUrl = 'http://localhost:9001/reimbursements';
+      fetchUrl = `${environment.context}reimbursements`;
     } else {
-      fetchUrl = `http://localhost:9001/users/${currentUser.userId}/reimbursements`;
+      fetchUrl = `${environment.context}users/${currentUser.userId}/reimbursements`;
     }
     fetch(fetchUrl)
       .then(resp => {

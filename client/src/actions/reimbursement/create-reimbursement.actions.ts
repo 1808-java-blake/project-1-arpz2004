@@ -2,6 +2,7 @@ import { createReimbursementTypes } from "./create-reimbursement.types";
 import { Reimbursement } from "../../model/Reimbursement";
 import history from '../../history'
 import { getCurrentUser } from "../../App"
+import { environment } from "../../environment";
 
 export const updateError = (error: string) => {
   return {
@@ -44,7 +45,7 @@ export const createReimbursement = (e: React.FormEvent<HTMLFormElement>, reimbur
   const currentUser = getCurrentUser();
   if (currentUser) {
     reimbursement = new Reimbursement({ ...reimbursement, author: currentUser });
-    fetch('http://localhost:9001/reimbursements', {
+    fetch(`${environment.context}/reimbursements`, {
       body: JSON.stringify(reimbursement),
       headers: {
         'Content-Type': 'application/json',
