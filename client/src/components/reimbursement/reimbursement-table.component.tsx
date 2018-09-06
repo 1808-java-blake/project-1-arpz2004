@@ -8,6 +8,7 @@ import { Reimbursement } from '../../model/Reimbursement';
 import { IReimbursementTableState, IState } from '../../reducers';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ReimbursementComponent } from './reimbursement.component';
+import NumberFormat from 'react-number-format';
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
@@ -60,17 +61,26 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         </ToggleButtonGroup>
                     </ButtonToolbar>
                     <ButtonToolbar>
-                        <ToggleButtonGroup onChange={this.props.updateItemsCountPerPage} type="radio" name="options" defaultValue={this.props.itemsCountPerPage}>
-                            <ToggleButton value={5}>5</ToggleButton>
-                            <ToggleButton value={10}>10</ToggleButton>
-                            <ToggleButton value={25}>25</ToggleButton>
-                            <ToggleButton value={this.props.customItemsCountPerPage}>Custom:</ToggleButton>
+                        <ToggleButtonGroup
+                            className="input-container"
+                            onChange={this.props.updateItemsCountPerPage}
+                            type="radio" name="options"
+                            defaultValue={this.props.itemsCountPerPage}>
+                            <ToggleButton value={5}><span className="container">5</span></ToggleButton>
+                            <ToggleButton value={10}><span className="container">10</span></ToggleButton>
+                            <ToggleButton value={25}><span className="container">25</span></ToggleButton>
+                            <ToggleButton value={this.props.customItemsCountPerPage}>
+                                <span className="container">
+                                    <NumberFormat
+                                        allowNegative={false}
+                                        isNumericString={true}
+                                        onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue)}
+                                        value={this.props.customItemsCountPerPage === 0 ? '' : this.props.customItemsCountPerPage}
+                                        id="custom-page-input"
+                                        isAllowed={(val) => +val.value < 100 && val.value.length <= 2} />
+                                </span>
+                            </ToggleButton>
                         </ToggleButtonGroup>
-                        <input
-                                onChange={(e: any) => this.props.updateCustomItemsCountPerPage(e.target.value)}
-                                value={this.props.customItemsCountPerPage}
-                                type="text"
-                                placeholder="Rows per page" />
                     </ButtonToolbar>
                 </div>
                 <table className="table">
