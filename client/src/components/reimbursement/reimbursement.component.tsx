@@ -18,6 +18,14 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
       <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
       <td>{reimbursement.status}</td>
       <td>{reimbursement.type}</td>
+      <td>
+        <div className="container">
+          <div className="btn-group-vertical">
+            <button type="button" className="btn btn-secondary btn-success">Approve</button>
+            <button type="button" className="btn btn-secondary btn-danger">Deny</button>
+          </div>
+        </div>
+      </td>
     </tr>
   );
 }
