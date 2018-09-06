@@ -35,6 +35,33 @@ export const fetchReimbursements = () => (dispatch: any) => {
   }
 }
 
+export const updateReimbursement = (reimbursementId: number, newStatus: string) => (dispatch: any) => {
+  const currentUser = getCurrentUser();
+  if (currentUser && currentUser.role === "Manager") {
+    fetch(`${environment.context}reimbursements/${reimbursementId}`, {
+      credentials: 'include',
+      method: 'PATCH'
+    })
+      .then(resp => {
+        if (resp.status === 200) {
+          return resp.json();
+        } else {
+          throw new Error('Failed to fetch reimbursements');
+        }
+      }).then(resp => {
+        dispatch({
+          payload: {
+            reimbursements: resp
+          },
+          type: reimbursementTableTypes.FETCH_REIMBURSEMENTS
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+}
+
 export const filterReimbursements = (filteredReimbursements: Reimbursement[], statusFilter: string[]) => (dispatch: any) => {
   dispatch({
     payload: {

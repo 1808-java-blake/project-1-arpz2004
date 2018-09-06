@@ -12,6 +12,7 @@ import { getCurrentUser } from '../../App';
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
     filterReimbursements: (reimbursements: Reimbursement[], statusFilter: string[]) => void
+    updateReimbursement: (reimbursementId: number, newStatus: string) => void
     updateActivePage: (activePage: number, filteredReimbursements: Reimbursement[], itemsCountPerPage: number) => void
 }
 
@@ -72,7 +73,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                     </thead>
                     <tbody>
                         {this.props.renderedReimbursements.map((reimbursement: Reimbursement) => {
-                            return <ReimbursementComponent key={reimbursement.reimbursementId} reimbursement={reimbursement} />
+                            return <ReimbursementComponent key={reimbursement.reimbursementId} reimbursement={reimbursement} changeStatus={(reimbursementId: number, newStatus: string) => this.props.updateReimbursement(reimbursementId, newStatus)} />
                         })}
                     </tbody>
                 </table>
@@ -91,7 +92,8 @@ const mapStateToProps = (state: IState) => state.reimbursementTable
 const mapDispatchToProps = {
     fetchReimbursements: reimbursementTableActions.fetchReimbursements,
     filterReimbursements: reimbursementTableActions.filterReimbursements,
-    updateActivePage: reimbursementTableActions.updateActivePage
+    updateActivePage: reimbursementTableActions.updateActivePage,
+    updateReimbursement: reimbursementTableActions.updateReimbursement
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReimbursementTableComponent);

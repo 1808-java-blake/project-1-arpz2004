@@ -3,10 +3,11 @@ import { Reimbursement } from '../../model/Reimbursement';
 
 interface IProps {
   reimbursement: Reimbursement
+  changeStatus: (reimbursementId: number, newStatus: string) => void
 }
 
 export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) => {
-  const { reimbursement } = props;
+  const { reimbursement, changeStatus } = props;
   return (
     <tr>
       <th scope="row">{reimbursement.reimbursementId}</th>
@@ -22,8 +23,8 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
         {reimbursement.status === "Pending" ?
           (<div className="container">
             <div className="btn-group-vertical">
-              <button type="button" className="btn btn-secondary btn-success">Approve</button>
-              <button type="button" className="btn btn-secondary btn-danger">Deny</button>
+              <button type="button" className="btn btn-secondary btn-success" onClick={() => changeStatus(reimbursement.reimbursementId, "Approved")}>Approve</button>
+              <button type="button" className="btn btn-secondary btn-danger" onClick={() => changeStatus(reimbursement.reimbursementId, "Denied")}>Deny</button>
             </div>
           </div>) :
           <></>

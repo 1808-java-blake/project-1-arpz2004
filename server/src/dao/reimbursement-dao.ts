@@ -36,7 +36,7 @@ export async function findAll(): Promise<Reimbursement[]> {
     }
 }
 
-export async function findById(id: number): Promise<Reimbursement> {
+export async function findById(id: number): Promise<Reimbursement | null> {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
@@ -51,16 +51,20 @@ export async function findById(id: number): Promise<Reimbursement> {
                 NATURAL JOIN reimbursement_system.user_role author_role
                 LEFT JOIN reimbursement_system.ers_user resolver ON reimb.resolver_id = resolver.user_id
                 LEFT JOIN reimbursement_system.user_role resolver_role ON resolver_role.role_id = resolver.role_id`, [id]);
-        const reimbursementResult = resp.rows[0];
-        const reimbursement = reimbursementConverter(reimbursementResult);
-        reimbursement.author = userConverter(reimbursementResult);
-        Object.keys(reimbursementResult).forEach((key) => {
-            if (key.startsWith('r_')) {
-                reimbursementResult[key.substring(2, key.length)] = reimbursementResult[key];
-            }
-        });
-        reimbursement.resolver = userConverter(reimbursementResult);
-        return reimbursement;
+        if (resp.rowCount) {
+            const reimbursementResult = resp.rows[0];
+            const reimbursement = reimbursementConverter(reimbursementResult);
+            reimbursement.author = userConverter(reimbursementResult);
+            Object.keys(reimbursementResult).forEach((key) => {
+                if (key.startsWith('r_')) {
+                    reimbursementResult[key.substring(2, key.length)] = reimbursementResult[key];
+                }
+            });
+            reimbursement.resolver = userConverter(reimbursementResult);
+            return reimbursement;
+        } else {
+            return null;
+        }
     } finally {
         client.release();
     }
@@ -127,26 +131,37 @@ export async function create(reimbursement: Reimbursement): Promise<number> {
     }
 }
 
-export async function update(reimbursement: Reimbursement): Promise<number> {
+export async function update(reimbursementId: number, cols: any): Promise<number> {
     const client = await connectionPool.connect();
-    try {
-        const author = reimbursement.author;
-        const resolver = reimbursement.resolver;
-        const resp = await client.query(
-            `UPDATE reimbursement_system.reimbursement
-            SET amount=$1, submitted=$2, resolved=$3, description=$4, author_id=$5, resolver_id=$6, 
-            status_id=(
+    const query = ['UPDATE reimbursement_system.reimbursement'];
+    query.push('SET');
+    const set: any = [];
+    const colValues = Object.keys(cols).map((key) => {
+        return cols[key];
+    });
+    Object.keys(cols).forEach(function (key, i) {
+        if (key === 'status') {
+            set.push(`status_id=(
                 SELECT status_id
                 FROM reimbursement_system.reimbursement_status
-                WHERE status = $7
-            ), type_id=(
+                WHERE status = $${i + 1}
+            )`);
+        } else if (key === 'type') {
+            set.push(`type_id=(
                 SELECT type_id
                 FROM reimbursement_system.reimbursement_type
-                WHERE type = $8
-            )
-            WHERE reimbursement_id=$9
-            RETURNING reimbursement_id`, [reimbursement.amount, reimbursement.submitted, reimbursement.resolved, reimbursement.description, author && author.userId, resolver && resolver.userId, reimbursement.status, reimbursement.type, reimbursement.reimbursementId]);
-        return resp.rows[0].reimbursement_id;
+                WHERE type = $${i + 1}
+            )`);
+        } else {
+            set.push(`${key}=$${i + 1}`);
+        }
+    });
+    query.push(set.join(', '));
+    query.push(`WHERE reimbursement_id=${reimbursementId}`);
+    query.push('RETURNING reimbursement_id');
+    try {
+        const resp = await client.query(query.join(' '), colValues);
+        return resp.rowCount ? resp.rows[0].reimbursement_id : null;
     } finally {
         client.release();
     }

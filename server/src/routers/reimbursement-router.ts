@@ -24,11 +24,11 @@ reimbursementRouter.get('', [authMiddleware('Manager'), async (req: Request, res
 reimbursementRouter.get('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     const id = +req.params.id;
     try {
-        const user = await reimbursementDao.findById(id);
-        if (user !== undefined) {
-            resp.json(user);
+        const reimbursement = await reimbursementDao.findById(id);
+        if (reimbursement) {
+            resp.json(reimbursement);
         } else {
-            resp.sendStatus(400);
+            resp.sendStatus(404);
         }
     } catch (err) {
         resp.sendStatus(500);
@@ -52,11 +52,16 @@ reimbursementRouter.post('', [authMiddleware('Employee', 'Manager'), async (req:
 /**
  * Update reimbursement
  */
-reimbursementRouter.put('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
+reimbursementRouter.patch('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
+    const reimbursementId = +req.params.id;
     try {
-        const id = await reimbursementDao.update(req.body);
-        resp.status(201);
-        resp.json(id);
+        const id = await reimbursementDao.update(reimbursementId, req.body);
+        if (id) {
+            resp.status(201);
+            resp.json(id);
+        } else {
+            resp.sendStatus(404);
+        }
     } catch (err) {
         console.log(err);
         resp.sendStatus(500);
