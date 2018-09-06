@@ -11,9 +11,12 @@ export class ProtectedRoute extends React.Component<any, {}> {
                 {...props}
                 render={prop => (
                     getCurrentUser() ?
-                        <Component {...prop} /> :
+                        (this.props.component ?
+                            <Component {...prop} /> :
+                            <Redirect to='/reimbursements' />) :
                         <Redirect to='/sign-in' />
-                )}
+                )
+                }
             />
         )
     }
