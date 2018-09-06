@@ -31,7 +31,7 @@ class App extends React.Component {
                 <ProtectedRoute path="/reimbursements" component={ReimbursementTableComponent} />
                 <Route path="/sign-in" component={SignInComponent} />
                 <ProtectedRoute path="/logout" component={LogoutComponent} />
-                <Route component={SignInComponent} />
+                <ProtectedRoute />
               </Switch>
             </div>
           </div>
