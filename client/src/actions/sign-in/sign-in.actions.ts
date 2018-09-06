@@ -35,7 +35,7 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
     body: JSON.stringify(credentials),
     credentials: 'include',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     method: 'POST',
   })

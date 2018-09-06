@@ -12,7 +12,9 @@ export const fetchReimbursements = () => (dispatch: any) => {
     } else {
       fetchUrl = `${environment.context}users/${currentUser.userId}/reimbursements`;
     }
-    fetch(fetchUrl)
+    fetch(fetchUrl, {
+      credentials: 'include'
+    })
       .then(resp => {
         if (resp.status === 200) {
           return resp.json();
