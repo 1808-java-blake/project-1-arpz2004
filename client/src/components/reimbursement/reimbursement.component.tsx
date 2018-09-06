@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Reimbursement } from '../../model/Reimbursement';
+import { getCurrentUser } from '../../App';
 
 interface IProps {
   reimbursement: Reimbursement
@@ -8,6 +9,8 @@ interface IProps {
 
 export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) => {
   const { reimbursement, changeStatus } = props;
+  const currentUser = getCurrentUser();
+  const managerColumn = currentUser && currentUser.role === "Manager";
   return (
     <tr>
       <th scope="row">{reimbursement.reimbursementId}</th>
@@ -19,17 +22,20 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
       <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
       <td>{reimbursement.status}</td>
       <td>{reimbursement.type}</td>
-      <td>
-        {reimbursement.status === "Pending" ?
-          (<div className="container">
-            <div className="btn-group-vertical">
-              <button type="button" className="btn btn-secondary btn-success" onClick={() => changeStatus(reimbursement.reimbursementId, "Approved")}>Approve</button>
-              <button type="button" className="btn btn-secondary btn-danger" onClick={() => changeStatus(reimbursement.reimbursementId, "Denied")}>Deny</button>
-            </div>
-          </div>) :
-          <></>
-        }
-      </td>
+      {managerColumn ?
+        <td>
+          {reimbursement.status === "Pending" ?
+            (<div className="container">
+              <div className="btn-group-vertical">
+                <button type="button" className="btn btn-secondary btn-success" onClick={() => changeStatus(reimbursement.reimbursementId, "Approved")}>Approve</button>
+                <button type="button" className="btn btn-secondary btn-danger" onClick={() => changeStatus(reimbursement.reimbursementId, "Denied")}>Deny</button>
+              </div>
+            </div>) :
+            <></>
+          }
+        </td> :
+        <></>
+      }
     </tr>
   );
 }
