@@ -3,6 +3,7 @@ import { reimbursementTableTypes } from "../actions/reimbursement/reimbursement-
 
 const initialState: IReimbursementTableState = {
     activePage: 1,
+    customItemsCountPerPage: 0,
     filteredReimbursements: [],
     itemsCountPerPage: 10,
     reimbursements: [],
@@ -36,10 +37,15 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
                     return reimbursement.reimbursementId === action.payload.reimbursementId ? { ...reimbursement, status: action.payload.newStatus, resolved: action.payload.resolved, resolver: action.payload.resolver } : reimbursement;
                 })
             }
-        case reimbursementTableTypes.UPDATE_ITEM_COUNTS_PER_PAGE:
+        case reimbursementTableTypes.UPDATE_ITEMS_COUNT_PER_PAGE:
             return {
                 ...state,
                 itemsCountPerPage: action.payload.itemsCountPerPage
+            }
+        case reimbursementTableTypes.UPDATE_CUSTOM_ITEMS_COUNT_PER_PAGE:
+            return {
+                ...state,
+                customItemsCountPerPage: action.payload.customItemsCountPerPage
             }
     }
     return state;

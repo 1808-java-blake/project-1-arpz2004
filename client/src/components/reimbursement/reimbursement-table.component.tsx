@@ -14,7 +14,8 @@ interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     filterReimbursements: (reimbursements: Reimbursement[], statusFilter: string[]) => void
     updateReimbursement: (reimbursementId: number, newStatus: string) => void
     updateActivePage: (activePage: number, filteredReimbursements: Reimbursement[], itemsCountPerPage: number) => void,
-    updateItemsCountPerPage: (itemsCountPerPage: number) => void
+    updateItemsCountPerPage: (itemsCountPerPage: number) => void,
+    updateCustomItemsCountPerPage: (itemsCountPerPage: number) => void
 }
 
 class ReimbursementTableComponent extends React.Component<IProps, {}> {
@@ -63,7 +64,13 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                             <ToggleButton value={5}>5</ToggleButton>
                             <ToggleButton value={10}>10</ToggleButton>
                             <ToggleButton value={25}>25</ToggleButton>
+                            <ToggleButton value={this.props.customItemsCountPerPage}>Custom:</ToggleButton>
                         </ToggleButtonGroup>
+                        <input
+                                onChange={(e: any) => this.props.updateCustomItemsCountPerPage(e.target.value)}
+                                value={this.props.customItemsCountPerPage}
+                                type="text"
+                                placeholder="Rows per page" />
                     </ButtonToolbar>
                 </div>
                 <table className="table">
@@ -105,6 +112,7 @@ const mapDispatchToProps = {
     fetchReimbursements: reimbursementTableActions.fetchReimbursements,
     filterReimbursements: reimbursementTableActions.filterReimbursements,
     updateActivePage: reimbursementTableActions.updateActivePage,
+    updateCustomItemsCountPerPage: reimbursementTableActions.updateCustomItemsCountPerPage,
     updateItemsCountPerPage: reimbursementTableActions.updateItemsCountPerPage,
     updateReimbursement: reimbursementTableActions.updateReimbursement
 }

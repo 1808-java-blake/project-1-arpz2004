@@ -26,6 +26,7 @@ export interface IReimbursementTableState {
   renderedReimbursements: Reimbursement[]
   activePage: number
   itemsCountPerPage: number
+  customItemsCountPerPage: number
   statusFilter: string[]
 }
 

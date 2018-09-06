@@ -102,6 +102,15 @@ export const updateItemsCountPerPage = (itemsCountPerPage: number) => {
     payload: {
       itemsCountPerPage
     },
-    type: reimbursementTableTypes.UPDATE_ITEM_COUNTS_PER_PAGE
+    type: reimbursementTableTypes.UPDATE_ITEMS_COUNT_PER_PAGE
+  }
+}
+
+export const updateCustomItemsCountPerPage = (customItemsCountPerPage: number) => {
+  return {
+    payload: {
+      customItemsCountPerPage
+    },
+    type: reimbursementTableTypes.UPDATE_CUSTOM_ITEMS_COUNT_PER_PAGE
   }
 }
