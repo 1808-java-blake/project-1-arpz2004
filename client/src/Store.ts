@@ -11,7 +11,13 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
+const currentUser = sessionStorage.getItem('currentUser');
+const initialState = {
+  currentUser: currentUser ? JSON.parse(currentUser) : null
+}
+
 export const store: Store<any> = createStore(
   state,
+  initialState,
   enhancer
 );

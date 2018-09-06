@@ -62,6 +62,7 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
       throw new Error('Failed to login');
     })
     .then(resp => {
+      sessionStorage.setItem('currentUser', JSON.stringify(resp));
       dispatch({
         payload: {
           currentUser: resp,
