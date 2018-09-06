@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 import './include/bootstrap';
 import { Provider } from 'react-redux';
-import { Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch } from 'react-router-dom';
 import { store } from './Store';
 import SignInComponent from './components/sign-in/sign-in.component';
 import ReimbursementTableComponent from './components/reimbursement/reimbursement-table.component'
@@ -29,7 +29,7 @@ class App extends React.Component {
               <Switch>
                 <ProtectedRoute path="/reimbursements/new" component={CreateReimbursementComponent} />
                 <ProtectedRoute path="/reimbursements" component={ReimbursementTableComponent} />
-                <Route path="/sign-in" component={SignInComponent} />
+                <ProtectedRoute path="/sign-in" component={SignInComponent} />
                 <ProtectedRoute path="/logout" component={LogoutComponent} />
                 <ProtectedRoute />
               </Switch>

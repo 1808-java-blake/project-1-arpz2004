@@ -5,16 +5,19 @@ import { getCurrentUser } from '../../App';
 export class ProtectedRoute extends React.Component<any, {}> {
     public render() {
         const { component: Component, ...props } = this.props
-
+        const signInRoute = props.path === '/sign-in';
         return (
             <Route
                 {...props}
                 render={prop => (
                     getCurrentUser() ?
-                        (this.props.component ?
+                        (this.props.component && !signInRoute ?
                             <Component {...prop} /> :
                             <Redirect to='/reimbursements' />) :
-                        <Redirect to='/sign-in' />
+                        (signInRoute ?
+                            <Component {...prop} /> :
+                            <Redirect to='/sign-in' />
+                        )
                 )
                 }
             />
