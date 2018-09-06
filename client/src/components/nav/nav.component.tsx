@@ -15,7 +15,9 @@ export const AppNav: React.StatelessComponent<any> = (props) => {
   let signInLink = null;
   let reimbursementsLink = null;
   let createReimbursementLink = null;
+  let logoutLink = null;
   if (currentUser) {
+    logoutLink = createLink("/logout", "Logout");
     reimbursementsLink = createLink("/reimbursements", "Reimbursements");
     if (!currentUser.isManager()) {
       createReimbursementLink = createLink("/reimbursements/new", "Create Reimbursement");
@@ -39,6 +41,7 @@ export const AppNav: React.StatelessComponent<any> = (props) => {
             {signInLink}
             {reimbursementsLink}
             {createReimbursementLink}
+            {logoutLink}
           </ul>
         </div>
       </nav>

@@ -76,6 +76,8 @@ userRouter.post('', [authMiddleware('Manager'), async (req: Request, resp: Respo
  */
 userRouter.post('/login', async (req, resp) => {
     try {
+        console.log("SESSION")
+        console.log(req.session);
         const user = await userDao.findByUsernameAndPassword(req.body.username, req.body.password);
         if (user && req.session) {
             req.session.user = user;

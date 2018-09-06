@@ -10,6 +10,8 @@ import CreateReimbursementComponent from './components/reimbursement/create-reim
 import { AppNav } from './components/nav/nav.component';
 import history from './history'
 import { User } from './model/User';
+import LogoutComponent from './components/logout/logout.component';
+import { ProtectedRoute } from './components/routes/protected-route.component';
 
 export const getCurrentUser = () => {
   const currentUser = store.getState().currentUser;
@@ -25,9 +27,10 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                <Route path="/reimbursements/new" component={CreateReimbursementComponent} />
-                <Route path="/reimbursements" component={ReimbursementTableComponent} />
+                <ProtectedRoute path="/reimbursements/new" component={CreateReimbursementComponent} />
+                <ProtectedRoute path="/reimbursements" component={ReimbursementTableComponent} />
                 <Route path="/sign-in" component={SignInComponent} />
+                <ProtectedRoute path="/logout" component={LogoutComponent} />
                 <Route component={SignInComponent} />
               </Switch>
             </div>
