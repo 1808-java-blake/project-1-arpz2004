@@ -39,21 +39,26 @@ export const updateReimbursement = (reimbursementId: number, newStatus: string) 
   const currentUser = getCurrentUser();
   if (currentUser && currentUser.role === "Manager") {
     fetch(`${environment.context}reimbursements/${reimbursementId}`, {
+      body: JSON.stringify({ status: newStatus }),
       credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       method: 'PATCH'
     })
       .then(resp => {
         if (resp.status === 200) {
           return resp.json();
         } else {
-          throw new Error('Failed to fetch reimbursements');
+          throw new Error('Failed to update reimbursement');
         }
       }).then(resp => {
         dispatch({
           payload: {
-            reimbursements: resp
+            newStatus,
+            reimbursementId: resp
           },
-          type: reimbursementTableTypes.FETCH_REIMBURSEMENTS
+          type: reimbursementTableTypes.UPDATE_REIMBURSEMENT
         })
       })
       .catch(err => {

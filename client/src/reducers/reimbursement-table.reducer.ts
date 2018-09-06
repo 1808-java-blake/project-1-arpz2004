@@ -29,6 +29,13 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
                 activePage: action.payload.activePage,
                 renderedReimbursements: action.payload.renderedReimbursements
             }
+        case reimbursementTableTypes.UPDATE_REIMBURSEMENT:
+            return {
+                ...state,
+                reimbursements: state.reimbursements.map(reimbursement => {
+                    return reimbursement.reimbursementId === action.payload.reimbursementId ? { ...reimbursement, status: action.payload.newStatus } : reimbursement;
+                })
+            }
     }
     return state;
 }

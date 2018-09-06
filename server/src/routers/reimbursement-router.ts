@@ -57,7 +57,7 @@ reimbursementRouter.patch('/:id', [authMiddleware('Manager'), async (req: Reques
     try {
         const id = await reimbursementDao.update(reimbursementId, req.body);
         if (id) {
-            resp.status(201);
+            resp.status(200);
             resp.json(id);
         } else {
             resp.sendStatus(404);
