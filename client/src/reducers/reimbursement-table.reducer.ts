@@ -33,7 +33,7 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
             return {
                 ...state,
                 reimbursements: state.reimbursements.map(reimbursement => {
-                    return reimbursement.reimbursementId === action.payload.reimbursementId ? { ...reimbursement, status: action.payload.newStatus } : reimbursement;
+                    return reimbursement.reimbursementId === action.payload.reimbursementId ? { ...reimbursement, status: action.payload.newStatus, resolved: action.payload.resolved, resolver: action.payload.resolver } : reimbursement;
                 })
             }
     }

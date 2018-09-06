@@ -37,9 +37,10 @@ export const fetchReimbursements = () => (dispatch: any) => {
 
 export const updateReimbursement = (reimbursementId: number, newStatus: string) => (dispatch: any) => {
   const currentUser = getCurrentUser();
+  const resolved = new Date;
   if (currentUser && currentUser.role === "Manager") {
     fetch(`${environment.context}reimbursements/${reimbursementId}`, {
-      body: JSON.stringify({ status: newStatus }),
+      body: JSON.stringify({ status: newStatus, resolver_id: currentUser.userId, resolved }),
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -56,7 +57,9 @@ export const updateReimbursement = (reimbursementId: number, newStatus: string) 
         dispatch({
           payload: {
             newStatus,
-            reimbursementId: resp
+            reimbursementId: resp,
+            resolved,
+            resolver: currentUser
           },
           type: reimbursementTableTypes.UPDATE_REIMBURSEMENT
         })
