@@ -11,7 +11,6 @@ export const userRouter = express.Router();
  */
 userRouter.get('', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     try {
-        console.log('retrieving all users');
         const users = await userDao.findAll();
         resp.json(users);
     } catch (err) {
@@ -25,7 +24,6 @@ userRouter.get('', [authMiddleware('Manager'), async (req: Request, resp: Respon
  */
 userRouter.get('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     const id = +req.params.id;
-    console.log(`retreiving user with id  ${id}`)
     try {
         const user = await userDao.findById(id);
         if (user !== undefined) {
@@ -43,7 +41,6 @@ userRouter.get('/:id', [authMiddleware('Manager'), async (req: Request, resp: Re
  */
 userRouter.get('/:id/reimbursements', [authMiddleware('Employee', 'Manager'), async (req: Request, resp: Response) => {
     const id = +req.params.id;
-    console.log(`retreiving reimbursements submitted by user with id  ${id}`)
     try {
         const reimbursements = await reimbursementDao.findByAuthorId(id);
         if (reimbursements !== undefined) {
@@ -60,7 +57,6 @@ userRouter.get('/:id/reimbursements', [authMiddleware('Employee', 'Manager'), as
  * Add a new user
  */
 userRouter.post('', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
-    console.log('creating user')
     try {
         const id = await userDao.create(req.body);
         resp.status(201);
@@ -76,8 +72,6 @@ userRouter.post('', [authMiddleware('Manager'), async (req: Request, resp: Respo
  */
 userRouter.post('/login', async (req, resp) => {
     try {
-        console.log("SESSION")
-        console.log(req.session);
         const user = await userDao.findByUsernameAndPassword(req.body.username, req.body.password);
         if (user && req.session) {
             req.session.user = user;

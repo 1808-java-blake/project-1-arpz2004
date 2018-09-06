@@ -10,7 +10,6 @@ export const reimbursementRouter = express.Router();
  */
 reimbursementRouter.get('', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     try {
-        console.log('retrieving all reimbursements');
         const users = await reimbursementDao.findAll();
         resp.json(users);
     } catch (err) {
@@ -24,7 +23,6 @@ reimbursementRouter.get('', [authMiddleware('Manager'), async (req: Request, res
  */
 reimbursementRouter.get('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
     const id = +req.params.id;
-    console.log(`retreiving reimbursement with id  ${id}`)
     try {
         const user = await reimbursementDao.findById(id);
         if (user !== undefined) {
@@ -41,7 +39,6 @@ reimbursementRouter.get('/:id', [authMiddleware('Manager'), async (req: Request,
  * Add a new reimbursement
  */
 reimbursementRouter.post('', [authMiddleware('Employee', 'Manager'), async (req: Request, resp: Response) => {
-    console.log('creating reimbursement')
     try {
         const id = await reimbursementDao.create(req.body);
         resp.status(201);
@@ -56,7 +53,6 @@ reimbursementRouter.post('', [authMiddleware('Employee', 'Manager'), async (req:
  * Update reimbursement
  */
 reimbursementRouter.put('/:id', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
-    console.log('updating reimbursement')
     try {
         const id = await reimbursementDao.update(req.body);
         resp.status(201);
