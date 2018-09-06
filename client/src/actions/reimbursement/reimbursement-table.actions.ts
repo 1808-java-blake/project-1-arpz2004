@@ -96,3 +96,12 @@ export const updateActivePage = (activePage: number, filteredReimbursements: Rei
     type: reimbursementTableTypes.UPDATE_ACTIVE_PAGE
   })
 }
+
+export const updateItemsCountPerPage = (itemsCountPerPage: number) => {
+  return {
+    payload: {
+      itemsCountPerPage
+    },
+    type: reimbursementTableTypes.UPDATE_ITEM_COUNTS_PER_PAGE
+  }
+}

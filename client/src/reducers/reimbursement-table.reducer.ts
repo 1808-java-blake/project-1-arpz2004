@@ -36,6 +36,11 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
                     return reimbursement.reimbursementId === action.payload.reimbursementId ? { ...reimbursement, status: action.payload.newStatus, resolved: action.payload.resolved, resolver: action.payload.resolver } : reimbursement;
                 })
             }
+        case reimbursementTableTypes.UPDATE_ITEM_COUNTS_PER_PAGE:
+            return {
+                ...state,
+                itemsCountPerPage: action.payload.itemsCountPerPage
+            }
     }
     return state;
 }
