@@ -39,7 +39,7 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
           <></>
         }
       </tr>
-      <tr>
+      <tr onClick={showDetails}>
         <td colSpan={managerColumn ? 8 : 7} className="hidden-row">
           <Collapse isOpen={detailsShown}>
             <div className="container">
