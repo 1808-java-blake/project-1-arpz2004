@@ -61,6 +61,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         const { filteredReimbursements, statusFilter, itemsCountPerPage } = this.props;
         const numberOfFilteredReimbursements = filteredReimbursements.length;
         const currentUser = getCurrentUser();
+        const requestedByColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Requested By</th> : null;
         const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col" className="text-center">Approve/Deny</th> : null;
         const custPerPage = this.props.customItemsCountPerPage;
         return (
@@ -92,8 +93,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                             <th scope="col">ID</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Submitted</th>
-                            <th scope="col">Author</th>
-                            <th scope="col">Resolver</th>
+                            {requestedByColumn}
                             <th scope="col">Status</th>
                             <th scope="col">Type</th>
                             {managerColumn}

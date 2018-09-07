@@ -20,8 +20,10 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
         <th scope="row"><span onClick={toggleDetails}>{reimbursement.reimbursementId}</span></th>
         <td><span onClick={toggleDetails}>${reimbursement.amount}</span></td>
         <td><span onClick={toggleDetails}>{formatDate(reimbursement.submitted)}</span></td>
-        <td><span onClick={toggleDetails}>{reimbursement.author.username}</span></td>
-        <td><span onClick={toggleDetails}>{reimbursement.resolver && reimbursement.resolver.username}</span></td>
+        {managerColumn ?
+          <td><span onClick={toggleDetails}>{reimbursement.author.username}</span></td>
+          : <></>
+        }
         <td><span onClick={toggleDetails}>{reimbursement.status}</span></td>
         <td><span onClick={toggleDetails}>{reimbursement.type}</span></td>
         {managerColumn ?
@@ -40,19 +42,24 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
         }
       </tr>
       <tr onClick={toggleDetails} className="extra-reimbursement-details">
-        <td colSpan={managerColumn ? 8 : 7} className="hidden-row">
+        <td colSpan={managerColumn ? 7 : 6} className="hidden-row">
           <Collapse isOpen={showDetails}>
             <div className="container">
               <div className="row">
-                <div className="col-md-8">
+                <div className="col-sm-8">
                   <dl className="row">
                     <dt className="col-sm-3">Description</dt>
                     <dd className="col-sm-9">{reimbursement.description}</dd>
-
-                    <dt className="col-sm-3">Resolved</dt>
+                    <dt className="col-sm-3">Submitted</dt>
                     <dd className="col-sm-9">
-                      {reimbursement.resolved && formatTime(reimbursement.resolved)}
+                      {reimbursement.submitted && formatTime(reimbursement.submitted)}
                     </dd>
+                    {reimbursement.resolved ? (<>
+                      <dt className="col-sm-3">Resolved</dt>
+                      <dd className="col-sm-9">
+                        {formatTime(reimbursement.resolved)}
+                      </dd></>) : null
+                    }
                   </dl>
                 </div>
               </div>
@@ -65,16 +72,17 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
 }
 
 const formatDate = (time: Date) => {
+  const mS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   time = new Date(time)
   const yyyy = time.getFullYear();
   const month = time.getMonth();
-  const mm = month < 10 ? `0${month}` : month;
-  const day = time.getDay();
+  const day = time.getDate();
   const dd = day < 10 ? `0${day}` : day;
-  return <>{yyyy}-{mm}-{dd}</>;
+  return <>{mS[month]} {dd}, {yyyy}</>;
 }
 
 const formatTime = (time: Date) => {
+  const mS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   time = new Date(time)
   let h = time.getHours();
   const amPm = h < 12 ? 'AM' : 'PM';
@@ -86,8 +94,7 @@ const formatTime = (time: Date) => {
   const s = seconds < 10 ? `0${seconds}` : seconds;
   const yyyy = time.getFullYear();
   const month = time.getMonth();
-  const mm = month < 10 ? `0${month}` : month;
-  const day = time.getDay();
+  const day = time.getDate();
   const dd = day < 10 ? `0${day}` : day;
-  return <>{yyyy}-{mm}-{dd} {h}:{m}:{s} {amPm}</>;
+  return <>{mS[month]} {dd}, {yyyy} {h}:{m}:{s} {amPm}</>;
 }

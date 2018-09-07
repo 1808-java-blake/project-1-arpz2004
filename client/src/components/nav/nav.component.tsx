@@ -18,9 +18,9 @@ export const AppNav: React.StatelessComponent<any> = (props) => {
   let logoutLink = null;
   if (currentUser) {
     logoutLink = createLink("/logout", "Logout");
-    reimbursementsLink = createLink("/reimbursements", "Reimbursements");
+    reimbursementsLink = createLink("/reimbursements", "Request History");
     if (!currentUser.isManager()) {
-      createReimbursementLink = createLink("/reimbursements/new", "Create Reimbursement");
+      createReimbursementLink = createLink("/reimbursements/new", "Submit Request");
     }
   } else {
     signInLink = createLink("/sign-in", "Sign In");
