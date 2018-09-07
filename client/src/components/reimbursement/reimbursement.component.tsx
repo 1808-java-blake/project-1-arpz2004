@@ -6,24 +6,24 @@ import Collapse from 'reactstrap/lib/Collapse';
 interface IProps {
   reimbursement: Reimbursement
   changeStatus: (reimbursementId: number, newStatus: string) => void
-  showDetails: () => void
-  detailsShown: boolean
+  toggleDetails: () => void
+  showDetails: boolean
 }
 
 export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) => {
-  const { reimbursement, changeStatus, detailsShown, showDetails } = props;
+  const { reimbursement, changeStatus, showDetails, toggleDetails } = props;
   const currentUser = getCurrentUser();
   const managerColumn = currentUser && currentUser.role === "Manager";
   return (
     <>
-      <tr className="reimbursement-table-row" onClick={showDetails}>
-        <th scope="row">{reimbursement.reimbursementId}</th>
-        <td>${reimbursement.amount}</td>
-        <td>{formatTime(reimbursement.submitted)}</td>
-        <td>{reimbursement.author.username}</td>
-        <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
-        <td>{reimbursement.status}</td>
-        <td>{reimbursement.type}</td>
+      <tr className="reimbursement-table-row">
+        <th scope="row"><span onClick={toggleDetails}>{reimbursement.reimbursementId}</span></th>
+        <td><span onClick={toggleDetails}>${reimbursement.amount}</span></td>
+        <td><span onClick={toggleDetails}>{formatDate(reimbursement.submitted)}</span></td>
+        <td><span onClick={toggleDetails}>{reimbursement.author.username}</span></td>
+        <td><span onClick={toggleDetails}>{reimbursement.resolver && reimbursement.resolver.username}</span></td>
+        <td><span onClick={toggleDetails}>{reimbursement.status}</span></td>
+        <td><span onClick={toggleDetails}>{reimbursement.type}</span></td>
         {managerColumn ?
           <td className="text-center">
             {reimbursement.status === "Pending" ?
@@ -39,9 +39,9 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
           <></>
         }
       </tr>
-      <tr onClick={showDetails}>
+      <tr onClick={toggleDetails} className="extra-reimbursement-details">
         <td colSpan={managerColumn ? 8 : 7} className="hidden-row">
-          <Collapse isOpen={detailsShown}>
+          <Collapse isOpen={showDetails}>
             <div className="container">
               <div className="row">
                 {`Description: ${reimbursement.description}`}
@@ -56,6 +56,16 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
       </tr>
     </>
   );
+}
+
+const formatDate = (time: Date) => {
+  time = new Date(time)
+  const yyyy = time.getFullYear();
+  const month = time.getMonth();
+  const mm = month < 10 ? `0${month}` : month;
+  const day = time.getDay();
+  const dd = day < 10 ? `0${day}` : day;
+  return <>{yyyy}-{mm}-{dd}</>;
 }
 
 const formatTime = (time: Date) => {
@@ -73,5 +83,5 @@ const formatTime = (time: Date) => {
   const mm = month < 10 ? `0${month}` : month;
   const day = time.getDay();
   const dd = day < 10 ? `0${day}` : day;
-  return <div>{yyyy}-{mm}-{dd} {h}:{m}:{s} {amPm}</div>;
+  return <>{yyyy}-{mm}-{dd} {h}:{m}:{s} {amPm}</>;
 }

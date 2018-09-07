@@ -101,7 +101,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                     </thead>
                     <tbody>
                         {this.props.renderedReimbursements.map((reimbursement: Reimbursement) => {
-                            return <ReimbursementComponent detailsShown={this.props.detailsShown.indexOf(reimbursement.reimbursementId) >= 0} showDetails={() => this.props.updateDetailsShown(this.toggleDetailsShown(this.props.detailsShown, reimbursement.reimbursementId))} key={reimbursement.reimbursementId} reimbursement={reimbursement} changeStatus={(reimbursementId: number, newStatus: string) => this.props.updateReimbursement(reimbursementId, newStatus)} />
+                            return <ReimbursementComponent showDetails={this.props.detailsShown.indexOf(reimbursement.reimbursementId) >= 0} toggleDetails={() => this.props.updateDetailsShown(this.toggleDetailsShown(this.props.detailsShown, reimbursement.reimbursementId))} key={reimbursement.reimbursementId} reimbursement={reimbursement} changeStatus={(reimbursementId: number, newStatus: string) => this.props.updateReimbursement(reimbursementId, newStatus)} />
                         })}
                     </tbody>
                 </table>
