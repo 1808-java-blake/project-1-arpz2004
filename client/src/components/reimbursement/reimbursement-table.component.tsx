@@ -69,7 +69,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                             <ToggleButton bsStyle={"danger"} value={"Denied"}>Denied</ToggleButton>
                         </ToggleButtonGroup>
                     </ButtonToolbar> */}
-                    <ButtonGroup>
+                    <ButtonGroup className="reimbursement-table-buttons">
                         <Button outline color="warning" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
                         <Button outline color="success" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
                         <Button outline color="danger" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Denied"))} active={statusFilter.indexOf("Denied") >= 0}>Denied</Button>
