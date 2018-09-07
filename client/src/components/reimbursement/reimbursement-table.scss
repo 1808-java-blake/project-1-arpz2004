@@ -28,4 +28,7 @@
 
 .extra-reimbursement-details{
     cursor: pointer;
+    dd{
+        word-wrap: break-word;
+    }
 }

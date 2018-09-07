@@ -46,7 +46,7 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
           <Collapse isOpen={showDetails}>
             <div className="container">
               <div className="row">
-                <div className="col-sm-8">
+                <div className="col-sm-6">
                   <dl className="row">
                     <dt className="col-sm-3">Description</dt>
                     <dd className="col-sm-9">{reimbursement.description}</dd>
@@ -60,6 +60,22 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
                         {formatTime(reimbursement.resolved)}
                       </dd></>) : null
                     }
+                  </dl>
+                </div>
+                <div className="col-sm-6">
+                  <dl className="row">
+                    <dt className="col-sm-3">Requested By</dt>
+                    <dd className="col-sm-9">
+                      {reimbursement.author.username}
+                    </dd>
+                    <dt className="col-sm-3">Name</dt>
+                    <dd className="col-sm-9">
+                      {reimbursement.author.firstName + ' ' + reimbursement.author.lastName}
+                    </dd>
+                    <dt className="col-sm-3">Email</dt>
+                    <dd className="col-sm-9">
+                      {reimbursement.author.email}
+                    </dd>
                   </dl>
                 </div>
               </div>
