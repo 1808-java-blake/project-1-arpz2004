@@ -33,6 +33,9 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         if (this.props.reimbursements !== prevProps.reimbursements) {
             this.filterByStatus(this.props.statusFilter);
         }
+        if (this.props.customItemsCountPerPage !== prevProps.customItemsCountPerPage) {
+            this.props.updateItemsCountPerPage(this.props.customItemsCountPerPage);
+        }
         if (this.props.filteredReimbursements !== prevProps.filteredReimbursements || this.props.itemsCountPerPage !== prevProps.itemsCountPerPage) {
             this.props.updateActivePage(this.props.activePage, this.props.filteredReimbursements, this.props.itemsCountPerPage);
         }
@@ -65,7 +68,8 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                             className="input-container"
                             onChange={this.props.updateItemsCountPerPage}
                             type="radio" name="options"
-                            defaultValue={this.props.itemsCountPerPage}>
+                            defaultValue={this.props.itemsCountPerPage}
+                            value={this.props.itemsCountPerPage}>
                             <ToggleButton value={5}><span className="container">5</span></ToggleButton>
                             <ToggleButton value={10}><span className="container">10</span></ToggleButton>
                             <ToggleButton value={25}><span className="container">25</span></ToggleButton>
@@ -74,7 +78,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                                     <NumberFormat
                                         allowNegative={false}
                                         isNumericString={true}
-                                        onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue)}
+                                        onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue ? values.floatValue : this.props.customItemsCountPerPage)}
                                         value={this.props.customItemsCountPerPage === 0 ? '' : this.props.customItemsCountPerPage}
                                         id="custom-page-input"
                                         isAllowed={(val) => +val.value < 100 && val.value.length <= 2} />
