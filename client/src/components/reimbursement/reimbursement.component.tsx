@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Reimbursement } from '../../model/Reimbursement';
 import { getCurrentUser } from '../../App';
+import Collapse from 'reactstrap/lib/Collapse';
 
 interface IProps {
   reimbursement: Reimbursement
@@ -12,31 +13,45 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
   const currentUser = getCurrentUser();
   const managerColumn = currentUser && currentUser.role === "Manager";
   return (
-    <tr>
-      <th scope="row">{reimbursement.reimbursementId}</th>
-      <td>${reimbursement.amount}</td>
-      <td>{formatTime(reimbursement.submitted)}</td>
-      <td>{reimbursement.resolved && formatTime(reimbursement.resolved)}</td>
-      <td>{reimbursement.description}</td>
-      <td>{reimbursement.author.username}</td>
-      <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
-      <td>{reimbursement.status}</td>
-      <td>{reimbursement.type}</td>
-      {managerColumn ?
-        <td>
-          {reimbursement.status === "Pending" ?
-            (<div className="container">
-              <div className="btn-group-vertical">
-                <button type="button" className="btn btn-secondary btn-success" onClick={() => changeStatus(reimbursement.reimbursementId, "Approved")}>Approve</button>
-                <button type="button" className="btn btn-secondary btn-danger" onClick={() => changeStatus(reimbursement.reimbursementId, "Denied")}>Deny</button>
-              </div>
-            </div>) :
-            <></>
-          }
-        </td> :
-        <></>
-      }
-    </tr>
+    <>
+      <tr>
+        <th scope="row">{reimbursement.reimbursementId}</th>
+        <td>${reimbursement.amount}</td>
+        <td>{formatTime(reimbursement.submitted)}</td>
+        <td>{reimbursement.resolved && formatTime(reimbursement.resolved)}</td>
+        <td>{reimbursement.description}</td>
+        <td>{reimbursement.author.username}</td>
+        <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
+        <td>{reimbursement.status}</td>
+        <td>{reimbursement.type}</td>
+        {managerColumn ?
+          <td>
+            {reimbursement.status === "Pending" ?
+              (<div className="container">
+                <div className="btn-group-vertical">
+                  <button type="button" className="btn btn-secondary btn-success" onClick={() => changeStatus(reimbursement.reimbursementId, "Approved")}>Approve</button>
+                  <button type="button" className="btn btn-secondary btn-danger" onClick={() => changeStatus(reimbursement.reimbursementId, "Denied")}>Deny</button>
+                </div>
+              </div>) :
+              <></>
+            }
+          </td> :
+          <></>
+        }
+      </tr>
+      <tr>
+        <td colSpan={managerColumn ? 10 : 9} className="hidden-row">
+          <Collapse isOpen={reimbursement.status === "Pending"}>
+            <div className="container">
+              Anim pariatur cliche reprehenderit,
+               enim eiusmod high life accusamus terry richardson ad squid. Nihil
+               anim keffiyeh helvetica, craft beer labore wes anderson cred
+               nesciunt sapiente ea proident.
+             </div>
+          </Collapse>
+        </td>
+      </tr>
+    </>
   );
 }
 
