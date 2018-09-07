@@ -4,6 +4,7 @@ import { reimbursementTableTypes } from "../actions/reimbursement/reimbursement-
 const initialState: IReimbursementTableState = {
     activePage: 1,
     customItemsCountPerPage: 0,
+    detailsShown: [],
     filteredReimbursements: [],
     itemsCountPerPage: 10,
     reimbursements: [],
@@ -46,6 +47,11 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
             return {
                 ...state,
                 customItemsCountPerPage: action.payload.customItemsCountPerPage
+            }
+        case reimbursementTableTypes.UPDATE_DETAILS_SHOWN:
+            return {
+                ...state,
+                detailsShown: action.payload.detailsShown
             }
     }
     return state;

@@ -6,15 +6,17 @@ import Collapse from 'reactstrap/lib/Collapse';
 interface IProps {
   reimbursement: Reimbursement
   changeStatus: (reimbursementId: number, newStatus: string) => void
+  showDetails: () => void
+  detailsShown: boolean
 }
 
 export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) => {
-  const { reimbursement, changeStatus } = props;
+  const { reimbursement, changeStatus, detailsShown, showDetails } = props;
   const currentUser = getCurrentUser();
   const managerColumn = currentUser && currentUser.role === "Manager";
   return (
     <>
-      <tr className="reimbursement-table-row">
+      <tr className="reimbursement-table-row" onClick={showDetails}>
         <th scope="row">{reimbursement.reimbursementId}</th>
         <td>${reimbursement.amount}</td>
         <td>{formatTime(reimbursement.submitted)}</td>
@@ -38,8 +40,8 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
         }
       </tr>
       <tr>
-        <td colSpan={managerColumn ? 9 : 8} className="hidden-row">
-          <Collapse isOpen={reimbursement.status === "Pending"}>
+        <td colSpan={managerColumn ? 8 : 7} className="hidden-row">
+          <Collapse isOpen={detailsShown}>
             <div className="container">
               <div className="row">
                 {`Description: ${reimbursement.description}`}

@@ -114,3 +114,12 @@ export const updateCustomItemsCountPerPage = (customItemsCountPerPage: number) =
     type: reimbursementTableTypes.UPDATE_CUSTOM_ITEMS_COUNT_PER_PAGE
   }
 }
+
+export const updateDetailsShown = (detailsShown: number[]) => {
+  return {
+    payload: {
+      detailsShown
+    },
+    type: reimbursementTableTypes.UPDATE_DETAILS_SHOWN
+  }
+}

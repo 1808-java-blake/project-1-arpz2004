@@ -14,6 +14,7 @@ interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
     filterReimbursements: (reimbursements: Reimbursement[], statusFilter: string[]) => void
     updateReimbursement: (reimbursementId: number, newStatus: string) => void
+    updateDetailsShown: (reimbursementIds: number[]) => void
     updateActivePage: (activePage: number, filteredReimbursements: Reimbursement[], itemsCountPerPage: number) => void,
     updateItemsCountPerPage: (itemsCountPerPage: number) => void,
     updateCustomItemsCountPerPage: (itemsCountPerPage: number) => void
@@ -50,6 +51,10 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
 
     public toggleFilter = (oldStatusFilter: string[], status: string) => {
         return oldStatusFilter.some(filter => filter === status) ? oldStatusFilter.filter(filter => filter !== status) : oldStatusFilter.slice().concat(status);
+    }
+
+    public toggleDetailsShown = (oldDetailsShown: number[], reimbursementId: number) => {
+        return oldDetailsShown.some(filter => filter === reimbursementId) ? oldDetailsShown.filter(filter => filter !== reimbursementId) : oldDetailsShown.slice().concat(reimbursementId);
     }
 
     public render() {
@@ -96,7 +101,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                     </thead>
                     <tbody>
                         {this.props.renderedReimbursements.map((reimbursement: Reimbursement) => {
-                            return <ReimbursementComponent key={reimbursement.reimbursementId} reimbursement={reimbursement} changeStatus={(reimbursementId: number, newStatus: string) => this.props.updateReimbursement(reimbursementId, newStatus)} />
+                            return <ReimbursementComponent detailsShown={this.props.detailsShown.indexOf(reimbursement.reimbursementId) >= 0} showDetails={() => this.props.updateDetailsShown(this.toggleDetailsShown(this.props.detailsShown, reimbursement.reimbursementId))} key={reimbursement.reimbursementId} reimbursement={reimbursement} changeStatus={(reimbursementId: number, newStatus: string) => this.props.updateReimbursement(reimbursementId, newStatus)} />
                         })}
                     </tbody>
                 </table>
@@ -119,6 +124,7 @@ const mapDispatchToProps = {
     filterReimbursements: reimbursementTableActions.filterReimbursements,
     updateActivePage: reimbursementTableActions.updateActivePage,
     updateCustomItemsCountPerPage: reimbursementTableActions.updateCustomItemsCountPerPage,
+    updateDetailsShown: reimbursementTableActions.updateDetailsShown,
     updateItemsCountPerPage: reimbursementTableActions.updateItemsCountPerPage,
     updateReimbursement: reimbursementTableActions.updateReimbursement
 }
