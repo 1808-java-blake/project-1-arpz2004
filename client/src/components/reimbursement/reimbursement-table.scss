@@ -6,4 +6,8 @@
 
 .reimbursement-table-buttons{
     margin-bottom: 0.5rem;
+    .btn:hover{
+        background-color: inherit;
+        color: inherit;
+    }
 }
