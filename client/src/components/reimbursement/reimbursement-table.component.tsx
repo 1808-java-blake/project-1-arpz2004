@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ButtonToolbar, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { Button, ButtonGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -54,7 +53,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     }
 
     public render() {
-        const { filteredReimbursements, statusFilter } = this.props;
+        const { filteredReimbursements, statusFilter, itemsCountPerPage } = this.props;
         const numberOfFilteredReimbursements = filteredReimbursements.length;
         const currentUser = getCurrentUser();
         const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Approve/Deny</th> : null;
@@ -62,41 +61,25 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         return (
             <div className="container">
                 <div className="d-flex justify-content-between">
-                    {/* <ButtonToolbar>
-                        <ToggleButtonGroup onChange={this.filterByStatus} type="checkbox" defaultValue={this.props.statusFilter}>
-                            <ToggleButton bsStyle={"warning"} value={"Pending"}>Pending</ToggleButton>
-                            <ToggleButton bsStyle={"success"} value={"Approved"}>Approved</ToggleButton>
-                            <ToggleButton bsStyle={"danger"} value={"Denied"}>Denied</ToggleButton>
-                        </ToggleButtonGroup>
-                    </ButtonToolbar> */}
                     <ButtonGroup className="reimbursement-table-buttons">
                         <Button outline color="warning" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
                         <Button outline color="success" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
                         <Button outline color="danger" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Denied"))} active={statusFilter.indexOf("Denied") >= 0}>Denied</Button>
                     </ButtonGroup>
-                    <ButtonToolbar>
-                        <ToggleButtonGroup
-                            className="input-container"
-                            onChange={this.props.updateItemsCountPerPage}
-                            type="radio" name="options"
-                            defaultValue={this.props.itemsCountPerPage}
-                            value={this.props.itemsCountPerPage}>
-                            <ToggleButton value={5}><span className="container">5</span></ToggleButton>
-                            <ToggleButton value={10}><span className="container">10</span></ToggleButton>
-                            <ToggleButton value={25}><span className="container">25</span></ToggleButton>
-                            <ToggleButton value={custPerPage ? ([5, 10, 25].indexOf(custPerPage) < 0 ? custPerPage : custPerPage - 1) : 1}>
-                                <span className="container">
-                                    <NumberFormat
-                                        allowNegative={false}
-                                        isNumericString={true}
-                                        onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue ? values.floatValue : custPerPage)}
-                                        value={custPerPage === 0 ? '' : custPerPage}
-                                        id="custom-page-input"
-                                        isAllowed={(val) => +val.value < 100 && val.value.length <= 2} />
-                                </span>
-                            </ToggleButton>
-                        </ToggleButtonGroup>
-                    </ButtonToolbar>
+                    <ButtonGroup className="reimbursement-table-buttons">
+                        <Button outline color="secondary" onClick={() => this.props.updateItemsCountPerPage(5)} active={itemsCountPerPage === 5}>5</Button>
+                        <Button outline color="secondary" onClick={() => this.props.updateItemsCountPerPage(10)} active={itemsCountPerPage === 10}>10</Button>
+                        <Button outline color="secondary" onClick={() => this.props.updateItemsCountPerPage(25)} active={itemsCountPerPage === 25}>25</Button>
+                        <Button outline color="secondary" onClick={() => this.props.updateItemsCountPerPage(custPerPage ? custPerPage : 1)} active={itemsCountPerPage === (custPerPage ? custPerPage : 1)}>
+                            <NumberFormat
+                                allowNegative={false}
+                                isNumericString={true}
+                                onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue ? values.floatValue : custPerPage)}
+                                value={custPerPage === 0 ? '' : custPerPage}
+                                id="custom-page-input"
+                                isAllowed={(val) => +val.value < 100 && val.value.length <= 2} />
+                        </Button>
+                    </ButtonGroup>
                 </div>
                 <table className="table">
                     <thead>
