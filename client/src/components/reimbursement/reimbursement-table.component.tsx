@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ButtonToolbar, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import * as reimbursementTableActions from '../../actions/reimbursement/reimbursement-table.actions';
@@ -48,8 +49,12 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         this.props.filterReimbursements(filteredReimbursements, statusArray);
     }
 
+    public toggleFilter = (oldStatusFilter: string[], status: string) => {
+        return oldStatusFilter.some(filter => filter === status) ? oldStatusFilter.filter(filter => filter !== status) : oldStatusFilter.slice().concat(status);
+    }
+
     public render() {
-        const filteredReimbursements = this.props.filteredReimbursements;
+        const { filteredReimbursements, statusFilter } = this.props;
         const numberOfFilteredReimbursements = filteredReimbursements.length;
         const currentUser = getCurrentUser();
         const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Approve/Deny</th> : null;
@@ -57,13 +62,18 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         return (
             <div className="container">
                 <div className="d-flex justify-content-between">
-                    <ButtonToolbar>
+                    {/* <ButtonToolbar>
                         <ToggleButtonGroup onChange={this.filterByStatus} type="checkbox" defaultValue={this.props.statusFilter}>
                             <ToggleButton bsStyle={"warning"} value={"Pending"}>Pending</ToggleButton>
                             <ToggleButton bsStyle={"success"} value={"Approved"}>Approved</ToggleButton>
                             <ToggleButton bsStyle={"danger"} value={"Denied"}>Denied</ToggleButton>
                         </ToggleButtonGroup>
-                    </ButtonToolbar>
+                    </ButtonToolbar> */}
+                    <ButtonGroup>
+                        <Button outline color="warning" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
+                        <Button outline color="success" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
+                        <Button outline color="danger" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Denied"))} active={statusFilter.indexOf("Denied") >= 0}>Denied</Button>
+                    </ButtonGroup>
                     <ButtonToolbar>
                         <ToggleButtonGroup
                             className="input-container"
