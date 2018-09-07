@@ -27,7 +27,7 @@ export const AppNav: React.StatelessComponent<any> = (props) => {
   }
   return (
     <div id="main-nav">
-      <nav className="navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">
+      <nav className="navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-dark display-front nav-pad">
         <div className="navbar-header c-pointer shift-left">
           <Link to="/home" className="unset-anchor">
             <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
