@@ -53,6 +53,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         const numberOfFilteredReimbursements = filteredReimbursements.length;
         const currentUser = getCurrentUser();
         const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Approve/Deny</th> : null;
+        const custPerPage = this.props.customItemsCountPerPage;
         return (
             <div className="container">
                 <div className="d-flex justify-content-between">
@@ -73,13 +74,13 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                             <ToggleButton value={5}><span className="container">5</span></ToggleButton>
                             <ToggleButton value={10}><span className="container">10</span></ToggleButton>
                             <ToggleButton value={25}><span className="container">25</span></ToggleButton>
-                            <ToggleButton value={this.props.customItemsCountPerPage}>
+                            <ToggleButton value={custPerPage ? ([5, 10, 25].indexOf(custPerPage) < 0 ? custPerPage : custPerPage - 1) : 1}>
                                 <span className="container">
                                     <NumberFormat
                                         allowNegative={false}
                                         isNumericString={true}
-                                        onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue ? values.floatValue : this.props.customItemsCountPerPage)}
-                                        value={this.props.customItemsCountPerPage === 0 ? '' : this.props.customItemsCountPerPage}
+                                        onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue ? values.floatValue : custPerPage)}
+                                        value={custPerPage === 0 ? '' : custPerPage}
                                         id="custom-page-input"
                                         isAllowed={(val) => +val.value < 100 && val.value.length <= 2} />
                                 </span>
