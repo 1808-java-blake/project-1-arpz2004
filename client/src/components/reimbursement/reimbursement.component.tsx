@@ -76,14 +76,14 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
                     <dd className="col-sm-9">
                       {reimbursement.author.email}
                     </dd>
-                    {managerColumn && reimbursement.resolver ?
+                    {managerColumn && reimbursement.resolved && reimbursement.resolver ?
                       (<><dt className="col-sm-3">Resolved By</dt>
                         <dd className="col-sm-9">
                           {reimbursement.resolver.username}
                         </dd>
                         <dt className="col-sm-3">Name</dt>
                         <dd className="col-sm-9">
-                          {reimbursement.resolver.firstName + ' ' + reimbursement.author.lastName}
+                          {reimbursement.resolver.firstName + ' ' + reimbursement.resolver.lastName}
                         </dd>
                         <dt className="col-sm-3">Email</dt>
                         <dd className="col-sm-9">
