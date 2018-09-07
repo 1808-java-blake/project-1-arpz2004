@@ -26,7 +26,7 @@ export const AppNav: React.StatelessComponent<any> = (props) => {
     signInLink = createLink("/sign-in", "Sign In");
   }
   return (
-    <div>
+    <div id="main-nav">
       <nav className="navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">
         <div className="navbar-header c-pointer shift-left">
           <Link to="/home" className="unset-anchor">
