@@ -14,12 +14,10 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
   const managerColumn = currentUser && currentUser.role === "Manager";
   return (
     <>
-      <tr>
+      <tr className="reimbursement-table-row">
         <th scope="row">{reimbursement.reimbursementId}</th>
         <td>${reimbursement.amount}</td>
         <td>{formatTime(reimbursement.submitted)}</td>
-        <td>{reimbursement.resolved && formatTime(reimbursement.resolved)}</td>
-        <td>{reimbursement.description}</td>
         <td>{reimbursement.author.username}</td>
         <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
         <td>{reimbursement.status}</td>
@@ -28,7 +26,7 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
           <td>
             {reimbursement.status === "Pending" ?
               (<div className="container">
-                <div className="btn-group-vertical">
+                <div className="btn-group">
                   <button type="button" className="btn btn-secondary btn-success" onClick={() => changeStatus(reimbursement.reimbursementId, "Approved")}>Approve</button>
                   <button type="button" className="btn btn-secondary btn-danger" onClick={() => changeStatus(reimbursement.reimbursementId, "Denied")}>Deny</button>
                 </div>
@@ -40,14 +38,17 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
         }
       </tr>
       <tr>
-        <td colSpan={managerColumn ? 10 : 9} className="hidden-row">
+        <td colSpan={managerColumn ? 9 : 8} className="hidden-row">
           <Collapse isOpen={reimbursement.status === "Pending"}>
             <div className="container">
-              Anim pariatur cliche reprehenderit,
-               enim eiusmod high life accusamus terry richardson ad squid. Nihil
-               anim keffiyeh helvetica, craft beer labore wes anderson cred
-               nesciunt sapiente ea proident.
-             </div>
+              <div className="row">
+                {`Description: ${reimbursement.description}`}
+              </div>
+              <div className="row">
+                {reimbursement.resolved && 'Resolved:'}
+                {reimbursement.resolved && formatTime(reimbursement.resolved)}
+              </div>
+            </div>
           </Collapse>
         </td>
       </tr>
@@ -70,5 +71,5 @@ const formatTime = (time: Date) => {
   const mm = month < 10 ? `0${month}` : month;
   const day = time.getDay();
   const dd = day < 10 ? `0${day}` : day;
-  return <div>{yyyy}-{mm}-{dd}<br />{h}:{m}:{s} {amPm}</div>;
+  return <div>{yyyy}-{mm}-{dd} {h}:{m}:{s} {amPm}</div>;
 }
