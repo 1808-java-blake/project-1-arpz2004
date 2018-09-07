@@ -44,11 +44,17 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
           <Collapse isOpen={showDetails}>
             <div className="container">
               <div className="row">
-                {`Description: ${reimbursement.description}`}
-              </div>
-              <div className="row">
-                {reimbursement.resolved && 'Resolved:'}
-                {reimbursement.resolved && formatTime(reimbursement.resolved)}
+                <div className="col-md-8">
+                  <dl className="row">
+                    <dt className="col-sm-3">Description</dt>
+                    <dd className="col-sm-9">{reimbursement.description}</dd>
+
+                    <dt className="col-sm-3">Resolved</dt>
+                    <dd className="col-sm-9">
+                      {reimbursement.resolved && formatTime(reimbursement.resolved)}
+                    </dd>
+                  </dl>
+                </div>
               </div>
             </div>
           </Collapse>
