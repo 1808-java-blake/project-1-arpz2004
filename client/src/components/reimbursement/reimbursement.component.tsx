@@ -23,14 +23,14 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
         <td>{reimbursement.status}</td>
         <td>{reimbursement.type}</td>
         {managerColumn ?
-          <td>
+          <td className="text-center">
             {reimbursement.status === "Pending" ?
-              (<div className="container">
+              (
                 <div className="btn-group">
                   <button type="button" className="btn btn-secondary btn-success" onClick={() => changeStatus(reimbursement.reimbursementId, "Approved")}>Approve</button>
                   <button type="button" className="btn btn-secondary btn-danger" onClick={() => changeStatus(reimbursement.reimbursementId, "Denied")}>Deny</button>
                 </div>
-              </div>) :
+              ) :
               <></>
             }
           </td> :
