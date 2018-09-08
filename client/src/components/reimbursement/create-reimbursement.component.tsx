@@ -47,12 +47,10 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
           </FormGroup>
           <FormGroup required>
             <Label for="reimbursementType">Type</Label>
-            <div>
-              <CustomInput type="radio" id="reimbursement-lodging" name="reimbursementType" label="Lodging" required/>
-              <CustomInput type="radio" id="reimbursement-travel" name="reimbursementType" label="Travel" required/>
-              <CustomInput type="radio" id="reimbursement-food" name="reimbursementType" label="Food" required/>
-              <CustomInput type="radio" id="reimbursement-other" name="reimbursementType" label="Other" required/>
-            </div>
+            <CustomInput onChange={(e: any) => this.props.updateType("Lodging")} defaultChecked={this.props.reimbursement.type === "Lodging"} type="radio" id="reimbursement-lodging" name="reimbursementType" label="Lodging" required />
+            <CustomInput onChange={(e: any) => this.props.updateType("Travel")} defaultChecked={this.props.reimbursement.type === "Travel"} type="radio" id="reimbursement-travel" name="reimbursementType" label="Travel" required />
+            <CustomInput onChange={(e: any) => this.props.updateType("Food")} defaultChecked={this.props.reimbursement.type === "Food"} type="radio" id="reimbursement-food" name="reimbursementType" label="Food" required />
+            <CustomInput onChange={(e: any) => this.props.updateType("Other")} defaultChecked={this.props.reimbursement.type === "Other"} type="radio" id="reimbursement-other" name="reimbursementType" label="Other" required />
           </FormGroup>
           <FormGroup required>
             <Label for="inputDescription">Description</Label>
