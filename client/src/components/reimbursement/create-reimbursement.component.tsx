@@ -53,37 +53,18 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
             <CustomInput onChange={(e: any) => this.props.updateType("Other")} defaultChecked={this.props.reimbursement.type === "Other"} type="radio" id="reimbursement-other" name="reimbursementType" label="Other" required />
           </FormGroup>
           <FormGroup required>
-            <Label for="inputDescription">Description</Label>
+            <Label for="input-description">Description</Label>
             <Input type="textarea"
               onChange={(e: any) => this.props.updateDescription(e.target.value)}
               value={reimbursement.description}
               maxLength={250}
-              id="inputDescription"
+              id="input-description"
               className="form-control"
-              placeholder="Description"
               required />
           </FormGroup>
           <Button className="btn btn-lg btn-primary btn-block" type="submit">Submit</Button>
         </Form>
         {errorMessage && <p id="error-message">{errorMessage}</p>}
-        {/* <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => (this.props.createReimbursement(e, this.props.reimbursement))}>
-
-          <div className="form-group">
-            <label htmlFor="inputType">Type:</label>
-            <select
-              className="form-control"
-              id="inputType"
-              value={reimbursement.type}
-              onChange={(e: any) => this.props.updateType(e.target.value)}>
-              <option>Lodging</option>
-              <option>Travel</option>
-              <option>Food</option>
-              <option>Other</option>
-            </select>
-          </div>
-
-          <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-        </form> */}
       </>
     );
   }
