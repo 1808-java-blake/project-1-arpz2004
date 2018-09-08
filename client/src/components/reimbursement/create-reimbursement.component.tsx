@@ -2,7 +2,8 @@ import * as React from 'react';
 import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { CustomInput, FormGroup, Input, Label } from 'reactstrap';
+import Textarea from 'react-textarea-autosize';
+import { CustomInput, FormGroup, Label } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
 import Form from 'reactstrap/lib/Form';
 import * as createReimbursementActions from '../../actions/reimbursement/create-reimbursement.actions';
@@ -32,6 +33,7 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
           <FormGroup>
             <Label for="inputAmount">Amount</Label>
             <NumberFormat
+              autoFocus
               prefix={'$'}
               decimalScale={2}
               fixedDecimalScale={true}
@@ -54,7 +56,8 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
           </FormGroup>
           <FormGroup required>
             <Label for="input-description">Description</Label>
-            <Input type="textarea"
+            <Textarea
+              type="textarea"
               onChange={(e: any) => this.props.updateDescription(e.target.value)}
               value={reimbursement.description}
               maxLength={250}
