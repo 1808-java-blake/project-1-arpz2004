@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import { IState, ICreateReimbursementState } from '../../reducers';
-import * as createReimbursementActions from '../../actions/reimbursement/create-reimbursement.actions';
-import { connect } from 'react-redux';
-import { Reimbursement } from '../../model/Reimbursement';
 import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { CustomInput, FormGroup, Input, Label } from 'reactstrap';
+import Button from 'reactstrap/lib/Button';
+import Form from 'reactstrap/lib/Form';
+import * as createReimbursementActions from '../../actions/reimbursement/create-reimbursement.actions';
+import { Reimbursement } from '../../model/Reimbursement';
+import { ICreateReimbursementState, IState } from '../../reducers';
 
 interface IProps extends RouteComponentProps<{}>, ICreateReimbursementState {
   updateError: (message: string) => void
@@ -24,53 +27,66 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
     const { errorMessage, reimbursement } = this.props;
 
     return (
-      <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => (this.props.createReimbursement(e, this.props.reimbursement))}>
-        <h1 className="h3 mb-3 font-weight-normal">Enter reimbursement details</h1>
-        <div className="input-group mb-3">
-          <label htmlFor="inputAmount" className="sr-only">Amount</label>
-          <NumberFormat
-            prefix={'$'}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            thousandSeparator={true}
-            allowNegative={false}
-            isNumericString={true}
-            onValueChange={(values) => this.props.updateAmount(values.formattedValue)}
-            value={reimbursement.amount === 0 ? '' : reimbursement.amount}
-            id="inputAmount"
-            className="form-control"
-            placeholder="Amount"
-            isAllowed={(val) => +val.value <= 999999.99 && val.value.length <= 9}
-            required />
-        </div>
-
-        <label htmlFor="inputDescription" className="sr-only">Description</label>
-        <textarea
-          onChange={(e: any) => this.props.updateDescription(e.target.value)}
-          value={reimbursement.description}
-          maxLength={250}
-          id="inputDescription"
-          className="form-control"
-          placeholder="Description"
-          required />
-
-        <div className="form-group">
-          <label htmlFor="inputType">Type:</label>
-          <select
-            className="form-control"
-            id="inputType"
-            value={reimbursement.type}
-            onChange={(e: any) => this.props.updateType(e.target.value)}>
-            <option>Lodging</option>
-            <option>Travel</option>
-            <option>Food</option>
-            <option>Other</option>
-          </select>
-        </div>
-
-        <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+      <>
+        <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => (this.props.createReimbursement(e, this.props.reimbursement))}>
+          <FormGroup>
+            <Label for="inputAmount">Amount</Label>
+            <NumberFormat
+              prefix={'$'}
+              decimalScale={2}
+              fixedDecimalScale={true}
+              thousandSeparator={true}
+              allowNegative={false}
+              isNumericString={true}
+              onValueChange={(values) => this.props.updateAmount(values.formattedValue)}
+              value={reimbursement.amount === 0 ? '' : reimbursement.amount}
+              id="inputAmount"
+              className="form-control"
+              isAllowed={(val) => +val.value <= 999999.99 && val.value.length <= 9}
+              required />
+          </FormGroup>
+          <FormGroup required>
+            <Label for="reimbursementType">Type</Label>
+            <div>
+              <CustomInput type="radio" id="reimbursement-lodging" name="reimbursementType" label="Lodging" required/>
+              <CustomInput type="radio" id="reimbursement-travel" name="reimbursementType" label="Travel" required/>
+              <CustomInput type="radio" id="reimbursement-food" name="reimbursementType" label="Food" required/>
+              <CustomInput type="radio" id="reimbursement-other" name="reimbursementType" label="Other" required/>
+            </div>
+          </FormGroup>
+          <FormGroup required>
+            <Label for="inputDescription">Description</Label>
+            <Input type="textarea"
+              onChange={(e: any) => this.props.updateDescription(e.target.value)}
+              value={reimbursement.description}
+              maxLength={250}
+              id="inputDescription"
+              className="form-control"
+              placeholder="Description"
+              required />
+          </FormGroup>
+          <Button className="btn btn-lg btn-primary btn-block" type="submit">Submit</Button>
+        </Form>
         {errorMessage && <p id="error-message">{errorMessage}</p>}
-      </form>
+        {/* <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => (this.props.createReimbursement(e, this.props.reimbursement))}>
+
+          <div className="form-group">
+            <label htmlFor="inputType">Type:</label>
+            <select
+              className="form-control"
+              id="inputType"
+              value={reimbursement.type}
+              onChange={(e: any) => this.props.updateType(e.target.value)}>
+              <option>Lodging</option>
+              <option>Travel</option>
+              <option>Food</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        </form> */}
+      </>
     );
   }
 }
