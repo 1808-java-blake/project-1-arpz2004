@@ -94,8 +94,8 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                             <th scope="col">Amount</th>
                             <th scope="col">Submitted</th>
                             {requestedByColumn}
-                            <th scope="col">Status</th>
-                            <th scope="col">Type</th>
+                            <th scope="col"><span id="status-col">Status</span></th>
+                            <th scope="col"><span id="type-col">Type</span></th>
                             {managerColumn}
                         </tr>
                     </thead>
