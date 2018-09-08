@@ -29,8 +29,14 @@
 
 .extra-reimbursement-details{
     cursor: pointer;
+    .container{
+        padding: 12px !important;
+    }
     dd{
         word-wrap: break-word;
+    }
+    dl.row{
+        margin-bottom: 0px;
     }
 }
 

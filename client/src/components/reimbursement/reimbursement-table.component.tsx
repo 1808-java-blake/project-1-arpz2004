@@ -87,8 +87,8 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         </Button>
                     </ButtonGroup>
                 </div>
-                <table className="table">
-                    <thead>
+                <table className="table table-striped">
+                    <thead className="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Amount</th>
@@ -100,6 +100,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         </tr>
                     </thead>
                     <tbody>
+                        <tr><td className="hidden-row"></td></tr>
                         {this.props.renderedReimbursements.map((reimbursement: Reimbursement) => {
                             return <ReimbursementComponent showDetails={this.props.detailsShown.indexOf(reimbursement.reimbursementId) >= 0} toggleDetails={() => this.props.updateDetailsShown(this.toggleDetailsShown(this.props.detailsShown, reimbursement.reimbursementId))} key={reimbursement.reimbursementId} reimbursement={reimbursement} changeStatus={(reimbursementId: number, newStatus: string) => this.props.updateReimbursement(reimbursementId, newStatus)} />
                         })}
