@@ -46,47 +46,47 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
           <Collapse isOpen={showDetails}>
             <div className="container">
               <div className="row">
-                <div className="col-sm-6">
+                <div className="col-lg-6">
                   <dl className="row">
-                    <dt className="col-sm-3">Description</dt>
-                    <dd className="col-sm-9">{reimbursement.description}</dd>
-                    <dt className="col-sm-3">Submitted</dt>
-                    <dd className="col-sm-9">
+                    <dt className="col-lg-3">Description</dt>
+                    <dd className="col-lg-9">{reimbursement.description}</dd>
+                    <dt className="col-lg-3">Submitted</dt>
+                    <dd className="col-lg-9">
                       {reimbursement.submitted && formatTime(reimbursement.submitted)}
                     </dd>
                     {reimbursement.resolved ? (<>
-                      <dt className="col-sm-3">Resolved</dt>
-                      <dd className="col-sm-9">
+                      <dt className="col-lg-3">Resolved</dt>
+                      <dd className="col-lg-9">
                         {formatTime(reimbursement.resolved)}
                       </dd></>) : null
                     }
                   </dl>
                 </div>
-                <div className="col-sm-6">
+                <div className="col-lg-6">
                   <dl className="row">
-                    <dt className="col-sm-3">Requested By</dt>
-                    <dd className="col-sm-9">
+                    <dt className="col-lg-3">Requested By</dt>
+                    <dd className="col-lg-9">
                       {reimbursement.author.username}
                     </dd>
-                    <dt className="col-sm-3">Name</dt>
+                    <dt className="col-lg-3">Name</dt>
                     <dd className="col-sm-9">
                       {reimbursement.author.firstName + ' ' + reimbursement.author.lastName}
                     </dd>
-                    <dt className="col-sm-3">Email</dt>
-                    <dd className="col-sm-9">
+                    <dt className="col-lg-3">Email</dt>
+                    <dd className="col-lg-9">
                       {reimbursement.author.email}
                     </dd>
                     {managerColumn && reimbursement.resolved && reimbursement.resolver ?
-                      (<><dt className="col-sm-3">Resolved By</dt>
-                        <dd className="col-sm-9">
+                      (<><dt className="col-lg-3">Resolved By</dt>
+                        <dd className="col-lg-9">
                           {reimbursement.resolver.username}
                         </dd>
-                        <dt className="col-sm-3">Name</dt>
-                        <dd className="col-sm-9">
+                        <dt className="col-lg-3">Name</dt>
+                        <dd className="col-lg-9">
                           {reimbursement.resolver.firstName + ' ' + reimbursement.resolver.lastName}
                         </dd>
-                        <dt className="col-sm-3">Email</dt>
-                        <dd className="col-sm-9">
+                        <dt className="col-lg-3">Email</dt>
+                        <dd className="col-lg-9">
                           {reimbursement.resolver.email}
                         </dd></>) : <></>
                     }
