@@ -32,8 +32,14 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
                 renderedReimbursements: action.payload.renderedReimbursements
             }
         case reimbursementTableTypes.UPDATE_REIMBURSEMENT:
+            const index = state.detailsShown.indexOf(action.payload.reimbursementId);
+            const detailsShown = state.detailsShown.slice();
+            if (index >= 0) {
+                detailsShown.splice(index, 1)
+            }
             return {
                 ...state,
+                detailsShown,
                 reimbursements: state.reimbursements.map(reimbursement => {
                     return reimbursement.reimbursementId === action.payload.reimbursementId ? { ...reimbursement, status: action.payload.newStatus, resolved: action.payload.resolved, resolver: action.payload.resolver } : reimbursement;
                 })
