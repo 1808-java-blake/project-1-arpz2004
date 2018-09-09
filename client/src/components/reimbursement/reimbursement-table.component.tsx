@@ -94,25 +94,27 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         </div>
                     </CardHeader>
                 </Card>
-                <table className="table table-striped">
-                    <thead className="thead-light">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Submitted</th>
-                            {requestedByColumn}
-                            <th scope="col"><span id="status-col">Status</span></th>
-                            <th scope="col"><span id="type-col">Type</span></th>
-                            {managerColumn}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td className="hidden-row"></td></tr>
-                        {this.props.renderedReimbursements.map((reimbursement: Reimbursement) => {
-                            return <ReimbursementComponent showDetails={this.props.detailsShown.indexOf(reimbursement.reimbursementId) >= 0} toggleDetails={() => this.props.updateDetailsShown(this.toggleDetailsShown(this.props.detailsShown, reimbursement.reimbursementId))} key={reimbursement.reimbursementId} reimbursement={reimbursement} changeStatus={(reimbursementId: number, newStatus: string) => this.props.updateReimbursement(reimbursementId, newStatus)} />
-                        })}
-                    </tbody>
-                </table>
+                <div className="table-responsive">
+                    <table className="table table-striped">
+                        <thead className="thead-light">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Submitted</th>
+                                {requestedByColumn}
+                                <th scope="col"><span id="status-col">Status</span></th>
+                                <th scope="col"><span id="type-col">Type</span></th>
+                                {managerColumn}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td className="hidden-row"></td></tr>
+                            {this.props.renderedReimbursements.map((reimbursement: Reimbursement) => {
+                                return <ReimbursementComponent showDetails={this.props.detailsShown.indexOf(reimbursement.reimbursementId) >= 0} toggleDetails={() => this.props.updateDetailsShown(this.toggleDetailsShown(this.props.detailsShown, reimbursement.reimbursementId))} key={reimbursement.reimbursementId} reimbursement={reimbursement} changeStatus={(reimbursementId: number, newStatus: string) => this.props.updateReimbursement(reimbursementId, newStatus)} />
+                            })}
+                        </tbody>
+                    </table>
+                </div>
                 <div className="float-right">
                     <PaginationComponent
                         activePage={this.props.activePage}
