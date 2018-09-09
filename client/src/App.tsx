@@ -23,7 +23,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <div>
+          <>
             <AppNav />
             <div id="main-content-container">
               <Switch>
@@ -34,7 +34,7 @@ class App extends React.Component {
                 <ProtectedRoute />
               </Switch>
             </div>
-          </div>
+          </>
         </Router>
       </Provider>
     );

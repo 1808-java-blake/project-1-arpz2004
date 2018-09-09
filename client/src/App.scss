@@ -75,6 +75,18 @@
 #main-nav{
   width: 100vw;
 }
-html, body{
+html, body, #root, #main-content-container{
   overflow-x: hidden;
+  height: 100%;
+}
+
+#login-form{
+  top: 40%;
+    position: fixed;
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+
 }

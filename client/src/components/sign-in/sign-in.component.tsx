@@ -1,10 +1,16 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import { ISignInState, IState } from '../../reducers';
-import * as signInActions from '../../actions/sign-in/sign-in.actions';
-import * as currentUserActions from '../../actions/current-user/current-user.actions';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { Button } from 'reactstrap';
+import Col from 'reactstrap/lib/Col';
+import Container from 'reactstrap/lib/Container';
+import Form from 'reactstrap/lib/Form';
+import FormGroup from 'reactstrap/lib/FormGroup';
+import Input from 'reactstrap/lib/Input';
+import * as currentUserActions from '../../actions/current-user/current-user.actions';
+import * as signInActions from '../../actions/sign-in/sign-in.actions';
 import { User } from '../../model/User';
+import { ISignInState, IState } from '../../reducers';
 
 interface IProps extends RouteComponentProps<{}>, ISignInState {
   updateCurrentUser: (currentUser: User | null) => void
@@ -29,32 +35,39 @@ class SignInComponent extends React.Component<IProps, {}> {
   public render() {
     const { errorMessage, credentials } = this.props;
     return (
-      <form className="form-signin" onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
-        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-
-        <label htmlFor="inputUsername" className="sr-only">Username</label>
-        <input
-          onChange={(e: any) => this.props.updateUsername(e.target.value)}
-          value={credentials.username}
-          type="text"
-          id="inputUsername"
-          className="form-control"
-          placeholder="Username"
-          required />
-
-        <label htmlFor="inputPassword" className="sr-only">Password</label>
-        <input
-          onChange={(e: any) => this.props.updatePassword(e.target.value)}
-          value={credentials.password}
-          type="password"
-          id="inputPassword"
-          className="form-control"
-          placeholder="Password"
-          required />
-
-        <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        {errorMessage && <p id="error-message">{errorMessage}</p>}
-      </form>
+        <Container className="col-md-2 col-md-offset-2" id="login-form">
+          <h2>Sign In</h2>
+          <Form className="form-signin" onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
+            <Col>
+              <FormGroup>
+                <Input
+                  onChange={(e: any) => this.props.updateUsername(e.target.value)}
+                  value={credentials.username}
+                  type="text"
+                  id="inputUsername"
+                  className="form-control"
+                  placeholder="Username"
+                  required
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Input
+                  onChange={(e: any) => this.props.updatePassword(e.target.value)}
+                  value={credentials.password}
+                  type="password"
+                  id="inputPassword"
+                  className="form-control"
+                  placeholder="Password"
+                  required
+                />
+              </FormGroup>
+            </Col>
+            <Button className="btn btn-lg btn-primary btn-block" type="submit">Submit</Button>
+          </Form>
+          {errorMessage && <p id="error-message">{errorMessage}</p>}
+        </Container>
     );
   }
 }
