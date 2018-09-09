@@ -75,24 +75,6 @@
 #main-nav{
   width: 100vw;
 }
-html, body, #root, #main-content-container{
+html, body{
   overflow-x: hidden;
-  height: 100%;
-}
-
-#login-form{
-  top: 40%;
-    position: fixed;
-    -webkit-transform: translateY(-50%);
-       -moz-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-         -o-transform: translateY(-50%);
-            transform: translateY(-50%);
-  h5{
-    text-align: center;
-  }
-}
-
-.form-padding{
-  padding: 20px;
 }
