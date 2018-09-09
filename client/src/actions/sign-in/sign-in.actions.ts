@@ -40,39 +40,46 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
     method: 'POST',
   })
     .then(resp => {
-      if (resp.status === 401) {
-        dispatch({
-          payload: {
-            currentUser: null,
-            errorMessage: 'Invalid username or password'
-          },
-          type: signInTypes.LOGIN
-        });
-      } else if (resp.status === 200) {
+      if (resp.status === 200) {
         return resp.json();
       } else {
-        dispatch({
-          payload: {
-            currentUser: null,
-            errorMessage: 'Failed to login at this time'
-          },
-          type: signInTypes.LOGIN
-        });
+        return resp;
       }
-      throw new Error('Failed to login');
     })
     .then(resp => {
-      sessionStorage.setItem('currentUser', JSON.stringify(resp));
+      switch (resp.status) {
+        case 401:
+          dispatch({
+            payload: {
+              currentUser: null,
+              errorMessage: 'Invalid username or password'
+            },
+            type: signInTypes.LOGIN
+          });
+          break;
+        case undefined:
+          sessionStorage.setItem('currentUser', JSON.stringify(resp));
+          dispatch({
+            payload: {
+              currentUser: resp,
+              errorMessage: ''
+            },
+            type: signInTypes.LOGIN
+          });
+          history.push('/reimbursements');
+          break;
+        default:
+          throw new Error("Failed to login at this time");
+      }
+    })
+    .catch(err => {
       dispatch({
         payload: {
-          currentUser: resp,
-          errorMessage: ''
+          currentUser: null,
+          errorMessage: 'Failed to login at this time'
         },
         type: signInTypes.LOGIN
       });
-      history.push('/reimbursements');
-    })
-    .catch(err => {
       console.log(err);
     });
 }
