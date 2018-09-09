@@ -66,9 +66,7 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
       dispatch({
         payload: {
           currentUser: resp,
-          errorMessage: '',
-          password: '',
-          username: ''
+          errorMessage: ''
         },
         type: signInTypes.LOGIN
       });
