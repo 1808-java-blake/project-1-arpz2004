@@ -38,7 +38,7 @@ class SignInComponent extends React.Component<IProps, {}> {
       <div className="container h-100">
         <div className="row h-75">
           <div className="mx-auto my-auto">
-            <Card id="signin-form">
+            <Card>
               <CardHeader className="text-white bg-dark">Sign In to Start a Reimbursement Request</CardHeader>
               <CardBody className="bg-light">
                 <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
