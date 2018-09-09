@@ -28,47 +28,49 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
     const { errorMessage, reimbursement } = this.props;
 
     return (
-      <div id="reimbursement-form">
-        <h2>Reimbursement Request</h2>
-        <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => (this.props.createReimbursement(e, this.props.reimbursement))}>
-          <FormGroup>
-            <Label for="inputAmount">Amount</Label>
-            <NumberFormat
-              autoFocus
-              prefix={'$'}
-              decimalScale={2}
-              fixedDecimalScale={true}
-              thousandSeparator={true}
-              allowNegative={false}
-              isNumericString={true}
-              onValueChange={(values) => this.props.updateAmount(values.formattedValue)}
-              value={reimbursement.amount === 0 ? '' : reimbursement.amount}
-              id="inputAmount"
-              className="form-control"
-              isAllowed={(val) => +val.value <= 999999.99 && val.value.length <= 9}
-              required />
-          </FormGroup>
-          <FormGroup required>
-            <Label for="reimbursementType">Type</Label>
-            <CustomInput onChange={(e: any) => this.props.updateType("Lodging")} defaultChecked={this.props.reimbursement.type === "Lodging"} type="radio" id="reimbursement-lodging" name="reimbursementType" label="Lodging" required />
-            <CustomInput onChange={(e: any) => this.props.updateType("Travel")} defaultChecked={this.props.reimbursement.type === "Travel"} type="radio" id="reimbursement-travel" name="reimbursementType" label="Travel" required />
-            <CustomInput onChange={(e: any) => this.props.updateType("Food")} defaultChecked={this.props.reimbursement.type === "Food"} type="radio" id="reimbursement-food" name="reimbursementType" label="Food" required />
-            <CustomInput onChange={(e: any) => this.props.updateType("Other")} defaultChecked={this.props.reimbursement.type === "Other"} type="radio" id="reimbursement-other" name="reimbursementType" label="Other" required />
-          </FormGroup>
-          <FormGroup required>
-            <Label for="input-description">Description</Label>
-            <Textarea
-              type="textarea"
-              onChange={(e: any) => this.props.updateDescription(e.target.value)}
-              value={reimbursement.description}
-              maxLength={250}
-              id="input-description"
-              className="form-control"
-              required />
-          </FormGroup>
-          <Button color="primary" className="btn btn-lg btn-block" type="submit">Submit</Button>
-        </Form>
-        {errorMessage && <p id="error-message">{errorMessage}</p>}
+      <div className="border border-primary rounded bg-light" id="reimbursement-form">
+        <div className="form-padding">
+          <h5>Reimbursement Request</h5>
+          <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => (this.props.createReimbursement(e, this.props.reimbursement))}>
+            <FormGroup>
+              <Label for="inputAmount">Amount</Label>
+              <NumberFormat
+                autoFocus
+                prefix={'$'}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                thousandSeparator={true}
+                allowNegative={false}
+                isNumericString={true}
+                onValueChange={(values) => this.props.updateAmount(values.formattedValue)}
+                value={reimbursement.amount === 0 ? '' : reimbursement.amount}
+                id="inputAmount"
+                className="form-control"
+                isAllowed={(val) => +val.value <= 999999.99 && val.value.length <= 9}
+                required />
+            </FormGroup>
+            <FormGroup required>
+              <Label for="reimbursementType">Type</Label>
+              <CustomInput onChange={(e: any) => this.props.updateType("Lodging")} defaultChecked={this.props.reimbursement.type === "Lodging"} type="radio" id="reimbursement-lodging" name="reimbursementType" label="Lodging" required />
+              <CustomInput onChange={(e: any) => this.props.updateType("Travel")} defaultChecked={this.props.reimbursement.type === "Travel"} type="radio" id="reimbursement-travel" name="reimbursementType" label="Travel" required />
+              <CustomInput onChange={(e: any) => this.props.updateType("Food")} defaultChecked={this.props.reimbursement.type === "Food"} type="radio" id="reimbursement-food" name="reimbursementType" label="Food" required />
+              <CustomInput onChange={(e: any) => this.props.updateType("Other")} defaultChecked={this.props.reimbursement.type === "Other"} type="radio" id="reimbursement-other" name="reimbursementType" label="Other" required />
+            </FormGroup>
+            <FormGroup required>
+              <Label for="input-description">Description</Label>
+              <Textarea
+                type="textarea"
+                onChange={(e: any) => this.props.updateDescription(e.target.value)}
+                value={reimbursement.description}
+                maxLength={250}
+                id="input-description"
+                className="form-control"
+                required />
+            </FormGroup>
+            <Button color="primary" className="btn btn-lg btn-block" type="submit">Submit</Button>
+          </Form>
+          {errorMessage && <p id="error-message">{errorMessage}</p>}
+        </div>
       </div>
     );
   }

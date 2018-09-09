@@ -36,7 +36,7 @@ class SignInComponent extends React.Component<IProps, {}> {
     const { errorMessage, credentials } = this.props;
     return (
       <Container className="col-md-3 col-md-offset-3 border border-primary rounded bg-light" id="login-form">
-        <div className="form-signin">
+        <div className="form-padding">
           <h5>Sign In To Start a Reimbursement Request</h5>
           <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
             <Col>
