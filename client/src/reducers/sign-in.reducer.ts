@@ -36,6 +36,11 @@ export const signInReducer = (state = initialState, action: any) => {
     case signInTypes.LOGIN:
       return {
         ...state,
+        credentials: {
+          ...state.credentials,
+          password: action.payload.password,
+          username: action.payload.username
+        },
         currentUser: action.payload.currentUser,
         errorMessage: action.payload.errorMessage
       }
