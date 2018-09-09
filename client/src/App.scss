@@ -88,5 +88,11 @@ html, body, #root, #main-content-container{
         -ms-transform: translateY(-50%);
          -o-transform: translateY(-50%);
             transform: translateY(-50%);
+  h5{
+    text-align: center;
+  }
+}
 
+.form-signin{
+  padding: 20px;
 }

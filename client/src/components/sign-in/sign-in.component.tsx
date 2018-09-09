@@ -35,9 +35,10 @@ class SignInComponent extends React.Component<IProps, {}> {
   public render() {
     const { errorMessage, credentials } = this.props;
     return (
-        <Container className="col-md-2 col-md-offset-2" id="login-form">
-          <h2>Sign In</h2>
-          <Form className="form-signin" onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
+      <Container className="col-md-3 col-md-offset-3 border border-primary rounded bg-light" id="login-form">
+        <div className="form-signin">
+          <h5>Sign In To Start a Reimbursement Request</h5>
+          <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
             <Col>
               <FormGroup>
                 <Input
@@ -64,10 +65,11 @@ class SignInComponent extends React.Component<IProps, {}> {
                 />
               </FormGroup>
             </Col>
-            <Button className="btn btn-lg btn-primary btn-block" type="submit">Submit</Button>
+            <Button color="primary" className="btn btn-lg btn-block" type="submit">Sign In</Button>
           </Form>
           {errorMessage && <p id="error-message">{errorMessage}</p>}
-        </Container>
+        </div>
+      </Container>
     );
   }
 }
