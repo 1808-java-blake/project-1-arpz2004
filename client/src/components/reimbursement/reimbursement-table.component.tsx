@@ -69,26 +69,29 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         return (
             <div className="container">
                 <Card>
-                    <CardHeader className="text-white bg-dark">Reimbursement Request History
-                        <ButtonGroup className="reimbursement-table-buttons">
-                            <Button outline color="warning" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
-                            <Button outline color="success" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
-                            <Button outline color="danger" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Denied"))} active={statusFilter.indexOf("Denied") >= 0}>Denied</Button>
-                        </ButtonGroup>
-                        <ButtonGroup>
-                            <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(5)} active={itemsCountPerPage === 5}>5</Button>
-                            <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(10)} active={itemsCountPerPage === 10}>10</Button>
-                            <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(25)} active={itemsCountPerPage === 25}>25</Button>
-                            <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(custPerPage ? custPerPage : 1)} active={itemsCountPerPage === (custPerPage ? custPerPage : 1)}>
-                                <NumberFormat
-                                    allowNegative={false}
-                                    isNumericString={true}
-                                    onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue ? values.floatValue : custPerPage)}
-                                    value={custPerPage === 0 ? '' : custPerPage}
-                                    id="custom-page-input"
-                                    isAllowed={(val) => +val.value < 100 && val.value.length <= 2} />
-                            </Button>
-                        </ButtonGroup>
+                    <CardHeader className="text-white bg-dark">
+                        <div className="d-flex justify-content-between">
+                            <span className="my-auto">Reimbursement Request History</span>
+                            <ButtonGroup className="reimbursement-table-buttons">
+                                <Button outline color="warning" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
+                                <Button outline color="success" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
+                                <Button outline color="danger" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Denied"))} active={statusFilter.indexOf("Denied") >= 0}>Denied</Button>
+                            </ButtonGroup>
+                            <ButtonGroup>
+                                <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(5)} active={itemsCountPerPage === 5}>5</Button>
+                                <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(10)} active={itemsCountPerPage === 10}>10</Button>
+                                <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(25)} active={itemsCountPerPage === 25}>25</Button>
+                                <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(custPerPage ? custPerPage : 1)} active={itemsCountPerPage === (custPerPage ? custPerPage : 1)}>
+                                    <NumberFormat
+                                        allowNegative={false}
+                                        isNumericString={true}
+                                        onValueChange={(values) => this.props.updateCustomItemsCountPerPage(values.floatValue ? values.floatValue : custPerPage)}
+                                        value={custPerPage === 0 ? '' : custPerPage}
+                                        id="custom-page-input"
+                                        isAllowed={(val) => +val.value < 100 && val.value.length <= 2} />
+                                </Button>
+                            </ButtonGroup>
+                        </div>
                     </CardHeader>
                 </Card>
                 <table className="table table-striped">
