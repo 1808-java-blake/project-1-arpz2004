@@ -70,7 +70,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
             <div className="container">
                 <Card>
                     <CardHeader className="text-white bg-dark">
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between stacked-buttons">
                             <span className="my-auto">Reimbursement Request History</span>
                             <ButtonGroup className="reimbursement-table-buttons">
                                 <Button outline color="warning" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
