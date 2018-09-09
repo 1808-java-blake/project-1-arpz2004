@@ -75,7 +75,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                             <Button outline color="success" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
                             <Button outline color="danger" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Denied"))} active={statusFilter.indexOf("Denied") >= 0}>Denied</Button>
                         </ButtonGroup>
-                        <ButtonGroup className="reimbursement-table-buttons">
+                        <ButtonGroup>
                             <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(5)} active={itemsCountPerPage === 5}>5</Button>
                             <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(10)} active={itemsCountPerPage === 10}>10</Button>
                             <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(25)} active={itemsCountPerPage === 25}>25</Button>
