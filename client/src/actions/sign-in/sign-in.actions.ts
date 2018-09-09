@@ -44,7 +44,7 @@ export const login = (e: React.FormEvent<HTMLFormElement>, credentials: any) => 
         dispatch({
           payload: {
             currentUser: null,
-            errorMessage: 'Invalid Credentials'
+            errorMessage: 'Invalid username or password'
           },
           type: signInTypes.LOGIN
         });

@@ -41,6 +41,11 @@ class SignInComponent extends React.Component<IProps, {}> {
             <Card>
               <CardHeader className="text-white bg-dark">Sign In to Start a Reimbursement Request</CardHeader>
               <CardBody className="bg-light">
+                {errorMessage &&
+                  <div className="alert alert-danger" role="alert">
+                    <span id="error-message">{errorMessage}</span>
+                  </div>
+                }
                 <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
                   <Col>
                     <FormGroup>
@@ -71,7 +76,6 @@ class SignInComponent extends React.Component<IProps, {}> {
                   </Col>
                   <Button color="primary" className="btn btn-lg btn-block" type="submit">Sign In</Button>
                 </Form>
-                {errorMessage && <p id="error-message">{errorMessage}</p>}
               </CardBody>
             </Card>
           </div>
