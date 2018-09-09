@@ -35,41 +35,47 @@ class SignInComponent extends React.Component<IProps, {}> {
   public render() {
     const { errorMessage, credentials } = this.props;
     return (
-        <Card>
-          <CardHeader className="text-white bg-dark">Sign In to Start a Reimbursement Request</CardHeader>
-          <CardBody className="bg-light">
-            <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
-              <Col>
-                <FormGroup>
-                  <Input
-                    onChange={(e: any) => this.props.updateUsername(e.target.value)}
-                    value={credentials.username}
-                    type="text"
-                    id="inputUsername"
-                    className="form-control"
-                    placeholder="Username"
-                    required
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <Input
-                    onChange={(e: any) => this.props.updatePassword(e.target.value)}
-                    value={credentials.password}
-                    type="password"
-                    id="inputPassword"
-                    className="form-control"
-                    placeholder="Password"
-                    required
-                  />
-                </FormGroup>
-              </Col>
-              <Button color="primary" className="btn btn-lg btn-block" type="submit">Sign In</Button>
-            </Form>
-            {errorMessage && <p id="error-message">{errorMessage}</p>}
-          </CardBody>
-        </Card>
+      <div className="container h-100">
+        <div className="row h-75">
+          <div className="mx-auto my-auto">
+            <Card id="signin-form">
+              <CardHeader className="text-white bg-dark">Sign In to Start a Reimbursement Request</CardHeader>
+              <CardBody className="bg-light">
+                <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>
+                  <Col>
+                    <FormGroup>
+                      <Input
+                        onChange={(e: any) => this.props.updateUsername(e.target.value)}
+                        value={credentials.username}
+                        type="text"
+                        id="inputUsername"
+                        className="form-control"
+                        placeholder="Username"
+                        required
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup>
+                      <Input
+                        onChange={(e: any) => this.props.updatePassword(e.target.value)}
+                        value={credentials.password}
+                        type="password"
+                        id="inputPassword"
+                        className="form-control"
+                        placeholder="Password"
+                        required
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Button color="primary" className="btn btn-lg btn-block" type="submit">Sign In</Button>
+                </Form>
+                {errorMessage && <p id="error-message">{errorMessage}</p>}
+              </CardBody>
+            </Card>
+          </div>
+        </div>
+      </div>
     );
   }
 }
