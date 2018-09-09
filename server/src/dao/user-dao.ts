@@ -32,19 +32,18 @@ export async function findById(id: number): Promise<User> {
     }
 }
 
-export async function findByUsernameAndPassword(username: string, password: string): Promise<User> {
+export async function findByUsername(username: string): Promise<User> {
     const client = await connectionPool.connect();
     const nullUser: any = null;
     try {
         const resp = await client.query(
             `SELECT * FROM reimbursement_system.ers_user u
             NATURAL JOIN reimbursement_system.user_role
-            WHERE u.username = $1
-            AND u.password = $2`, [username, password]);
-         if (resp.rows.length !== 0) {
+            WHERE u.username = $1`, [username]);
+        if (resp.rows.length !== 0) {
             return userConverter(resp.rows[0]);
-         }
-         return nullUser;
+        }
+        return nullUser;
     } finally {
         client.release();
     }

@@ -12,7 +12,7 @@ CREATE TABLE ers_user
 (
     user_id SERIAL NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL,
+    password VARCHAR(60) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,

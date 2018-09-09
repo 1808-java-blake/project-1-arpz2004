@@ -3,6 +3,7 @@ import * as express from 'express';
 import * as userDao from '../dao/user-dao';
 import * as reimbursementDao from '../dao/reimbursement-dao';
 import { authMiddleware } from '../security/authorization-middleware';
+import * as bcrypt from 'bcrypt';
 
 export const userRouter = express.Router();
 
@@ -56,9 +57,12 @@ userRouter.get('/:id/reimbursements', [authMiddleware('Employee', 'Manager'), as
 /**
  * Add a new user
  */
-userRouter.post('', [authMiddleware('Manager'), async (req: Request, resp: Response) => {
+userRouter.post('', [async (req: Request, resp: Response) => {
+    const user = req.body;
+    user.password = await bcrypt.hash(user.password, 10);
+    user.id = 0;
     try {
-        const id = await userDao.create(req.body);
+        const id = await userDao.create(user);
         resp.status(201);
         resp.json(id);
     } catch (err) {
@@ -72,8 +76,9 @@ userRouter.post('', [authMiddleware('Manager'), async (req: Request, resp: Respo
  */
 userRouter.post('/login', async (req, resp) => {
     try {
-        const user = await userDao.findByUsernameAndPassword(req.body.username, req.body.password);
-        if (user && req.session) {
+        const user = await userDao.findByUsername(req.body.username);
+        const authenticated = await bcrypt.compare(req.body.password, user.password);
+        if (user && req.session && authenticated) {
             req.session.user = user;
             resp.json(user);
         } else {
