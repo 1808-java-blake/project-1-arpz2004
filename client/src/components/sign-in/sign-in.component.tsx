@@ -45,6 +45,7 @@ class SignInComponent extends React.Component<IProps, {}> {
                   <Col>
                     <FormGroup>
                       <Input
+                        autoFocus
                         onChange={(e: any) => this.props.updateUsername(e.target.value)}
                         value={credentials.username}
                         type="text"
