@@ -9,6 +9,8 @@ import { IReimbursementTableState, IState } from '../../reducers';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ReimbursementComponent } from './reimbursement.component';
 import NumberFormat from 'react-number-format';
+import Card from 'reactstrap/lib/Card';
+import CardHeader from 'reactstrap/lib/CardHeader';
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
@@ -87,8 +89,11 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         </Button>
                     </ButtonGroup>
                 </div>
+                <Card>
+                    <CardHeader className="text-white bg-dark">Reimbursement Request History</CardHeader>
+                </Card>
                 <table className="table table-striped">
-                    <thead className="thead-dark">
+                    <thead className="thead-light">
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Amount</th>
