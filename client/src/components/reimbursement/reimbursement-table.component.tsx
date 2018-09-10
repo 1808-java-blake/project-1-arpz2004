@@ -71,6 +71,13 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         const currentUser = getCurrentUser();
         const requestedByColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Requested By</th> : null;
         const managerColumn = currentUser && currentUser.role === "Manager" ? <th scope="col" className="text-center">Approve/Deny</th> : null;
+        const filterByUsernameInput = currentUser && currentUser.role === "Manager" ?
+            <input
+                id="inputUsernameFilter"
+                placeholder="Filter by username"
+                type="text"
+                onChange={(e: any) => this.props.updateUsernameFilter(e.target.value)}
+                value={usernameFilter} /> : null
         const custPerPage = this.props.customItemsCountPerPage;
         return (
             <div className="container">
@@ -78,12 +85,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                     <CardHeader className="text-white bg-dark">
                         <div className="d-flex justify-content-between stacked-buttons">
                             <span className="my-auto">Reimbursement Request History</span>
-                            <input
-                                id="inputUsernameFilter"
-                                placeholder="Filter by username"
-                                type="text"
-                                onChange={(e: any) => this.props.updateUsernameFilter(e.target.value)}
-                                value={usernameFilter} />
+                            {filterByUsernameInput}
                             <ButtonGroup className="reimbursement-table-buttons">
                                 <Button outline color="warning" onClick={() => this.filterByStatusAndUsername(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
                                 <Button outline color="success" onClick={() => this.filterByStatusAndUsername(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
