@@ -103,7 +103,7 @@ export const ReimbursementComponent: React.StatelessComponent<IProps> = (props) 
 
 const formatDate = (time: Date) => {
   const mS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-  time = new Date(time)
+  time = convertUTCDateToLocalDate(new Date(time))
   const yyyy = time.getFullYear();
   const month = time.getMonth();
   const day = time.getDate();
@@ -113,7 +113,7 @@ const formatDate = (time: Date) => {
 
 const formatTime = (time: Date) => {
   const mS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-  time = new Date(time)
+  time = convertUTCDateToLocalDate(new Date(time))
   let h = time.getHours();
   const amPm = h < 12 ? 'AM' : 'PM';
   h = h > 12 ? h - 12 : h;
@@ -127,4 +127,15 @@ const formatTime = (time: Date) => {
   const day = time.getDate();
   const dd = day < 10 ? `0${day}` : day;
   return <>{mS[month]} {dd}, {yyyy} {h}:{m}:{s} {amPm}</>;
+}
+
+const convertUTCDateToLocalDate = (date: Date) => {
+  const newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+
+  const offset = date.getTimezoneOffset() / 60;
+  const hours = date.getHours();
+
+  newDate.setHours(hours - offset);
+
+  return newDate;
 }
