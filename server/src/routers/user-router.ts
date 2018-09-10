@@ -77,7 +77,10 @@ userRouter.post('', [async (req: Request, resp: Response) => {
 userRouter.post('/login', async (req, resp) => {
     try {
         const user = await userDao.findByUsername(req.body.username);
-        const authenticated = await bcrypt.compare(req.body.password, user.password);
+        let authenticated = false;
+        if (user) {
+            authenticated = await bcrypt.compare(req.body.password, user.password);
+        }
         if (user && req.session && authenticated) {
             req.session.user = user;
             resp.json(user);
