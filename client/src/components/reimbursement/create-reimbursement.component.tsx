@@ -35,6 +35,11 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
             <Card>
               <CardHeader className="text-white bg-dark">Reimbursement Request</CardHeader>
               <CardBody className="bg-light">
+                {errorMessage &&
+                  <div className="alert alert-danger" role="alert">
+                    <span>{errorMessage}</span>
+                  </div>
+                }
                 <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => (this.props.createReimbursement(e, this.props.reimbursement))}>
                   <FormGroup>
                     <Label for="inputAmount">Amount</Label>
@@ -73,7 +78,6 @@ class CreateReimbursementComponent extends React.Component<IProps, {}> {
                   </FormGroup>
                   <Button color="primary" className="btn btn-lg btn-block" type="submit">Submit</Button>
                 </Form>
-                {errorMessage && <p id="error-message">{errorMessage}</p>}
               </CardBody>
             </Card>
           </div>

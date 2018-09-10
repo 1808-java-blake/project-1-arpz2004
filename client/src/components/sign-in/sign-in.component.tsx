@@ -43,7 +43,7 @@ class SignInComponent extends React.Component<IProps, {}> {
               <CardBody className="bg-light">
                 {errorMessage &&
                   <div className="alert alert-danger" role="alert">
-                    <span id="error-message">{errorMessage}</span>
+                    <span>{errorMessage}</span>
                   </div>
                 }
                 <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.props.login(e, this.props.credentials)}>

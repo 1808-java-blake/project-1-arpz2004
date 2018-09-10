@@ -129,6 +129,17 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                         </tbody>
                     </table>
                 </div>
+                {this.props.filteredReimbursements.length === 0 &&
+                    <div className="container">
+                        <div className="row">
+                            <div id="no-reimbursements-msg" className="mx-auto">
+                                <div className="alert alert-info" role="alert">
+                                    <span>There are no reimbursement requests that match the current filter.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <div className="float-right">
                     <PaginationComponent
                         activePage={this.props.activePage}
