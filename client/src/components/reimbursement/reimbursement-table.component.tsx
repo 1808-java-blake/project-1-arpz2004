@@ -34,8 +34,8 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     }
 
     public componentDidUpdate(prevProps: IProps) {
-        if (this.props.reimbursements !== prevProps.reimbursements) {
-            this.filterByStatus(this.props.statusFilter);
+        if (this.props.reimbursements !== prevProps.reimbursements || this.props.usernameFilter !== prevProps.usernameFilter) {
+            this.filterByStatusAndUsername(this.props.statusFilter);
         }
         if (this.props.customItemsCountPerPage !== prevProps.customItemsCountPerPage) {
             this.props.updateItemsCountPerPage(this.props.customItemsCountPerPage);
@@ -45,10 +45,15 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
         }
     }
 
-    public filterByStatus = (statusArray: string[]) => {
-        const filteredReimbursements = this.props.reimbursements.filter(reimbursement => {
+    public filterByStatusAndUsername = (statusArray: string[]) => {
+        let filteredReimbursements = this.props.reimbursements.filter(reimbursement => {
             return statusArray.indexOf(reimbursement.status) >= 0;
         });
+        const usernameFilter = this.props.usernameFilter;
+        if (usernameFilter) {
+            filteredReimbursements = filteredReimbursements.filter(reimbursement => reimbursement.author.username.indexOf(usernameFilter) >= 0);
+            filteredReimbursements = filteredReimbursements.filter(reimbursement => reimbursement.author.username === usernameFilter).concat(filteredReimbursements.filter(reimbursement => reimbursement.author.username !== usernameFilter));
+        }
         this.props.filterReimbursements(filteredReimbursements, statusArray);
     }
 
@@ -80,9 +85,9 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                                 onChange={(e: any) => this.props.updateUsernameFilter(e.target.value)}
                                 value={usernameFilter} />
                             <ButtonGroup className="reimbursement-table-buttons">
-                                <Button outline color="warning" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
-                                <Button outline color="success" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
-                                <Button outline color="danger" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Denied"))} active={statusFilter.indexOf("Denied") >= 0}>Denied</Button>
+                                <Button outline color="warning" onClick={() => this.filterByStatusAndUsername(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
+                                <Button outline color="success" onClick={() => this.filterByStatusAndUsername(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
+                                <Button outline color="danger" onClick={() => this.filterByStatusAndUsername(this.toggleFilter(statusFilter, "Denied"))} active={statusFilter.indexOf("Denied") >= 0}>Denied</Button>
                             </ButtonGroup>
                             <ButtonGroup>
                                 <Button color="primary" onClick={() => this.props.updateItemsCountPerPage(5)} active={itemsCountPerPage === 5}>5</Button>
