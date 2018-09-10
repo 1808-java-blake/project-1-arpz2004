@@ -18,6 +18,9 @@ export const PaginationComponent: React.StatelessComponent<IProps> = (props) => 
         totalItemsCount={totalItemsCount}
         pageRangeDisplayed={5}
         onChange={updateActivePage}
+        lastPageText={'' + Math.ceil(totalItemsCount / itemsCountPerPage)}
+        firstPageText={'1'}
+        hideDisabled={true}
         itemClass={'page-item'}
         linkClass={'page-link'}
       />
