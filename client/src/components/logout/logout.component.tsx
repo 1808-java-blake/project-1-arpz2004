@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import * as currentUserActions from '../../actions/current-user/current-user.actions';
 
 interface IProps extends RouteComponentProps<{}> {
-    logoutUser: (user: null) => void
+    logoutUser: () => void
 }
 
 class LogoutComponent extends React.Component<IProps, {}> {
@@ -14,7 +14,7 @@ class LogoutComponent extends React.Component<IProps, {}> {
     }
 
     public componentDidMount() {
-        this.props.logoutUser(null);
+        this.props.logoutUser();
     }
 
     public render() {
@@ -22,7 +22,7 @@ class LogoutComponent extends React.Component<IProps, {}> {
     }
 }
 const mapDispatchToProps = {
-    logoutUser: currentUserActions.updateCurrentUser
+    logoutUser: currentUserActions.logout
 }
 
 export default connect(null, mapDispatchToProps)(LogoutComponent);

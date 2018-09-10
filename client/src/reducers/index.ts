@@ -39,9 +39,17 @@ export interface IState {
   signIn: ISignInState
 }
 
-export const state = combineReducers<IState>({
+const reducer = combineReducers<IState>({
   createReimbursement: createReimbursementReducer,
   currentUser: currentUserReducer,
   reimbursementTable: reimbursementTableReducer,
   signIn: signInReducer
 })
+
+export const state = (newState: any, action: any) => {
+  if (action.type === 'LOGOUT') {
+    newState = undefined
+  }
+
+  return reducer(newState, action)
+}
