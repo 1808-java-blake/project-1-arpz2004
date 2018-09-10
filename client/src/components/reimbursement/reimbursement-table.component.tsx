@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { Button, ButtonGroup } from 'reactstrap';
+import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Button, ButtonGroup } from 'reactstrap';
+import Card from 'reactstrap/lib/Card';
+import CardHeader from 'reactstrap/lib/CardHeader';
 import * as reimbursementTableActions from '../../actions/reimbursement/reimbursement-table.actions';
 import { getCurrentUser } from '../../App';
 import { Reimbursement } from '../../model/Reimbursement';
 import { IReimbursementTableState, IState } from '../../reducers';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ReimbursementComponent } from './reimbursement.component';
-import NumberFormat from 'react-number-format';
-import Card from 'reactstrap/lib/Card';
-import CardHeader from 'reactstrap/lib/CardHeader';
 
 interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     fetchReimbursements: () => void,
@@ -19,7 +19,8 @@ interface IProps extends RouteComponentProps<{}>, IReimbursementTableState {
     updateDetailsShown: (reimbursementIds: number[]) => void
     updateActivePage: (activePage: number, filteredReimbursements: Reimbursement[], itemsCountPerPage: number) => void,
     updateItemsCountPerPage: (itemsCountPerPage: number) => void,
-    updateCustomItemsCountPerPage: (itemsCountPerPage: number) => void
+    updateCustomItemsCountPerPage: (itemsCountPerPage: number) => void,
+    updateUsernameFilter: (usernameFilter: string) => void
 }
 
 class ReimbursementTableComponent extends React.Component<IProps, {}> {
@@ -60,7 +61,7 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
     }
 
     public render() {
-        const { filteredReimbursements, statusFilter, itemsCountPerPage } = this.props;
+        const { filteredReimbursements, statusFilter, itemsCountPerPage, usernameFilter } = this.props;
         const numberOfFilteredReimbursements = filteredReimbursements.length;
         const currentUser = getCurrentUser();
         const requestedByColumn = currentUser && currentUser.role === "Manager" ? <th scope="col">Requested By</th> : null;
@@ -72,6 +73,12 @@ class ReimbursementTableComponent extends React.Component<IProps, {}> {
                     <CardHeader className="text-white bg-dark">
                         <div className="d-flex justify-content-between stacked-buttons">
                             <span className="my-auto">Reimbursement Request History</span>
+                            <input
+                                id="inputUsernameFilter"
+                                placeholder="Filter by username"
+                                type="text"
+                                onChange={(e: any) => this.props.updateUsernameFilter(e.target.value)}
+                                value={usernameFilter} />
                             <ButtonGroup className="reimbursement-table-buttons">
                                 <Button outline color="warning" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Pending"))} active={statusFilter.indexOf("Pending") >= 0}>Pending</Button>
                                 <Button outline color="success" onClick={() => this.filterByStatus(this.toggleFilter(statusFilter, "Approved"))} active={statusFilter.indexOf("Approved") >= 0}>Approved</Button>
@@ -136,7 +143,8 @@ const mapDispatchToProps = {
     updateCustomItemsCountPerPage: reimbursementTableActions.updateCustomItemsCountPerPage,
     updateDetailsShown: reimbursementTableActions.updateDetailsShown,
     updateItemsCountPerPage: reimbursementTableActions.updateItemsCountPerPage,
-    updateReimbursement: reimbursementTableActions.updateReimbursement
+    updateReimbursement: reimbursementTableActions.updateReimbursement,
+    updateUsernameFilter: reimbursementTableActions.updateUsernameFilter
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReimbursementTableComponent);

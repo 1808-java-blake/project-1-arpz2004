@@ -123,3 +123,12 @@ export const updateDetailsShown = (detailsShown: number[]) => {
     type: reimbursementTableTypes.UPDATE_DETAILS_SHOWN
   }
 }
+
+export const updateUsernameFilter = (usernameFilter: string) => {
+  return {
+    payload: {
+      usernameFilter
+    },
+    type: reimbursementTableTypes.UPDATE_USERNAME_FILTER
+  }
+}

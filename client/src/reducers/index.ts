@@ -29,6 +29,7 @@ export interface IReimbursementTableState {
   itemsCountPerPage: number
   customItemsCountPerPage: number
   statusFilter: string[]
+  usernameFilter: string
 }
 
 export interface IState {

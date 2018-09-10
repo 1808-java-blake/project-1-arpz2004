@@ -9,7 +9,8 @@ const initialState: IReimbursementTableState = {
     itemsCountPerPage: 10,
     reimbursements: [],
     renderedReimbursements: [],
-    statusFilter: ["Pending", "Approved", "Denied"]
+    statusFilter: ["Pending", "Approved", "Denied"],
+    usernameFilter: ''
 }
 
 export const reimbursementTableReducer = (state = initialState, action: any) => {
@@ -58,6 +59,11 @@ export const reimbursementTableReducer = (state = initialState, action: any) => 
             return {
                 ...state,
                 detailsShown: action.payload.detailsShown
+            }
+        case reimbursementTableTypes.UPDATE_USERNAME_FILTER:
+            return {
+                ...state,
+                usernameFilter: action.payload.usernameFilter
             }
     }
     return state;

@@ -40,6 +40,7 @@ export const updateType = (type: string) => {
     type: createReimbursementTypes.UPDATE_TYPE
   }
 }
+
 export const createReimbursement = (e: React.FormEvent<HTMLFormElement>, reimbursement: Reimbursement) => (dispatch: any) => {
   e.preventDefault();
   const currentUser = getCurrentUser();
