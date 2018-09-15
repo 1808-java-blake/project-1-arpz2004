@@ -20,7 +20,7 @@ interface IProps extends RouteComponentProps<{}>, ISignInState {
   login: (e: React.FormEvent<HTMLFormElement>, credentials: any) => void
 }
 
-class SignInComponent extends React.Component<IProps, {}> {
+export class SignInComponent extends React.Component<IProps, {}> {
 
   constructor(props: any) {
     super(props);
@@ -85,7 +85,10 @@ class SignInComponent extends React.Component<IProps, {}> {
   }
 }
 
-const mapStateToProps = (state: IState) => (state.signIn);
+const mapStateToProps = (state: IState) => {
+  return state.signIn;
+}
+
 const mapDispatchToProps = {
   login: signInActions.login,
   updateCurrentUser: currentUserActions.updateCurrentUser,
