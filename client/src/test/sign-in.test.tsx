@@ -35,4 +35,20 @@ describe('sign-in actions', () => {
         }
         expect(signInActions.updateError(errorMessage)).toEqual(expectedAction)
     })
+
+    it("should create an action to login user", async () => {
+        const dispatch = jest.fn();
+        const event: any = { preventDefault: () => null };
+        const credentials: any = { credentials: { password: 'test', username: 'test' } }
+        await signInActions.login(event, credentials)(dispatch);
+        expect(dispatch).toBeCalledWith(
+            {
+                payload: {
+                    currentUser: null,
+                    errorMessage: 'Failed to login at this time'
+                },
+                type: signInTypes.LOGIN
+            });
+    });
+
 })
