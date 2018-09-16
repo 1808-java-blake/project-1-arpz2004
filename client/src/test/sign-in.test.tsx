@@ -1,5 +1,6 @@
 import * as signInActions from '../actions/sign-in/sign-in.actions';
 import { signInTypes } from "../actions/sign-in/sign-in.types";
+import { mockResponse } from "./test-helper"
 
 describe('sign-in actions', () => {
     it('should create an action to update username', () => {
@@ -36,16 +37,25 @@ describe('sign-in actions', () => {
         expect(signInActions.updateError(errorMessage)).toEqual(expectedAction)
     })
 
-    it("should create an action to login user", async () => {
+    it("should create an action to login user successfully", async () => {
         const dispatch = jest.fn();
+        const response = `{
+            "userId": 1,
+            "username": "user123",
+            "firstName": "John",
+            "lastName": "Smith",
+            "email": "user123@gmail.com"
+        }`
+        window.fetch = jest.fn().mockImplementation(() =>
+            Promise.resolve(mockResponse(200, "OK", response)));
         const event: any = { preventDefault: () => null };
-        const credentials: any = { credentials: { password: 'test', username: 'test' } }
+        const credentials: any = { credentials: { password: 'pass', username: 'user123' } }
         await signInActions.login(event, credentials)(dispatch);
         expect(dispatch).toBeCalledWith(
             {
                 payload: {
-                    currentUser: null,
-                    errorMessage: 'Failed to login at this time'
+                    currentUser: JSON.parse(response),
+                    errorMessage: ''
                 },
                 type: signInTypes.LOGIN
             });
