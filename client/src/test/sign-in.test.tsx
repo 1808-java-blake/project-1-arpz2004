@@ -61,4 +61,39 @@ describe('sign-in actions', () => {
             });
     });
 
+    it("should create an action to display an error after invalid credentials used for login", async () => {
+        const dispatch = jest.fn();
+        const response = "Unauthorized"
+        window.fetch = jest.fn().mockImplementation(() =>
+            Promise.resolve(mockResponse(401, "Unauthorized", response)));
+        const event: any = { preventDefault: () => null };
+        const credentials: any = { credentials: { password: 'pass', username: 'user123' } }
+        await signInActions.login(event, credentials)(dispatch);
+        expect(dispatch).toBeCalledWith(
+            {
+                payload: {
+                    currentUser: null,
+                    errorMessage: 'Invalid username or password'
+                },
+                type: signInTypes.LOGIN
+            });
+    });
+
+    it("should create an action to display an error after login failed because of server error", async () => {
+        const dispatch = jest.fn();
+        const response = "Unauthorized"
+        window.fetch = jest.fn().mockImplementation(() =>
+            Promise.resolve(mockResponse(500, "Unauthorized", response)));
+        const event: any = { preventDefault: () => null };
+        const credentials: any = { credentials: { password: 'pass', username: 'user123' } }
+        await signInActions.login(event, credentials)(dispatch);
+        expect(dispatch).toBeCalledWith(
+            {
+                payload: {
+                    currentUser: null,
+                    errorMessage: 'Failed to login at this time'
+                },
+                type: signInTypes.LOGIN
+            });
+    });
 })
