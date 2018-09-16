@@ -81,9 +81,9 @@ describe('sign-in actions', () => {
 
     it("should create an action to display an error after login failed because of server error", async () => {
         const dispatch = jest.fn();
-        const response = "Unauthorized"
+        const response = "Internal Server Error"
         window.fetch = jest.fn().mockImplementation(() =>
-            Promise.resolve(mockResponse(500, "Unauthorized", response)));
+            Promise.resolve(mockResponse(500, "Internal Server Error", response)));
         const event: any = { preventDefault: () => null };
         const credentials: any = { credentials: { password: 'pass', username: 'user123' } }
         await signInActions.login(event, credentials)(dispatch);
